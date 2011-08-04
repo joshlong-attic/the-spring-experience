@@ -18,8 +18,14 @@ import javax.persistence.PersistenceContext;
 @Service
 public class LessonOrganizer {
 
-    @PersistenceContext
     private EntityManager entityManager;
+
+    @PersistenceContext
+    public void setEntityManager(EntityManager em){
+        this.entityManager = em;
+    }
+
+
 
     @Transactional
     public Lesson createLesson(long lessonPlanId, int number, String title) {
