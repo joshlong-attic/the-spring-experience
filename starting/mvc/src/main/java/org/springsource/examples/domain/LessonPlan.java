@@ -1,5 +1,7 @@
 package org.springsource.examples.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
@@ -13,19 +15,13 @@ import java.util.Set;
  */
 
 @Entity
-@XmlRootElement(name = "lesson")
 @Table(name = "lesson_plan")
 public class LessonPlan {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-
-    @OneToMany(mappedBy = "lessonPlan")
     private Set<Lesson> lessons = new HashSet<Lesson>();
 
+    @OneToMany(mappedBy = "lessonPlan")
     public Set<Lesson> getLessons(){
         return this.lessons;
     }
@@ -34,6 +30,9 @@ public class LessonPlan {
         this.lessons = lessons;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     public Long getId() {
         return id;
     }

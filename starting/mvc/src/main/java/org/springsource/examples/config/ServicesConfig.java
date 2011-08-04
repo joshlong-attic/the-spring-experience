@@ -1,8 +1,12 @@
 package org.springsource.examples.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -14,11 +18,16 @@ import org.springsource.examples.domain.Lesson;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.Driver;
 
 @ComponentScan("org.springsource.examples.services")
 @Configuration
+@PropertySource("classpath:/services.properties")
 @EnableTransactionManagement
 public class ServicesConfig {
+
+    @Autowired
+    private Environment environment ;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
@@ -42,9 +51,15 @@ public class ServicesConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-    @Bean
+      @Bean
+    @SuppressWarnings("unchecked")
     public DataSource dataSource() throws Exception {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-     }
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        dataSource.setPassword(environment.getProperty("dataSource.password"));
+        dataSource.setUrl(environment.getProperty("dataSource.url"));
+        dataSource.setUsername(environment.getProperty("dataSource.user"));
+        dataSource.setDriverClass((Class<Driver>) Class.forName(environment.getProperty("dataSource.driverClass")));
+        return dataSource;
+    }
 
 }

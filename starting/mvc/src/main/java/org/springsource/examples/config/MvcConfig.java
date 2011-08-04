@@ -4,17 +4,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.List;
 
 @ComponentScan("org.springsource.examples.controllers")
 @Import(ServicesConfig.class)
 @Configuration
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
+    @Override
+    public void configureViewControllers(ViewControllerConfigurer configurer) {
+        configurer.mapViewName("/","home");
+    }
 
     @Override
     public void configureResourceHandling(ResourceConfigurer configurer) {
@@ -33,6 +39,4 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         internalResourceViewResolver.setSuffix(".jsp");
         return internalResourceViewResolver;
     }
-
-
 }

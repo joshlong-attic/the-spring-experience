@@ -14,28 +14,26 @@ import javax.persistence.*;
 @Table(name = "lesson")
 public class Lesson implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+
     private Long id;
 
-    @Column(name = "lesson_title", nullable = false)
+
     private String lessonTitle;
 
-    @Column(name = "number", nullable = false)
+
     private int number;
+
+
+    private LessonPlan lessonPlan;
 
     @ManyToOne
     @JoinColumn(name = "lesson_plan_id", referencedColumnName = "id", nullable = false)
-    private LessonPlan lessonPlan;
-
-
-    public void setLessonPlan(LessonPlan lp) {
-        this.lessonPlan = lp;
-    }
-
     public LessonPlan getLessonPlan() {
         return lessonPlan;
+    }
+
+    public void setLessonPlan(LessonPlan lessonPlan) {
+        this.lessonPlan = lessonPlan;
     }
 
     public Lesson() {
@@ -46,6 +44,9 @@ public class Lesson implements java.io.Serializable {
         this.lessonTitle = t;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     public Long getId() {
         return this.id;
     }
@@ -54,6 +55,7 @@ public class Lesson implements java.io.Serializable {
         this.id = id;
     }
 
+    @Column(name = "number", nullable = false)
     public int getNumber() {
         return number;
     }
@@ -62,6 +64,7 @@ public class Lesson implements java.io.Serializable {
         this.number = number;
     }
 
+    @Column(name = "lesson_title", nullable = false)
     public String getLessonTitle() {
         return lessonTitle;
     }
