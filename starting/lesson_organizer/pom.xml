@@ -17,7 +17,11 @@
     <dependencies>
 
 
-
+           <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>8.3-603.jdbc3</version>
+            </dependency>
 
 
         <!-- Spring -->
