@@ -31,9 +31,18 @@ public class JpaAccountHolderServiceTest {
 
 
 	@Test
+	public void testAuditing() throws Throwable {
+		ExpenseHolder eh = this.expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password");
+		Assert.assertNotNull(eh.getDateCreated() != null);
+		Assert.assertNotNull(eh.getDateModified() != null);
+		Assert.assertEquals(eh.getDateModified(), eh.getDateCreated());
+	}
+
+	@Test
 	public void testAccountHolderCreation() throws Throwable {
 		ExpenseHolder eh = this.expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password");
 		Assert.assertNotNull(eh);
 		Assert.assertTrue(eh.getExpenseHolderId() > 0);
+
 	}
 }
