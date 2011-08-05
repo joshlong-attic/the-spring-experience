@@ -1,7 +1,6 @@
 package org.springsource.examples.expenses.services.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springsource.examples.expenses.model.Charge;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
@@ -38,7 +38,8 @@ public class ServiceConfiguration {
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
 
-		// localContainerEntityManagerFactoryBean.setPackagesToScan( new String[]{Lesson.class.getPackage().getName()});
+		String entityPackage = Charge.class.getPackage().getName() ;
+		localContainerEntityManagerFactoryBean.setPackagesToScan( new String[]{ entityPackage });
 		// look ma, no persistence.xml !
 
 		return localContainerEntityManagerFactoryBean;
@@ -53,11 +54,14 @@ public class ServiceConfiguration {
 	@Bean
 	@SuppressWarnings("unchecked")
 	public DataSource dataSource() throws Exception {
+
+		Class<Driver> driverClass = (Class<Driver>) Class.forName(environment.getProperty("dataSource.driverClassName")) ;
+
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 		dataSource.setPassword(environment.getProperty("dataSource.password"));
 		dataSource.setUrl(environment.getProperty("dataSource.url"));
 		dataSource.setUsername(environment.getProperty("dataSource.user"));
-		dataSource.setDriverClass((Class<Driver>) Class.forName(environment.getProperty("dataSource.driverClass")));
+		dataSource.setDriverClass(driverClass);
 		return dataSource;
 	}
 

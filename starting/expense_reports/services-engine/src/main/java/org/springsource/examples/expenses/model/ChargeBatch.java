@@ -1,5 +1,5 @@
 package org.springsource.examples.expenses.model;
-// Generated Aug 5, 2011 12:43:19 AM by Hibernate Tools 3.2.0.CR1
+// Generated Aug 5, 2011 1:50:40 AM by Hibernate Tools 3.2.0.CR1
 
 
 import javax.persistence.*;
@@ -18,7 +18,7 @@ public class ChargeBatch implements java.io.Serializable {
 
 
 	private long chargeBatchId;
-	private AccountHolder accountHolder;
+	private ExpenseHolder expenseHolder;
 	private Date importTime;
 	private Set<Charge> charges = new HashSet<Charge>(0);
 
@@ -26,20 +26,21 @@ public class ChargeBatch implements java.io.Serializable {
 	}
 
 
-	public ChargeBatch(long chargeBatchId, AccountHolder accountHolder, Date importTime) {
+	public ChargeBatch(long chargeBatchId, ExpenseHolder expenseHolder, Date importTime) {
 		this.chargeBatchId = chargeBatchId;
-		this.accountHolder = accountHolder;
+		this.expenseHolder = expenseHolder;
 		this.importTime = importTime;
 	}
 
-	public ChargeBatch(long chargeBatchId, AccountHolder accountHolder, Date importTime, Set<Charge> charges) {
+	public ChargeBatch(long chargeBatchId, ExpenseHolder expenseHolder, Date importTime, Set<Charge> charges) {
 		this.chargeBatchId = chargeBatchId;
-		this.accountHolder = accountHolder;
+		this.expenseHolder = expenseHolder;
 		this.importTime = importTime;
 		this.charges = charges;
 	}
 
 	@Id
+
 	@Column(name = "charge_batch_id", unique = true, nullable = false)
 	public long getChargeBatchId() {
 		return this.chargeBatchId;
@@ -50,13 +51,13 @@ public class ChargeBatch implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_holder_id", nullable = false)
-	public AccountHolder getAccountHolder() {
-		return this.accountHolder;
+	@JoinColumn(name = "expense_holder_id", nullable = false)
+	public ExpenseHolder getExpenseHolder() {
+		return this.expenseHolder;
 	}
 
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
+	public void setExpenseHolder(ExpenseHolder expenseHolder) {
+		this.expenseHolder = expenseHolder;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

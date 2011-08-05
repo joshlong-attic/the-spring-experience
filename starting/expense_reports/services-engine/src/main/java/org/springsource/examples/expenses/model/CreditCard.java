@@ -1,5 +1,5 @@
 package org.springsource.examples.expenses.model;
-// Generated Aug 5, 2011 12:43:19 AM by Hibernate Tools 3.2.0.CR1
+// Generated Aug 5, 2011 1:50:40 AM by Hibernate Tools 3.2.0.CR1
 
 
 import javax.persistence.*;
@@ -15,18 +15,17 @@ public class CreditCard implements java.io.Serializable {
 
 
 	private long creditCardId;
-	private AccountHolder accountHolder;
+	private ExpenseHolder expenseHolder;
 
 	public CreditCard() {
 	}
 
-	public CreditCard(long creditCardId, AccountHolder accountHolder) {
+	public CreditCard(long creditCardId, ExpenseHolder expenseHolder) {
 		this.creditCardId = creditCardId;
-		this.accountHolder = accountHolder;
+		this.expenseHolder = expenseHolder;
 	}
 
 	@Id
-
 	@Column(name = "credit_card_id", unique = true, nullable = false)
 	public long getCreditCardId() {
 		return this.creditCardId;
@@ -37,13 +36,13 @@ public class CreditCard implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "account_holder_id", nullable = false)
-	public AccountHolder getAccountHolder() {
-		return this.accountHolder;
+	@JoinColumn(name = "expense_holder_id", nullable = false)
+	public ExpenseHolder getExpenseHolder() {
+		return this.expenseHolder;
 	}
 
-	public void setAccountHolder(AccountHolder accountHolder) {
-		this.accountHolder = accountHolder;
+	public void setExpenseHolder(ExpenseHolder expenseHolder) {
+		this.expenseHolder = expenseHolder;
 	}
 
 
