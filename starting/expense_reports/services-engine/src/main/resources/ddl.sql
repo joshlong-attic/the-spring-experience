@@ -2,8 +2,6 @@ create database expenses ;
 create role expenses with password 'expenses' ;
 grant all privileges on database expenses to expenses ;
 
-
-
 CREATE TABLE public.MANAGED_FILE (
                 MANAGED_FILE_ID BIGINT NOT NULL,
                 EXTENSION VARCHAR(10) NOT NULL,

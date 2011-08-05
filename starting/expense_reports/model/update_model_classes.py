@@ -3,7 +3,7 @@ import os , sys  , re, glob , csv ,fnmatch
 
 def predicate(fn):
     piecesOfPardir=fn.split(os.path.sep)
-    return 'quietriot' in piecesOfPardir and 'model' in piecesOfPardir    
+    return 'expenses' in piecesOfPardir and 'model' in piecesOfPardir
 
 def write(fn, c) :
     fp = open( fn ,'w')
@@ -43,13 +43,13 @@ def fixId(fn) :
      @javax.persistence.Version   public java.lang.Long getVersion() { return version; }
     public void setVersion(java.lang.Long value) { this.version = value; }
     """
+
     contentOfFile = re.sub(r'package(.*?);',r'package  \1 ;import java.util.*;import javax.persistence.*;',contentOfFile)
-    contentOfFile = re.sub(r'public Set<(.*?)>', r' @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE) public Set<\1> ', contentOfFile)
-    contentOfFile = re.sub(r'public class (.*?)',r'@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE) public class \1' ,contentOfFile) 
-    contentOfFile = re.sub('int\\s*?id','Integer id',  contentOfFile) 
+    contentOfFile = re.sub('int\\s*?id','Integer id',  contentOfFile)
     contentOfFile = re.sub( 'public int getId' ,'public Integer getId' ,contentOfFile)
     contentOfFile = re.sub('\\s+?', ' ',contentOfFile)
-    contentOfFile = re.sub( '@Id.*?@Column' , '@Id    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO) @Column', contentOfFile)    
+    contentOfFile = re.sub( '@Id.*?@Column' , '@Id    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO) @Column', contentOfFile)
+    contentOfFile = re.sub('@Entity' , '@Entity @EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class) ', contentOfFile )
     if contentOfFile.find('dateModified') < 0 and contentOfFile.find('dateCreated') < 0 : 
         contentOfFile = re.sub( '@Id', '%s %s'%( versionJava, '@Id'), contentOfFile)
     write(fn, contentOfFile)

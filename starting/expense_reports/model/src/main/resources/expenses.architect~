@@ -90,251 +90,509 @@
    </relationships>
   </database>
   <database id="DB18" populated="true" UUID="1c81de58-bce7-4bff-aa00-e71821512a14" dbcs-ref="DS0" name="postgresql" physicalName="postgresql" >
-   <catalog id="CAT19" populated="false" UUID="1bf19823-3c02-46ba-bd48-9ac6419fb67b" name="expenses" nativeTerm="database" physicalName="expenses" >
+   <catalog id="CAT19" populated="true" UUID="1bf19823-3c02-46ba-bd48-9ac6419fb67b" name="expenses" nativeTerm="database" physicalName="expenses" >
+    <schema id="SCH20" populated="true" UUID="c83dd553-2c93-4592-a818-d20b26390153" name="information_schema" nativeTerm="schema" physicalName="information_schema" >
+    </schema>
+    <schema id="SCH21" populated="true" UUID="724c0743-4f3a-4949-b3aa-b366bb46df0a" name="pg_catalog" nativeTerm="schema" physicalName="pg_catalog" >
+    </schema>
+    <schema id="SCH22" populated="true" UUID="c9aa99ae-ae32-4452-ae9f-409c7352028a" name="pg_toast_temp_1" nativeTerm="schema" physicalName="pg_toast_temp_1" >
+    </schema>
+    <schema id="SCH23" populated="true" UUID="2a08934a-ac5e-4d6b-8461-829bc8c5eb2e" name="public" nativeTerm="schema" physicalName="public" >
+     <table id="TAB24" populated="true" UUID="40d7e1d0-8cf2-47fb-80f0-89b2fedb1579" name="attachment" objectType="TABLE" physicalName="attachment" >
+      <remarks></remarks>
+      <folder id="FOLTAB241" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL25" populated="true" UUID="394d89ef-2c09-497d-a308-f1856e87942b" autoIncrement="false" name="attachment_id" nullable="0" physicalName="attachment_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL26" populated="true" UUID="88fac137-bb4c-4e6b-b273-a00af3f4f257" autoIncrement="false" name="expense_report_line_id" nullable="0" physicalName="expense_report_line_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL27" populated="true" UUID="d7a5c411-56da-4e97-893f-f4502b5bea50" autoIncrement="false" name="managed_file_id" nullable="0" physicalName="managed_file_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB243" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB242" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB244" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX28" populated="true" UUID="e77e4d0d-230c-4b1d-b95f-c71759c3b297" clustered="false" index-type="BTREE" name="attachment_id" physicalName="attachment_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC29" populated="true" UUID="864e8672-bc78-4918-a502-ca2172854c67" ascendingOrDescending="UNSPECIFIED" column-ref="COL25" name="attachment_id" physicalName="attachment_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB30" populated="true" UUID="f5b7c9fc-0d94-486a-af29-fd9c8440899e" name="charge" objectType="TABLE" physicalName="charge" >
+      <remarks>a single charge, as imported from a credit card source. It belongs to a charge_batch, but it will be accounted for in an expense_report.</remarks>
+      <folder id="FOLTAB301" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL31" populated="true" UUID="bcd1a3fc-7f18-4f32-83e5-99ffebf266e9" autoIncrement="false" name="charge_id" nullable="0" physicalName="charge_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL32" populated="true" UUID="2ed4aaf0-d09f-4247-b622-6932192921f3" autoIncrement="false" name="charge_batch_id" nullable="0" physicalName="charge_batch_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL33" populated="true" UUID="e5f192a5-ffbb-4e69-8a25-93a36bec06a0" autoIncrement="false" name="charge_amount" nullable="0" physicalName="charge_amount" precision="308" referenceCount="1" scale="17" sourceDataTypeName="float8" type="8" >
+        <remarks></remarks>
+       </column>
+       <column id="COL34" populated="true" UUID="d13ce6db-02c9-47c6-bc13-6ee13425c5b7" autoIncrement="false" name="description" nullable="0" physicalName="description" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB303" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB302" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB304" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX35" populated="true" UUID="eb271df6-d8ae-4db1-883f-e01c2a4fde4d" clustered="false" index-type="BTREE" name="charge_id" physicalName="charge_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC36" populated="true" UUID="c822a625-c7cf-4a91-b502-6f31ce1b0656" ascendingOrDescending="UNSPECIFIED" column-ref="COL31" name="charge_id" physicalName="charge_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB37" populated="true" UUID="2d437d99-fca2-4fd1-9427-a08e80e410e6" name="charge_batch" objectType="TABLE" physicalName="charge_batch" >
+      <remarks>the batch of new charges as imported from a credit card source. this is simply the unit to describe imported charges.</remarks>
+      <folder id="FOLTAB371" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL38" populated="true" UUID="c156ccdb-9900-4c39-bdbd-6535c5f6ab36" autoIncrement="false" name="charge_batch_id" nullable="0" physicalName="charge_batch_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL39" populated="true" UUID="c9c866ea-9c96-471b-a4d8-05cd5ebfb971" autoIncrement="false" name="import_time" nullable="0" physicalName="import_time" precision="29" referenceCount="1" scale="6" sourceDataTypeName="timestamp" type="93" >
+        <remarks></remarks>
+       </column>
+       <column id="COL40" populated="true" UUID="ff94f3b1-f454-4dfb-88f9-6a71fcb01285" autoIncrement="false" name="expense_holder_id" nullable="0" physicalName="expense_holder_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB373" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB372" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB374" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX41" populated="true" UUID="f9a88058-dd2b-47a0-ba23-6ac8fdab320e" clustered="false" index-type="BTREE" name="charge_batch_id" physicalName="charge_batch_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC42" populated="true" UUID="e79cdf0c-7b2c-4485-936d-45ecfe6d8799" ascendingOrDescending="UNSPECIFIED" column-ref="COL38" name="charge_batch_id" physicalName="charge_batch_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB43" populated="true" UUID="74a9946f-9b84-4722-b073-1af0b5fa28fb" name="credit_card" objectType="TABLE" physicalName="credit_card" >
+      <remarks></remarks>
+      <folder id="FOLTAB431" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL44" populated="true" UUID="cee2689a-1584-4a8d-9661-729e515a0a12" autoIncrement="false" name="credit_card_id" nullable="0" physicalName="credit_card_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL45" populated="true" UUID="de72c903-251e-4284-abaa-b06f2c40d965" autoIncrement="false" name="expense_holder_id" nullable="0" physicalName="expense_holder_id" precision="20" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB433" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB432" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB434" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX46" populated="true" UUID="a5c91a2a-d43e-41eb-8fbd-29856c12ec15" clustered="false" index-type="BTREE" name="credit_card_id" physicalName="credit_card_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC47" populated="true" UUID="75fdee8b-f2a8-49d7-bc7c-3678de5e1445" ascendingOrDescending="UNSPECIFIED" column-ref="COL44" name="credit_card_id" physicalName="credit_card_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB48" populated="true" UUID="da53e62e-c934-4e0f-9292-f11c22872e9b" name="expense_holder" objectType="TABLE" physicalName="expense_holder" >
+      <remarks></remarks>
+      <folder id="FOLTAB481" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL49" populated="true" UUID="118da2b1-3e79-44c1-b710-2267840c4add" autoIncrement="false" name="expense_holder_id" nullable="0" physicalName="expense_holder_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL50" populated="true" UUID="d2587252-e1fa-4e1b-9539-6dc4941b5d41" autoIncrement="false" name="authorizing_expense_holder_id" nullable="0" physicalName="authorizing_expense_holder_id" precision="20" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL51" populated="true" UUID="bd668645-d226-4ba4-b634-933c675d531d" autoIncrement="false" name="first_name" nullable="0" physicalName="first_name" precision="255" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL52" populated="true" UUID="0152eba4-fcb3-4364-a73b-aef58b774838" autoIncrement="false" name="last_name" nullable="0" physicalName="last_name" precision="255" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL53" populated="true" UUID="81123441-8976-4727-84cf-0c18d9a98450" autoIncrement="false" name="email" nullable="0" physicalName="email" precision="255" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB483" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB482" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB484" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX54" populated="true" UUID="11805620-3c00-4c60-825b-21cb87cfd8af" clustered="false" index-type="BTREE" name="expense_holder_id" physicalName="expense_holder_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC55" populated="true" UUID="3ad2590f-5206-4c4f-bbcc-11e8d41df624" ascendingOrDescending="UNSPECIFIED" column-ref="COL49" name="expense_holder_id" physicalName="expense_holder_id" />
+       </index>
+       <index id="IDX56" populated="true" UUID="b3801fcb-f05a-464b-b15e-b4d30872bfef" clustered="false" index-type="BTREE" name="primary_key_3" physicalName="primary_key_3" primaryKeyIndex="false" unique="true" >
+        <index-column id="IDC57" populated="true" UUID="25001815-181a-484d-aa39-c15454d3b744" ascendingOrDescending="UNSPECIFIED" column-ref="COL49" name="expense_holder_id" physicalName="expense_holder_id" />
+       </index>
+       <index id="IDX58" populated="true" UUID="78fcae33-366c-4616-8263-6594eb79d2ad" clustered="false" index-type="BTREE" name="constraint_3_index_3" physicalName="constraint_3_index_3" primaryKeyIndex="false" unique="false" >
+        <index-column id="IDC59" populated="true" UUID="80f4d809-fc23-44c5-957e-e3febb582b69" ascendingOrDescending="UNSPECIFIED" column-ref="COL50" name="authorizing_expense_holder_id" physicalName="authorizing_expense_holder_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB60" populated="true" UUID="cff9a071-618c-4e14-867d-b3ccb7f8b1e0" name="expense_report" objectType="TABLE" physicalName="expense_report" >
+      <remarks></remarks>
+      <folder id="FOLTAB601" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL61" populated="true" UUID="0cd30cca-f486-4965-9192-de637e010c30" autoIncrement="false" name="expense_report_id" nullable="0" physicalName="expense_report_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL62" populated="true" UUID="b52847d0-d60b-4fb7-af7c-2729c1733116" autoIncrement="false" name="expense_holder_id" nullable="0" physicalName="expense_holder_id" precision="20" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB603" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB602" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB604" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX63" populated="true" UUID="a7868463-2ec3-4e2d-8dd2-afdb7abf4fbd" clustered="false" index-type="BTREE" name="expense_report_id" physicalName="expense_report_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC64" populated="true" UUID="eaae6f97-b1bc-470a-8684-98db3971cd04" ascendingOrDescending="UNSPECIFIED" column-ref="COL61" name="expense_report_id" physicalName="expense_report_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB65" populated="true" UUID="b0364e84-eccb-4914-86f9-e97b053a68a2" name="expense_report_line" objectType="TABLE" physicalName="expense_report_line" >
+      <remarks>Represents individual lines on an expense report. Ties together uploaded attachments (e.g., scanned-in, or photographed, receipts ) and individual charges.</remarks>
+      <folder id="FOLTAB651" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL66" populated="true" UUID="5cc7a263-9897-4ce5-a79b-6f14c51a50f7" autoIncrement="false" name="expense_report_line_id" nullable="0" physicalName="expense_report_line_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL67" populated="true" UUID="bc7849c3-d802-4370-b3af-8b0f45979e1f" autoIncrement="false" name="personal_expense" nullable="0" physicalName="personal_expense" precision="1" referenceCount="1" scale="0" sourceDataTypeName="bool" type="16" >
+        <remarks></remarks>
+       </column>
+       <column id="COL68" populated="true" UUID="85c9b7f3-ce7c-4e96-aabe-350f0d4b09ff" autoIncrement="false" name="justification" nullable="0" physicalName="justification" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL69" populated="true" UUID="cbbeb7b6-5b5b-441e-873e-ed6b33d7d3c0" autoIncrement="false" name="expense_report_id" nullable="0" physicalName="expense_report_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL70" populated="true" UUID="73f13981-c7b1-462a-9b5d-0013585fcebb" autoIncrement="false" name="charge_id" nullable="0" physicalName="charge_id" precision="20" referenceCount="3" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB653" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB652" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB654" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX71" populated="true" UUID="08b3651d-e448-4c31-bc1f-ae66599b7a5a" clustered="false" index-type="BTREE" name="expense_report_line_id" physicalName="expense_report_line_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC72" populated="true" UUID="cdcdccee-0242-4a99-b512-5388b4e1ae54" ascendingOrDescending="UNSPECIFIED" column-ref="COL66" name="expense_report_line_id" physicalName="expense_report_line_id" />
+       </index>
+      </folder>
+     </table>
+     <table id="TAB73" populated="true" UUID="daf0f34a-d602-4136-9097-a7061e2170ae" name="managed_file" objectType="TABLE" physicalName="managed_file" >
+      <remarks></remarks>
+      <folder id="FOLTAB731" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL74" populated="true" UUID="7ba59361-b6cb-4ce0-a487-de84674b5bb6" autoIncrement="false" name="managed_file_id" nullable="0" physicalName="managed_file_id" precision="20" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="int8" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL75" populated="true" UUID="4c4cb930-a81f-4f00-8c11-1d1a525b6d96" autoIncrement="false" name="extension" nullable="0" physicalName="extension" precision="10" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL76" populated="true" UUID="90d10ac0-4b70-4f95-b04a-feae1b829531" autoIncrement="false" name="byte_size" nullable="0" physicalName="byte_size" precision="308" referenceCount="1" scale="17" sourceDataTypeName="float8" type="8" >
+        <remarks></remarks>
+       </column>
+       <column id="COL77" populated="true" UUID="e38de2d1-bf7d-44c7-9bc3-7f1bf1073b12" autoIncrement="false" name="original_file_name" nullable="0" physicalName="original_file_name" precision="255" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL78" populated="true" UUID="29fcedc6-4970-4b0f-90fb-de269d1ef45d" autoIncrement="false" name="ready" nullable="0" physicalName="ready" precision="1" referenceCount="1" scale="0" sourceDataTypeName="bool" type="16" >
+        <remarks></remarks>
+       </column>
+       <column id="COL79" populated="true" UUID="7c8154f9-592e-415d-95cc-0063e20f3fb0" autoIncrement="false" name="mount_prefix" nullable="0" physicalName="mount_prefix" precision="10" referenceCount="1" scale="0" sourceDataTypeName="varchar" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL80" populated="true" UUID="b909d56a-332f-4345-b284-7de0a2696b12" autoIncrement="false" name="priority" nullable="0" physicalName="priority" precision="10" referenceCount="1" scale="0" sourceDataTypeName="int4" type="4" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB733" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB732" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB734" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX81" populated="true" UUID="99a3b506-3f0c-48e0-9ae9-a56abd9c63c4" clustered="false" index-type="BTREE" name="managed_file_id" physicalName="managed_file_id" primaryKeyIndex="true" unique="true" >
+        <index-column id="IDC82" populated="true" UUID="4c72bb5f-8648-40da-b05f-acfd9c288acb" ascendingOrDescending="UNSPECIFIED" column-ref="COL74" name="managed_file_id" physicalName="managed_file_id" />
+       </index>
+      </folder>
+     </table>
+    </schema>
    </catalog>
    <relationships>
+    <relationship id="REL83" populated="true" UUID="ea52f4ff-35b9-40b0-bbbc-ac67f197e3c2" deferrability="7" deleteRule="3" fk-table-ref="TAB65" fkCardinality="7" identifying="false" name="charge_expense_report_line_fk" physicalName="charge_expense_report_line_fk" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP84" populated="true" UUID="a1635348-45b9-41da-b4c5-25c28cf998e2" fk-column-ref="COL70" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
+    </relationship>
+    <relationship id="REL85" populated="true" UUID="9c536bc9-cb64-48fe-abdf-99e82e9b7cee" deferrability="7" deleteRule="3" fk-table-ref="TAB65" fkCardinality="7" identifying="false" name="fk8a4996b867c2a09" physicalName="fk8a4996b867c2a09" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP86" populated="true" UUID="2bda0f75-49d0-44ab-921b-e389e1cae6a6" fk-column-ref="COL70" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
+    </relationship>
+    <relationship id="REL87" populated="true" UUID="0c13e2ec-0b9d-45d1-aff5-b31f54bc8e33" deferrability="7" deleteRule="3" fk-table-ref="TAB30" fkCardinality="7" identifying="false" name="charge_charge_batch_fk" physicalName="charge_charge_batch_fk" pk-table-ref="TAB37" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP88" populated="true" UUID="d3169600-7e72-4383-85fe-4073342157e5" fk-column-ref="COL32" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL38" />
+    </relationship>
+    <relationship id="REL89" populated="true" UUID="9c61ddc8-ed81-464d-96fe-bc1526f67b38" deferrability="7" deleteRule="3" fk-table-ref="TAB30" fkCardinality="7" identifying="false" name="fkaed722b475814ae2" physicalName="fkaed722b475814ae2" pk-table-ref="TAB37" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP90" populated="true" UUID="1d66bb2a-c34a-4e2e-a183-d317228cb5a6" fk-column-ref="COL32" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL38" />
+    </relationship>
+    <relationship id="REL91" populated="true" UUID="f6251bf7-706f-407c-b712-b3df06aca9d6" deferrability="7" deleteRule="3" fk-table-ref="TAB37" fkCardinality="7" identifying="false" name="fk5f0685ef84d06ddc" physicalName="fk5f0685ef84d06ddc" pk-table-ref="TAB48" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP92" populated="true" UUID="f8bf65ee-85f8-40ce-b9f1-c3f897261739" fk-column-ref="COL40" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL49" />
+    </relationship>
+    <relationship id="REL93" populated="true" UUID="2809a50b-da80-4128-881d-e01aa6189b57" deferrability="7" deleteRule="3" fk-table-ref="TAB37" fkCardinality="7" identifying="false" name="charge_batch_account_holder_fk" physicalName="charge_batch_account_holder_fk" pk-table-ref="TAB48" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP94" populated="true" UUID="df163d17-a8fc-4bb2-b65b-1fbe31119449" fk-column-ref="COL40" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL49" />
+    </relationship>
+    <relationship id="REL95" populated="true" UUID="c97af8f3-3ca5-4886-b414-414cbf5705dd" deferrability="7" deleteRule="3" fk-table-ref="TAB65" fkCardinality="7" identifying="false" name="expense_report_expense_report_line_fk" physicalName="expense_report_expense_report_line_fk" pk-table-ref="TAB60" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP96" populated="true" UUID="5760d644-7536-4893-8624-554c98751bd5" fk-column-ref="COL69" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL61" />
+    </relationship>
+    <relationship id="REL97" populated="true" UUID="3f38fca8-4e5a-48c1-abe8-bc1e08a6d5cf" deferrability="7" deleteRule="3" fk-table-ref="TAB65" fkCardinality="7" identifying="false" name="fk8a4996b8384ce0dc" physicalName="fk8a4996b8384ce0dc" pk-table-ref="TAB60" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP98" populated="true" UUID="004752cd-570c-4ea6-ac3c-36ce3f930856" fk-column-ref="COL69" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL61" />
+    </relationship>
+    <relationship id="REL99" populated="true" UUID="f430d02b-dcdf-4536-bc72-107dff386802" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="7" identifying="false" name="attachment_expense_report_line_fk" physicalName="attachment_expense_report_line_fk" pk-table-ref="TAB65" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP100" populated="true" UUID="49515737-b08b-4b10-951c-4f3a8e1e8165" fk-column-ref="COL26" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL66" />
+    </relationship>
+    <relationship id="REL101" populated="true" UUID="151cb29f-7edd-4954-b11c-de20fd722b97" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="7" identifying="false" name="fk8af759232412a993" physicalName="fk8af759232412a993" pk-table-ref="TAB65" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP102" populated="true" UUID="c89e00cc-96dc-44c0-8a13-249918cb4b63" fk-column-ref="COL26" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL66" />
+    </relationship>
+    <relationship id="REL103" populated="true" UUID="f2a184d3-8acd-4f51-8dad-a793a23db85d" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="7" identifying="false" name="managed_file_attachment_fk" physicalName="managed_file_attachment_fk" pk-table-ref="TAB73" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP104" populated="true" UUID="35a50428-eff3-4d79-b3bc-a86fa5d9e77e" fk-column-ref="COL27" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL74" />
+    </relationship>
+    <relationship id="REL105" populated="true" UUID="b1860d93-2b8f-44b3-953e-9bed83335e93" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="7" identifying="false" name="fk8af75923cf0d786a" physicalName="fk8af75923cf0d786a" pk-table-ref="TAB73" pkCardinality="2" updateRule="3" >
+     <column-mapping id="CMP106" populated="true" UUID="584a0dad-29d5-4d50-acd7-ff363737a5fd" fk-column-ref="COL27" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL74" />
+    </relationship>
    </relationships>
   </database>
  </source-databases>
  <target-database id="ppdb" dbcs-ref="DS0">
-  <table id="TAB21" populated="true" UUID="895bb57f-d5aa-4760-8ac2-4318a17ac006" name="EXPENSE_HOLDER" objectType="TABLE" physicalName="EXPENSE_HOLDER" >
+  <table id="TAB108" populated="true" UUID="895bb57f-d5aa-4760-8ac2-4318a17ac006" name="EXPENSE_HOLDER" objectType="TABLE" physicalName="EXPENSE_HOLDER" >
    <remarks></remarks>
-   <folder id="FOLTAB211" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL22" populated="true" UUID="199a5966-06a5-48b2-9fc7-fd1e50019e31" autoIncrement="false" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL5" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1081" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL109" populated="true" UUID="199a5966-06a5-48b2-9fc7-fd1e50019e31" autoIncrement="false" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL5" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL23" populated="true" UUID="b75e4f34-7d73-4a90-9f52-b90174decfce" autoIncrement="false" defaultValue="" name="AUTHORIZING_EXPENSE_HOLDER_ID" nullable="0" physicalName="AUTHORIZING_EXPENSE_HOLDER_ID" precision="0" referenceCount="2" scale="0" source-column-ref="COL6" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL110" populated="true" UUID="b75e4f34-7d73-4a90-9f52-b90174decfce" autoIncrement="false" defaultValue="" name="AUTHORIZING_EXPENSE_HOLDER_ID" nullable="1" physicalName="AUTHORIZING_EXPENSE_HOLDER_ID" precision="0" referenceCount="2" scale="0" source-column-ref="COL6" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL24" populated="true" UUID="27514121-8386-473d-9a44-762bffe5fb85" autoIncrement="false" defaultValue="" name="FIRST_NAME" nullable="0" physicalName="FIRST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL7" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL111" populated="true" UUID="27514121-8386-473d-9a44-762bffe5fb85" autoIncrement="false" defaultValue="" name="FIRST_NAME" nullable="0" physicalName="FIRST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL7" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL25" populated="true" UUID="b0dafd9b-4570-463e-8d8d-277f78320229" autoIncrement="false" defaultValue="" name="LAST_NAME" nullable="0" physicalName="LAST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL8" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL112" populated="true" UUID="b0dafd9b-4570-463e-8d8d-277f78320229" autoIncrement="false" defaultValue="" name="LAST_NAME" nullable="0" physicalName="LAST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL8" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL26" populated="true" UUID="16177f33-667f-465e-8ecd-9366f3b51a34" autoIncrement="false" defaultValue="" name="EMAIL" nullable="0" physicalName="EMAIL" precision="255" referenceCount="1" scale="0" source-column-ref="COL9" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL113" populated="true" UUID="16177f33-667f-465e-8ecd-9366f3b51a34" autoIncrement="false" defaultValue="" name="EMAIL" nullable="0" physicalName="EMAIL" precision="255" referenceCount="1" scale="0" source-column-ref="COL9" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL114" populated="true" UUID="124ac088-5069-40ad-b4f4-d0dab40c23d6" autoIncrement="false" autoIncrementSequenceName="EXPENSE_HOLDER_PASSWORD_seq" defaultValue="" name="PASSWORD" nullable="0" physicalName="PASSWORD" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB213" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1083" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB212" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1082" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB214" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX27" populated="true" UUID="6fb675f5-fa33-452d-9a04-cc06d44d2833" clustered="false" name="EXPENSE_HOLDER_ID" physicalName="account_holder_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC28" populated="true" UUID="f985a9a1-233a-4f39-9582-ea86d9cf6b0d" ascendingOrDescending="UNSPECIFIED" column-ref="COL22" name="EXPENSE_HOLDER_ID" physicalName="EXPENSE_HOLDER_ID" />
+    <folder id="FOLTAB1084" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX115" populated="true" UUID="6fb675f5-fa33-452d-9a04-cc06d44d2833" clustered="false" name="EXPENSE_HOLDER_ID" physicalName="expense_holder_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC116" populated="true" UUID="f985a9a1-233a-4f39-9582-ea86d9cf6b0d" ascendingOrDescending="UNSPECIFIED" column-ref="COL109" name="EXPENSE_HOLDER_ID" physicalName="EXPENSE_HOLDER_ID" />
     </index>
-    <index id="IDX29" populated="true" UUID="e1c100aa-295c-416a-9db0-8cda8ff7312a" clustered="false" filterCondition="" name="PRIMARY_KEY_3" physicalName="primary_key_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="true" >
-     <index-column id="IDC30" populated="true" UUID="5b132a63-16a0-4668-833e-23760b1c9043" ascendingOrDescending="ASCENDING" column-ref="COL22" name="EXPENSE_HOLDER_ID" physicalName="EXPENSE_HOLDER_ID" />
+    <index id="IDX117" populated="true" UUID="e1c100aa-295c-416a-9db0-8cda8ff7312a" clustered="false" filterCondition="" name="PRIMARY_KEY_3" physicalName="primary_key_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="true" >
+     <index-column id="IDC118" populated="true" UUID="5b132a63-16a0-4668-833e-23760b1c9043" ascendingOrDescending="ASCENDING" column-ref="COL109" name="EXPENSE_HOLDER_ID" physicalName="EXPENSE_HOLDER_ID" />
     </index>
-    <index id="IDX31" populated="true" UUID="7b895055-d673-4f61-a0fd-b6a1c3b8ca18" clustered="false" filterCondition="" name="CONSTRAINT_3_INDEX_3" physicalName="constraint_3_index_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="false" >
-     <index-column id="IDC32" populated="true" UUID="03a40145-faec-4d72-98f3-2f01aac569d0" ascendingOrDescending="ASCENDING" column-ref="COL23" name="AUTHORIZING_EXPENSE_HOLDER_ID" physicalName="AUTHORIZING_EXPENSE_HOLDER_ID" />
+    <index id="IDX119" populated="true" UUID="7b895055-d673-4f61-a0fd-b6a1c3b8ca18" clustered="false" filterCondition="" name="CONSTRAINT_3_INDEX_3" physicalName="constraint_3_index_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="false" >
+     <index-column id="IDC120" populated="true" UUID="03a40145-faec-4d72-98f3-2f01aac569d0" ascendingOrDescending="ASCENDING" column-ref="COL110" name="AUTHORIZING_EXPENSE_HOLDER_ID" physicalName="AUTHORIZING_EXPENSE_HOLDER_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB33" populated="true" UUID="4d5b08d8-3080-4a61-8674-6aae7e5fdef0" name="CHARGE" objectType="TABLE" physicalName="CHARGE" >
+  <table id="TAB121" populated="true" UUID="4d5b08d8-3080-4a61-8674-6aae7e5fdef0" name="CHARGE" objectType="TABLE" physicalName="CHARGE" >
    <remarks>a single charge, as imported from a credit card source. It belongs to a charge_batch, but it will be accounted for in an expense_report.</remarks>
-   <folder id="FOLTAB331" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL34" populated="true" UUID="eb164a03-24c4-4edf-bbe5-260dea8462b5" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_ID_seq" defaultValue="" name="CHARGE_ID" nullable="0" physicalName="CHARGE_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1211" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL122" populated="true" UUID="eb164a03-24c4-4edf-bbe5-260dea8462b5" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_ID_seq" defaultValue="" name="CHARGE_ID" nullable="0" physicalName="CHARGE_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL35" populated="true" UUID="b6cd3caf-6a87-40f5-b3e3-a5be467bd00c" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL123" populated="true" UUID="b6cd3caf-6a87-40f5-b3e3-a5be467bd00c" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL36" populated="true" UUID="d4a5c863-ce8d-4a20-9354-72d9ddb36d8f" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_AMOUNT_seq" defaultValue="" name="CHARGE_AMOUNT" nullable="0" physicalName="CHARGE_AMOUNT" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
+    <column id="COL124" populated="true" UUID="d4a5c863-ce8d-4a20-9354-72d9ddb36d8f" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_AMOUNT_seq" defaultValue="" name="CHARGE_AMOUNT" nullable="0" physicalName="CHARGE_AMOUNT" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
      <remarks></remarks>
     </column>
-    <column id="COL37" populated="true" UUID="f7a1ecd9-c0dd-4a7b-8035-dbbb2c392548" autoIncrement="false" autoIncrementSequenceName="CHARGE_DESCRIPTION_seq" defaultValue="" name="DESCRIPTION" nullable="0" physicalName="DESCRIPTION" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL125" populated="true" UUID="f7a1ecd9-c0dd-4a7b-8035-dbbb2c392548" autoIncrement="false" autoIncrementSequenceName="CHARGE_DESCRIPTION_seq" defaultValue="" name="DESCRIPTION" nullable="0" physicalName="DESCRIPTION" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB333" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1213" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB332" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1212" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB334" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX38" populated="true" UUID="a71aeacd-31d8-455e-a91e-a88474d23a27" clustered="false" name="CHARGE_ID" physicalName="charge_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC39" populated="true" UUID="8a43c738-66a9-49fa-84f3-f86ca282ea12" ascendingOrDescending="UNSPECIFIED" column-ref="COL34" name="CHARGE_ID" physicalName="CHARGE_ID" />
+    <folder id="FOLTAB1214" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX126" populated="true" UUID="a71aeacd-31d8-455e-a91e-a88474d23a27" clustered="false" name="CHARGE_ID" physicalName="charge_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC127" populated="true" UUID="8a43c738-66a9-49fa-84f3-f86ca282ea12" ascendingOrDescending="UNSPECIFIED" column-ref="COL122" name="CHARGE_ID" physicalName="CHARGE_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB40" populated="true" UUID="0d4b7b67-3983-4a9b-9533-aca666981182" name="CREDIT_CARD" objectType="TABLE" physicalName="CREDIT_CARD" >
+  <table id="TAB128" populated="true" UUID="0d4b7b67-3983-4a9b-9533-aca666981182" name="CREDIT_CARD" objectType="TABLE" physicalName="CREDIT_CARD" >
    <remarks></remarks>
-   <folder id="FOLTAB401" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL41" populated="true" UUID="60ab69f5-873e-422c-915d-0e2fb06f904a" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_CREDIT_CARD_ID_seq" defaultValue="" name="CREDIT_CARD_ID" nullable="0" physicalName="CREDIT_CARD_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1281" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL129" populated="true" UUID="60ab69f5-873e-422c-915d-0e2fb06f904a" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_CREDIT_CARD_ID_seq" defaultValue="" name="CREDIT_CARD_ID" nullable="0" physicalName="CREDIT_CARD_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL42" populated="true" UUID="53f3e29a-4b08-4633-bc7f-5ee6c0d58673" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL130" populated="true" UUID="53f3e29a-4b08-4633-bc7f-5ee6c0d58673" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB403" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1283" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB402" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1282" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB404" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX43" populated="true" UUID="49697bd4-ec4d-48d8-a43f-cd9a875599c9" clustered="false" name="CREDIT_CARD_ID" physicalName="credit_card_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC44" populated="true" UUID="5e33983a-2e2e-476f-b583-6740dfa7c15a" ascendingOrDescending="UNSPECIFIED" column-ref="COL41" name="CREDIT_CARD_ID" physicalName="CREDIT_CARD_ID" />
+    <folder id="FOLTAB1284" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX131" populated="true" UUID="49697bd4-ec4d-48d8-a43f-cd9a875599c9" clustered="false" name="CREDIT_CARD_ID" physicalName="credit_card_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC132" populated="true" UUID="5e33983a-2e2e-476f-b583-6740dfa7c15a" ascendingOrDescending="UNSPECIFIED" column-ref="COL129" name="CREDIT_CARD_ID" physicalName="CREDIT_CARD_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB45" populated="true" UUID="76d76801-e4b5-4601-ab0a-75d407363570" name="CHARGE_BATCH" objectType="TABLE" physicalName="CHARGE_BATCH" >
+  <table id="TAB133" populated="true" UUID="76d76801-e4b5-4601-ab0a-75d407363570" name="CHARGE_BATCH" objectType="TABLE" physicalName="CHARGE_BATCH" >
    <remarks>the batch of new charges as imported from a credit card source. this is simply the unit to describe imported charges.</remarks>
-   <folder id="FOLTAB451" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL46" populated="true" UUID="6a26d71f-590f-4231-8081-1f957854becd" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1331" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL134" populated="true" UUID="6a26d71f-590f-4231-8081-1f957854becd" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL47" populated="true" UUID="3b152623-46e6-4aa6-8a22-afb2debb4b54" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_IMPORT_TIME_seq" defaultValue="" name="IMPORT_TIME" nullable="0" physicalName="IMPORT_TIME" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
+    <column id="COL135" populated="true" UUID="3b152623-46e6-4aa6-8a22-afb2debb4b54" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_IMPORT_TIME_seq" defaultValue="" name="IMPORT_TIME" nullable="0" physicalName="IMPORT_TIME" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
      <remarks></remarks>
     </column>
-    <column id="COL48" populated="true" UUID="ead7f752-dd7d-4930-9135-b446f324dd5d" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL136" populated="true" UUID="ead7f752-dd7d-4930-9135-b446f324dd5d" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB453" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1333" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB452" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1332" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB454" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX49" populated="true" UUID="494278c0-9443-4eac-80a5-ffde1bfff39b" clustered="false" name="CHARGE_BATCH_ID" physicalName="charge_batch_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC50" populated="true" UUID="f5606182-230d-407c-b623-52b94bc13f88" ascendingOrDescending="UNSPECIFIED" column-ref="COL46" name="CHARGE_BATCH_ID" physicalName="CHARGE_BATCH_ID" />
+    <folder id="FOLTAB1334" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX137" populated="true" UUID="494278c0-9443-4eac-80a5-ffde1bfff39b" clustered="false" name="CHARGE_BATCH_ID" physicalName="charge_batch_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC138" populated="true" UUID="f5606182-230d-407c-b623-52b94bc13f88" ascendingOrDescending="UNSPECIFIED" column-ref="COL134" name="CHARGE_BATCH_ID" physicalName="CHARGE_BATCH_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB51" populated="true" UUID="ad8b5d9c-ed1a-4cc0-93da-f0c4561709a9" name="EXPENSE_REPORT" objectType="TABLE" physicalName="EXPENSE_REPORT" >
+  <table id="TAB139" populated="true" UUID="ad8b5d9c-ed1a-4cc0-93da-f0c4561709a9" name="EXPENSE_REPORT" objectType="TABLE" physicalName="EXPENSE_REPORT" >
    <remarks></remarks>
-   <folder id="FOLTAB511" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL52" populated="true" UUID="49c079fd-5727-4870-a0bc-eecdc0738d9c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_EXPENSE_REPORT_ID_seq" defaultValue="" name="EXPENSE_REPORT_ID" nullable="0" physicalName="EXPENSE_REPORT_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1391" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL140" populated="true" UUID="49c079fd-5727-4870-a0bc-eecdc0738d9c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_EXPENSE_REPORT_ID_seq" defaultValue="" name="EXPENSE_REPORT_ID" nullable="0" physicalName="EXPENSE_REPORT_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL53" populated="true" UUID="2f97364c-1ca3-4b3b-97a9-4509872289d6" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL141" populated="true" UUID="2f97364c-1ca3-4b3b-97a9-4509872289d6" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="EXPENSE_HOLDER_ID" nullable="0" physicalName="EXPENSE_HOLDER_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB513" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1393" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB512" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1392" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB514" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX54" populated="true" UUID="49056f88-b677-44e5-bfd5-525f036dbc1c" clustered="false" name="EXPENSE_REPORT_ID" physicalName="expense_report_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC55" populated="true" UUID="0346870e-3e6d-4b67-b74f-8f924643cdf7" ascendingOrDescending="UNSPECIFIED" column-ref="COL52" name="EXPENSE_REPORT_ID" physicalName="EXPENSE_REPORT_ID" />
+    <folder id="FOLTAB1394" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX142" populated="true" UUID="49056f88-b677-44e5-bfd5-525f036dbc1c" clustered="false" name="EXPENSE_REPORT_ID" physicalName="expense_report_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC143" populated="true" UUID="0346870e-3e6d-4b67-b74f-8f924643cdf7" ascendingOrDescending="UNSPECIFIED" column-ref="COL140" name="EXPENSE_REPORT_ID" physicalName="EXPENSE_REPORT_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB56" populated="true" UUID="cf0f5c4b-8982-4889-8049-4d372bdbd77a" name="EXPENSE_REPORT_LINE" objectType="TABLE" physicalName="EXPENSE_REPORT_LINE" >
+  <table id="TAB144" populated="true" UUID="cf0f5c4b-8982-4889-8049-4d372bdbd77a" name="EXPENSE_REPORT_LINE" objectType="TABLE" physicalName="EXPENSE_REPORT_LINE" >
    <remarks>Represents individual lines on an expense report. Ties together uploaded attachments (e.g., scanned-in, or photographed, receipts ) and individual charges.</remarks>
-   <folder id="FOLTAB561" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL57" populated="true" UUID="1f991b4d-3168-4c92-b5f8-c61d5269417c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_EXPENSE_REPORT_LINE_ID_seq" defaultValue="" name="EXPENSE_REPORT_LINE_ID" nullable="0" physicalName="EXPENSE_REPORT_LINE_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1441" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL145" populated="true" UUID="1f991b4d-3168-4c92-b5f8-c61d5269417c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_EXPENSE_REPORT_LINE_ID_seq" defaultValue="" name="EXPENSE_REPORT_LINE_ID" nullable="0" physicalName="EXPENSE_REPORT_LINE_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL58" populated="true" UUID="798dee93-0b60-4982-903d-149101978f65" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_PERSONAL_EXPENSE_seq" defaultValue="" name="PERSONAL_EXPENSE" nullable="0" physicalName="PERSONAL_EXPENSE" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+    <column id="COL146" populated="true" UUID="798dee93-0b60-4982-903d-149101978f65" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_PERSONAL_EXPENSE_seq" defaultValue="" name="PERSONAL_EXPENSE" nullable="0" physicalName="PERSONAL_EXPENSE" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
      <remarks></remarks>
     </column>
-    <column id="COL59" populated="true" UUID="65388b8c-4f8d-45ed-ac17-171f73feb74c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_JUSTIFICATION_seq" defaultValue="" name="JUSTIFICATION" nullable="0" physicalName="JUSTIFICATION" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL147" populated="true" UUID="65388b8c-4f8d-45ed-ac17-171f73feb74c" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_JUSTIFICATION_seq" defaultValue="" name="JUSTIFICATION" nullable="0" physicalName="JUSTIFICATION" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL60" populated="true" UUID="00f33073-747d-4038-bdf1-b44cb1935cc7" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_EXPENSE_REPORT_ID_seq" defaultValue="" name="EXPENSE_REPORT_ID" nullable="0" physicalName="EXPENSE_REPORT_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL148" populated="true" UUID="00f33073-747d-4038-bdf1-b44cb1935cc7" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_EXPENSE_REPORT_ID_seq" defaultValue="" name="EXPENSE_REPORT_ID" nullable="0" physicalName="EXPENSE_REPORT_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL61" populated="true" UUID="9fc510e6-d9a3-4252-adc9-1842d973de33" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_CHARGE_ID_seq" defaultValue="" name="CHARGE_ID" nullable="0" physicalName="CHARGE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL149" populated="true" UUID="9fc510e6-d9a3-4252-adc9-1842d973de33" autoIncrement="false" autoIncrementSequenceName="EXPENSE_REPORT_LINE_CHARGE_ID_seq" defaultValue="" name="CHARGE_ID" nullable="0" physicalName="CHARGE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB563" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1443" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB562" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1442" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB564" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX62" populated="true" UUID="7498938a-2f4b-46ee-ac41-bee4616e17fd" clustered="false" name="EXPENSE_REPORT_LINE_ID" physicalName="expense_report_line_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC63" populated="true" UUID="d92582ee-6bb9-45e0-8ab3-e39e29922f4c" ascendingOrDescending="UNSPECIFIED" column-ref="COL57" name="EXPENSE_REPORT_LINE_ID" physicalName="EXPENSE_REPORT_LINE_ID" />
+    <folder id="FOLTAB1444" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX150" populated="true" UUID="7498938a-2f4b-46ee-ac41-bee4616e17fd" clustered="false" name="EXPENSE_REPORT_LINE_ID" physicalName="expense_report_line_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC151" populated="true" UUID="d92582ee-6bb9-45e0-8ab3-e39e29922f4c" ascendingOrDescending="UNSPECIFIED" column-ref="COL145" name="EXPENSE_REPORT_LINE_ID" physicalName="EXPENSE_REPORT_LINE_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB64" populated="true" UUID="c4ece271-6dd0-4d4f-92ff-35a5559606db" name="MANAGED_FILE" objectType="TABLE" physicalName="MANAGED_FILE" >
+  <table id="TAB152" populated="true" UUID="c4ece271-6dd0-4d4f-92ff-35a5559606db" name="MANAGED_FILE" objectType="TABLE" physicalName="MANAGED_FILE" >
    <remarks></remarks>
-   <folder id="FOLTAB641" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL65" populated="true" UUID="1479ffb5-771a-4bb0-86ab-7b90c0eccddd" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_MANAGED_FILE_ID_seq" defaultValue="" name="MANAGED_FILE_ID" nullable="0" physicalName="MANAGED_FILE_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1521" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL153" populated="true" UUID="1479ffb5-771a-4bb0-86ab-7b90c0eccddd" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_MANAGED_FILE_ID_seq" defaultValue="" name="MANAGED_FILE_ID" nullable="0" physicalName="MANAGED_FILE_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL66" populated="true" UUID="1737eaae-0d04-42ac-8f0a-d038e145583a" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_EXTENSION_seq" defaultValue="" name="EXTENSION" nullable="0" physicalName="EXTENSION" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL154" populated="true" UUID="1737eaae-0d04-42ac-8f0a-d038e145583a" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_EXTENSION_seq" defaultValue="" name="EXTENSION" nullable="0" physicalName="EXTENSION" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL67" populated="true" UUID="a9d10142-95f9-4020-9d0f-aa9eeb21168c" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_BYTE_SIZE_seq" defaultValue="" name="BYTE_SIZE" nullable="0" physicalName="BYTE_SIZE" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
+    <column id="COL155" populated="true" UUID="a9d10142-95f9-4020-9d0f-aa9eeb21168c" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_BYTE_SIZE_seq" defaultValue="" name="BYTE_SIZE" nullable="0" physicalName="BYTE_SIZE" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
      <remarks></remarks>
     </column>
-    <column id="COL68" populated="true" UUID="bd98ec89-45fc-4ba8-933a-794d00a96825" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_ORIGINAL_FILE_NAME_seq" defaultValue="" name="ORIGINAL_FILE_NAME" nullable="0" physicalName="ORIGINAL_FILE_NAME" precision="255" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL156" populated="true" UUID="bd98ec89-45fc-4ba8-933a-794d00a96825" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_ORIGINAL_FILE_NAME_seq" defaultValue="" name="ORIGINAL_FILE_NAME" nullable="0" physicalName="ORIGINAL_FILE_NAME" precision="255" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL69" populated="true" UUID="a6298e43-c3c4-4da0-9dd1-17363f5fdbf9" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_READY_seq" defaultValue="" name="READY" nullable="0" physicalName="READY" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+    <column id="COL157" populated="true" UUID="a6298e43-c3c4-4da0-9dd1-17363f5fdbf9" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_READY_seq" defaultValue="" name="READY" nullable="0" physicalName="READY" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
      <remarks></remarks>
     </column>
-    <column id="COL70" populated="true" UUID="f6e193ef-b787-4d10-bcbd-bc0cc2529df6" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_MOUNT_PREFIX_seq" defaultValue="" name="MOUNT_PREFIX" nullable="0" physicalName="MOUNT_PREFIX" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL158" populated="true" UUID="f6e193ef-b787-4d10-bcbd-bc0cc2529df6" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_MOUNT_PREFIX_seq" defaultValue="" name="MOUNT_PREFIX" nullable="0" physicalName="MOUNT_PREFIX" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL71" populated="true" UUID="fa9b99d0-6f17-417a-96eb-fcf746f5bd38" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_PRIORITY_seq" defaultValue="" name="PRIORITY" nullable="0" physicalName="PRIORITY" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL159" populated="true" UUID="fa9b99d0-6f17-417a-96eb-fcf746f5bd38" autoIncrement="false" autoIncrementSequenceName="MANAGED_FILE_PRIORITY_seq" defaultValue="" name="PRIORITY" nullable="0" physicalName="PRIORITY" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB643" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1523" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB642" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1522" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB644" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX72" populated="true" UUID="90f5e65a-b410-4067-b689-2f77b5f4e367" clustered="false" name="MANAGED_FILE_ID" physicalName="managed_file_id" primaryKeyIndex="true" unique="true" >
-     <index-column id="IDC73" populated="true" UUID="39272de2-061a-4953-878a-7588ba37adf3" ascendingOrDescending="UNSPECIFIED" column-ref="COL65" name="MANAGED_FILE_ID" physicalName="MANAGED_FILE_ID" />
+    <folder id="FOLTAB1524" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX160" populated="true" UUID="90f5e65a-b410-4067-b689-2f77b5f4e367" clustered="false" name="MANAGED_FILE_ID" physicalName="managed_file_id" primaryKeyIndex="true" unique="true" >
+     <index-column id="IDC161" populated="true" UUID="39272de2-061a-4953-878a-7588ba37adf3" ascendingOrDescending="UNSPECIFIED" column-ref="COL153" name="MANAGED_FILE_ID" physicalName="MANAGED_FILE_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB74" populated="true" UUID="386ab720-584e-43c0-a0d4-4541f24325e9" name="ATTACHMENT" objectType="TABLE" physicalName="ATTACHMENT" >
+  <table id="TAB162" populated="true" UUID="386ab720-584e-43c0-a0d4-4541f24325e9" name="ATTACHMENT" objectType="TABLE" physicalName="ATTACHMENT" >
    <remarks></remarks>
-   <folder id="FOLTAB741" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL75" populated="true" UUID="1aeb5802-2f0c-42a7-b092-410fda150849" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_ATTACHMENT_ID_seq" defaultValue="" name="ATTACHMENT_ID" nullable="0" physicalName="ATTACHMENT_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+   <folder id="FOLTAB1621" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL163" populated="true" UUID="1aeb5802-2f0c-42a7-b092-410fda150849" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_ATTACHMENT_ID_seq" defaultValue="" name="ATTACHMENT_ID" nullable="0" physicalName="ATTACHMENT_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL76" populated="true" UUID="008e6bfd-34ca-4615-9310-05d8331f4559" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_EXPENSE_REPORT_LINE_ID_seq" defaultValue="" name="EXPENSE_REPORT_LINE_ID" nullable="0" physicalName="EXPENSE_REPORT_LINE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL164" populated="true" UUID="008e6bfd-34ca-4615-9310-05d8331f4559" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_EXPENSE_REPORT_LINE_ID_seq" defaultValue="" name="EXPENSE_REPORT_LINE_ID" nullable="0" physicalName="EXPENSE_REPORT_LINE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
-    <column id="COL77" populated="true" UUID="2dfd1ebb-9587-446e-a14a-ed07eedc18e2" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_MANAGED_FILE_ID_seq" defaultValue="" name="MANAGED_FILE_ID" nullable="0" physicalName="MANAGED_FILE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+    <column id="COL165" populated="true" UUID="2dfd1ebb-9587-446e-a14a-ed07eedc18e2" autoIncrement="false" autoIncrementSequenceName="ATTACHMENT_MANAGED_FILE_ID_seq" defaultValue="" name="MANAGED_FILE_ID" nullable="0" physicalName="MANAGED_FILE_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB743" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1623" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB742" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1622" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB744" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX78" populated="true" UUID="7670046a-832b-47af-8dc5-759eacc051df" clustered="false" name="ATTACHMENT_ID" physicalName="attachment_id" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC79" populated="true" UUID="df6ba628-a648-4136-88a1-76088e760453" ascendingOrDescending="UNSPECIFIED" column-ref="COL75" name="ATTACHMENT_ID" physicalName="ATTACHMENT_ID" />
+    <folder id="FOLTAB1624" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX166" populated="true" UUID="7670046a-832b-47af-8dc5-759eacc051df" clustered="false" name="ATTACHMENT_ID" physicalName="attachment_id" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC167" populated="true" UUID="df6ba628-a648-4136-88a1-76088e760453" ascendingOrDescending="UNSPECIFIED" column-ref="COL163" name="ATTACHMENT_ID" physicalName="ATTACHMENT_ID" />
     </index>
    </folder>
   </table>
   <relationships>
-   <relationship id="REL80" populated="true" UUID="074f3170-bd1f-4e99-93ef-b66de67d7e2d" deferrability="7" deleteRule="1" fk-table-ref="TAB21" fkCardinality="7" identifying="false" name="CONSTRAINT_3" physicalName="constraint_3" pk-table-ref="TAB21" pkCardinality="2" updateRule="1" >
-    <column-mapping id="CMP81" populated="true" UUID="f8b1e229-ece3-4d81-9ec8-71e52fc2ea21" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   <relationship id="REL168" populated="true" UUID="074f3170-bd1f-4e99-93ef-b66de67d7e2d" deferrability="7" deleteRule="1" fk-table-ref="TAB108" fkCardinality="7" identifying="false" name="CONSTRAINT_3" physicalName="constraint_3" pk-table-ref="TAB108" pkCardinality="2" updateRule="1" >
+    <column-mapping id="CMP169" populated="true" UUID="01406a6c-bfc0-4dd7-ade9-a452dce1c371" fk-column-ref="COL110" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL109" />
    </relationship>
-   <relationship id="REL82" populated="true" UUID="97f88fb0-77e8-4333-9814-0b474a9a9a1b" deferrability="7" deleteRule="3" fk-table-ref="TAB40" fkCardinality="7" identifying="false" name="CREDIT_CARD_ACCOUNT_HOLDER_fk" physicalName="credit_card_account_holder_fk" pk-table-ref="TAB21" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP83" populated="true" UUID="01469420-25d7-4ad6-9b25-9ef5eface453" fk-column-ref="COL42" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   <relationship id="REL170" populated="true" UUID="97f88fb0-77e8-4333-9814-0b474a9a9a1b" deferrability="7" deleteRule="3" fk-table-ref="TAB128" fkCardinality="7" identifying="false" name="CREDIT_CARD_ACCOUNT_HOLDER_fk" physicalName="credit_card_account_holder_fk" pk-table-ref="TAB108" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP171" populated="true" UUID="01469420-25d7-4ad6-9b25-9ef5eface453" fk-column-ref="COL130" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL109" />
    </relationship>
-   <relationship id="REL84" populated="true" UUID="6896857b-7d5c-4d62-90d9-eddd0c113fb2" deferrability="7" deleteRule="3" fk-table-ref="TAB45" fkCardinality="7" identifying="false" name="CHARGE_BATCH_ACCOUNT_HOLDER_fk" physicalName="charge_batch_account_holder_fk" pk-table-ref="TAB21" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP85" populated="true" UUID="71406dd3-dd3e-431b-997f-203d0ff77826" fk-column-ref="COL48" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   <relationship id="REL172" populated="true" UUID="6896857b-7d5c-4d62-90d9-eddd0c113fb2" deferrability="7" deleteRule="3" fk-table-ref="TAB133" fkCardinality="7" identifying="false" name="CHARGE_BATCH_ACCOUNT_HOLDER_fk" physicalName="charge_batch_account_holder_fk" pk-table-ref="TAB108" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP173" populated="true" UUID="71406dd3-dd3e-431b-997f-203d0ff77826" fk-column-ref="COL136" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL109" />
    </relationship>
-   <relationship id="REL86" populated="true" UUID="99d4ec7c-031b-488f-9bcd-d0c733e2253f" deferrability="7" deleteRule="3" fk-table-ref="TAB51" fkCardinality="7" identifying="false" name="ACCOUNT_HOLDER_EXPENSE_REPORT_fk" physicalName="account_holder_expense_report_fk" pk-table-ref="TAB21" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP87" populated="true" UUID="2acedc2c-8a4d-4fa5-9503-bc16f22ba267" fk-column-ref="COL53" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   <relationship id="REL174" populated="true" UUID="99d4ec7c-031b-488f-9bcd-d0c733e2253f" deferrability="7" deleteRule="3" fk-table-ref="TAB139" fkCardinality="7" identifying="false" name="ACCOUNT_HOLDER_EXPENSE_REPORT_fk" physicalName="account_holder_expense_report_fk" pk-table-ref="TAB108" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP175" populated="true" UUID="2acedc2c-8a4d-4fa5-9503-bc16f22ba267" fk-column-ref="COL141" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL109" />
    </relationship>
-   <relationship id="REL88" populated="true" UUID="76732c14-46bf-43de-98c5-ef48ab5f7c13" deferrability="7" deleteRule="3" fk-table-ref="TAB56" fkCardinality="7" identifying="false" name="CHARGE_EXPENSE_REPORT_LINE_fk" physicalName="charge_expense_report_line_fk" pk-table-ref="TAB33" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP89" populated="true" UUID="4743db4b-0045-4d48-b2df-bba27554c3f1" fk-column-ref="COL61" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL34" />
+   <relationship id="REL176" populated="true" UUID="76732c14-46bf-43de-98c5-ef48ab5f7c13" deferrability="7" deleteRule="3" fk-table-ref="TAB144" fkCardinality="7" identifying="false" name="CHARGE_EXPENSE_REPORT_LINE_fk" physicalName="charge_expense_report_line_fk" pk-table-ref="TAB121" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP177" populated="true" UUID="4743db4b-0045-4d48-b2df-bba27554c3f1" fk-column-ref="COL149" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL122" />
    </relationship>
-   <relationship id="REL90" populated="true" UUID="91fb6ebc-bba4-4538-8a05-36b189db946b" deferrability="7" deleteRule="3" fk-table-ref="TAB33" fkCardinality="7" identifying="false" name="CHARGE_CHARGE_BATCH_fk" physicalName="charge_charge_batch_fk" pk-table-ref="TAB45" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP91" populated="true" UUID="9e9962ca-a63e-431d-a72f-90fa2bf58fae" fk-column-ref="COL35" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL46" />
+   <relationship id="REL178" populated="true" UUID="91fb6ebc-bba4-4538-8a05-36b189db946b" deferrability="7" deleteRule="3" fk-table-ref="TAB121" fkCardinality="7" identifying="false" name="CHARGE_CHARGE_BATCH_fk" physicalName="charge_charge_batch_fk" pk-table-ref="TAB133" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP179" populated="true" UUID="9e9962ca-a63e-431d-a72f-90fa2bf58fae" fk-column-ref="COL123" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL134" />
    </relationship>
-   <relationship id="REL92" populated="true" UUID="fd2913b1-a492-419b-9dd5-fe451a118254" deferrability="7" deleteRule="3" fk-table-ref="TAB56" fkCardinality="7" identifying="false" name="EXPENSE_REPORT_EXPENSE_REPORT_LINE_fk" physicalName="expense_report_expense_report_line_fk" pk-table-ref="TAB51" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP93" populated="true" UUID="f8f85d2e-2dac-4862-902a-d254d5710b75" fk-column-ref="COL60" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL52" />
+   <relationship id="REL180" populated="true" UUID="fd2913b1-a492-419b-9dd5-fe451a118254" deferrability="7" deleteRule="3" fk-table-ref="TAB144" fkCardinality="7" identifying="false" name="EXPENSE_REPORT_EXPENSE_REPORT_LINE_fk" physicalName="expense_report_expense_report_line_fk" pk-table-ref="TAB139" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP181" populated="true" UUID="f8f85d2e-2dac-4862-902a-d254d5710b75" fk-column-ref="COL148" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL140" />
    </relationship>
-   <relationship id="REL94" populated="true" UUID="dcf071f9-1dd9-497a-8892-eea0e7bdb680" deferrability="7" deleteRule="3" fk-table-ref="TAB74" fkCardinality="7" identifying="false" name="ATTACHMENT_EXPENSE_REPORT_LINE_fk" physicalName="attachment_expense_report_line_fk" pk-table-ref="TAB56" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP95" populated="true" UUID="1edc03e4-593a-4491-9933-fd8a7a5851a8" fk-column-ref="COL76" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL57" />
+   <relationship id="REL182" populated="true" UUID="dcf071f9-1dd9-497a-8892-eea0e7bdb680" deferrability="7" deleteRule="3" fk-table-ref="TAB162" fkCardinality="7" identifying="false" name="ATTACHMENT_EXPENSE_REPORT_LINE_fk" physicalName="attachment_expense_report_line_fk" pk-table-ref="TAB144" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP183" populated="true" UUID="1edc03e4-593a-4491-9933-fd8a7a5851a8" fk-column-ref="COL164" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL145" />
    </relationship>
-   <relationship id="REL96" populated="true" UUID="71f68608-3f2d-430e-a911-0015ef6315dd" deferrability="7" deleteRule="3" fk-table-ref="TAB74" fkCardinality="7" identifying="false" name="MANAGED_FILE_ATTACHMENT_fk" physicalName="managed_file_attachment_fk" pk-table-ref="TAB64" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP97" populated="true" UUID="9a434e41-545a-411d-a341-4d3b845288cc" fk-column-ref="COL77" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL65" />
+   <relationship id="REL184" populated="true" UUID="71f68608-3f2d-430e-a911-0015ef6315dd" deferrability="7" deleteRule="3" fk-table-ref="TAB162" fkCardinality="7" identifying="false" name="MANAGED_FILE_ATTACHMENT_fk" physicalName="managed_file_attachment_fk" pk-table-ref="TAB152" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP185" populated="true" UUID="9a434e41-545a-411d-a341-4d3b845288cc" fk-column-ref="COL165" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL153" />
    </relationship>
   </relationships>
  </target-database>
@@ -342,23 +600,23 @@
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
-  <table-pane table-ref="TAB21" x="435" y="20" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB33" x="92" y="374" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB40" x="700" y="210" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB45" x="69" y="180" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB51" x="382" y="277" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB56" x="416" y="509" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB64" x="784" y="512" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB74" x="775" y="350" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-link relationship-ref="REL80" pkConnection="0.4984423676012461" fkConnection="0.24390243902439024" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
-  <table-link relationship-ref="REL82" pkConnection="0.7535014005602241" fkConnection="0.23228346456692914" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL90" pkConnection="0.601063829787234" fkConnection="0.4019138755980861" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL84" pkConnection="0.06162464985994398" fkConnection="0.5402298850574713" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="20"/>
-  <table-link relationship-ref="REL86" pkConnection="0.3137254901960784" fkConnection="0.5905511811023622" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL92" pkConnection="0.6220472440944882" fkConnection="0.3699186991869919" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL88" pkConnection="0.2857142857142857" fkConnection="0.8275862068965517" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL94" pkConnection="0.3448275862068966" fkConnection="0.6896551724137931" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL96" pkConnection="0.3035019455252918" fkConnection="0.15357142857142858" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-pane table-ref="TAB108" x="380" y="20" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB121" x="92" y="401" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB128" x="700" y="237" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB133" x="69" y="207" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB139" x="382" y="304" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB144" x="443" y="511" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB152" x="832" y="559" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB162" x="802" y="360" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL168" pkConnection="0.4984423676012461" fkConnection="0.24390243902439024" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
+  <table-link relationship-ref="REL170" pkConnection="0.7535014005602241" fkConnection="0.23228346456692914" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL178" pkConnection="0.601063829787234" fkConnection="0.4019138755980861" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL172" pkConnection="0.06162464985994398" fkConnection="0.5402298850574713" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="20"/>
+  <table-link relationship-ref="REL174" pkConnection="0.3137254901960784" fkConnection="0.5905511811023622" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL180" pkConnection="0.556910569105691" fkConnection="0.3699186991869919" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL176" pkConnection="0.2857142857142857" fkConnection="0.8275862068965517" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL182" pkConnection="0.3448275862068966" fkConnection="0.6896551724137931" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL184" pkConnection="0.49416342412451364" fkConnection="0.15357142857142858" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
  </play-pen>
  <critic-manager>
   <critic-grouping platformType="Generic" enabled="true">
