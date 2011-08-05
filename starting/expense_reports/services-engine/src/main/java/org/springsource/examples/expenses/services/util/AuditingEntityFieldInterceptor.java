@@ -10,7 +10,9 @@ import java.util.Date;
 
 /**
  *
- * Simple Hibernate {@link org.hibernate.Interceptor} to ensure that all entities have their 'dateModified' and 'dateCreated' fields appropriately updated
+ * Simple Hibernate {@link org.hibernate.Interceptor} to ensure that all entities have their 'dateModified'
+ * and 'dateCreated' fields appropriately updated. Useful
+ * for auditing common in SOX environments.
  *
  * @author Josh Long
  */

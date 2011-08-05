@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="1.0.6">
+ <project-name>expenses</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS0">
+   <property key="Logical" value="postgresql" />
+   <property key="Connection Type" value="PostgreSQL" />
+   <property key="JDBC URL" value="jdbc:postgresql://127.0.0.1:5432/expenses" />
+   <property key="UID" value="expenses" />
+   <property key="PWD" value="expenses" />
+   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
+  </data-source>
+  <data-source id="DS2">
+   <property key="Logical" value="PlayPen Database" />
+   <property key="Connection Type" value="PostgreSQL" />
+   <property key="JDBC URL" value="jdbc:postgresql://127.0.0.1:5432/expenses" />
+   <property key="UID" value="expenses" />
+   <property key="PWD" value="expenses" />
+   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
+  </data-source>
+  <data-source id="DS0">
+   <property key="Connection Type" value="PostgreSQL" />
+   <property key="Logical" value="postgresql" />
+   <property key="JDBC URL" value="jdbc:postgresql://127.0.0.1:5432/expenses" />
+   <property key="UID" value="expenses" />
+   <property key="PWD" value="expenses" />
+   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
+   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+  <database id="DB0" populated="true" UUID="a9192e16-cd79-4450-aed3-bdc2be26af33" dbcs-ref="DS2" name="PlayPen Database" physicalName="h2expenses" >
+   <catalog id="CAT1" populated="true" UUID="69970d1d-3675-4252-b4e8-0f8ffd76be7e" name="EXPENSES" nativeTerm="catalog" physicalName="EXPENSES" >
+    <schema id="SCH2" populated="true" UUID="e5b7411c-c02e-4217-a464-71bee8205840" name="INFORMATION_SCHEMA" nativeTerm="schema" physicalName="INFORMATION_SCHEMA" >
+    </schema>
+    <schema id="SCH3" populated="true" UUID="5a8ce3e1-62e6-40db-8d85-86246caa1f2a" name="PUBLIC" nativeTerm="schema" physicalName="PUBLIC" >
+     <table id="TAB4" populated="true" UUID="0cc1de23-02df-4366-9c06-a9e3ea7a40c2" name="ACCOUNT_HOLDER" objectType="TABLE" physicalName="ACCOUNT_HOLDER" >
+      <remarks></remarks>
+      <folder id="FOLTAB41" populated="true" name="Columns" physicalName="Columns" type="1">
+       <column id="COL5" populated="true" UUID="2846e8d4-3ea8-4cf5-9df5-2c9b4b7ee604" autoIncrement="false" defaultValue="" name="ID" nullable="0" physicalName="ID" precision="19" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="BIGINT" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL6" populated="true" UUID="5eab50a6-da2c-405d-b6e3-1d6f7be8e40c" autoIncrement="false" defaultValue="" name="AUTHORIZING_ACCOUNT_HOLDER" nullable="0" physicalName="AUTHORIZING_ACCOUNT_HOLDER" precision="19" referenceCount="2" scale="0" sourceDataTypeName="BIGINT" type="-5" >
+        <remarks></remarks>
+       </column>
+       <column id="COL7" populated="true" UUID="1bb707ac-3a04-4121-a086-e6b3e14d4a41" autoIncrement="false" defaultValue="" name="FIRST_NAME" nullable="0" physicalName="FIRST_NAME" precision="255" referenceCount="1" scale="0" sourceDataTypeName="VARCHAR" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL8" populated="true" UUID="57d5432c-efa9-462b-956c-b193f589c9c0" autoIncrement="false" defaultValue="" name="LAST_NAME" nullable="0" physicalName="LAST_NAME" precision="255" referenceCount="1" scale="0" sourceDataTypeName="VARCHAR" type="12" >
+        <remarks></remarks>
+       </column>
+       <column id="COL9" populated="true" UUID="b53ae9ce-24d9-4c64-8e92-af325985e0f5" autoIncrement="false" defaultValue="" name="EMAIL" nullable="0" physicalName="EMAIL" precision="255" referenceCount="1" scale="0" sourceDataTypeName="VARCHAR" type="12" >
+        <remarks></remarks>
+       </column>
+       </folder>
+       <folder id="FOLTAB43" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+       </folder>
+       <folder id="FOLTAB42" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+       </folder>
+       <folder id="FOLTAB44" populated="true" name="Indices" physicalName="Indices" type="4">
+       <index id="IDX10" populated="true" UUID="6dc48498-8f0a-4b67-a07d-cd5f31d83e4a" clustered="false" name="ACCOUNT_HOLDER_pk" physicalName="ACCOUNT_HOLDER_pk" primaryKeyIndex="true" unique="false" >
+        <index-column id="IDC11" populated="true" UUID="2d0a3734-b702-429e-be14-c305fa59ce89" ascendingOrDescending="UNSPECIFIED" column-ref="COL5" name="ID" physicalName="ID" />
+       </index>
+       <index id="IDX12" populated="true" UUID="d87efc2e-e99f-4045-bec0-ffe9b754b9b3" clustered="false" filterCondition="" name="PRIMARY_KEY_3" physicalName="PRIMARY_KEY_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="true" >
+        <index-column id="IDC13" populated="true" UUID="8bc447be-e6d7-4c44-9fff-8ae79811c896" ascendingOrDescending="ASCENDING" column-ref="COL5" name="ID" physicalName="ID" />
+       </index>
+       <index id="IDX14" populated="true" UUID="7a103bba-fb70-47e5-87e8-426e8c077557" clustered="false" filterCondition="" name="CONSTRAINT_3_INDEX_3" physicalName="CONSTRAINT_3_INDEX_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="false" >
+        <index-column id="IDC15" populated="true" UUID="19808ebb-0283-424a-9214-b573fcc02534" ascendingOrDescending="ASCENDING" column-ref="COL6" name="AUTHORIZING_ACCOUNT_HOLDER" physicalName="AUTHORIZING_ACCOUNT_HOLDER" />
+       </index>
+      </folder>
+     </table>
+    </schema>
+   </catalog>
+   <relationships>
+    <relationship id="REL16" populated="true" UUID="ad76cf24-39e2-4e16-bd7d-6ac859173408" deferrability="7" deleteRule="1" fk-table-ref="TAB4" fkCardinality="7" identifying="false" name="CONSTRAINT_3" physicalName="CONSTRAINT_3" pk-table-ref="TAB4" pkCardinality="2" updateRule="1" >
+     <column-mapping id="CMP17" populated="true" UUID="3482dfca-8660-44e3-95be-58173436cb8a" fk-column-ref="COL6" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL5" />
+    </relationship>
+   </relationships>
+  </database>
+  <database id="DB18" populated="true" UUID="1c81de58-bce7-4bff-aa00-e71821512a14" dbcs-ref="DS0" name="postgresql" physicalName="postgresql" >
+   <catalog id="CAT19" populated="false" UUID="1bf19823-3c02-46ba-bd48-9ac6419fb67b" name="expenses" nativeTerm="database" physicalName="expenses" >
+   </catalog>
+   <relationships>
+   </relationships>
+  </database>
+ </source-databases>
+ <target-database id="ppdb" dbcs-ref="DS0">
+  <table id="TAB21" populated="true" UUID="895bb57f-d5aa-4760-8ac2-4318a17ac006" name="ACCOUNT_HOLDER" objectType="TABLE" physicalName="ACCOUNT_HOLDER" >
+   <remarks></remarks>
+   <folder id="FOLTAB211" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL22" populated="true" UUID="199a5966-06a5-48b2-9fc7-fd1e50019e31" autoIncrement="false" defaultValue="" name="ACCOUNT_HOLDER_ID" nullable="0" physicalName="ACCOUNT_HOLDER_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" source-column-ref="COL5" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL23" populated="true" UUID="b75e4f34-7d73-4a90-9f52-b90174decfce" autoIncrement="false" defaultValue="" name="AUTHORIZING_ACCOUNT_HOLDER_ID" nullable="0" physicalName="AUTHORIZING_ACCOUNT_HOLDER_ID" precision="0" referenceCount="2" scale="0" source-column-ref="COL6" sourceDataTypeName="BIGINT" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL24" populated="true" UUID="27514121-8386-473d-9a44-762bffe5fb85" autoIncrement="false" defaultValue="" name="FIRST_NAME" nullable="0" physicalName="FIRST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL7" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL25" populated="true" UUID="b0dafd9b-4570-463e-8d8d-277f78320229" autoIncrement="false" defaultValue="" name="LAST_NAME" nullable="0" physicalName="LAST_NAME" precision="255" referenceCount="1" scale="0" source-column-ref="COL8" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL26" populated="true" UUID="16177f33-667f-465e-8ecd-9366f3b51a34" autoIncrement="false" defaultValue="" name="EMAIL" nullable="0" physicalName="EMAIL" precision="255" referenceCount="1" scale="0" source-column-ref="COL9" sourceDataTypeName="VARCHAR" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB213" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB212" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB214" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX27" populated="true" UUID="6fb675f5-fa33-452d-9a04-cc06d44d2833" clustered="false" name="ACCOUNT_HOLDER_ID" physicalName="account_holder_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC28" populated="true" UUID="f985a9a1-233a-4f39-9582-ea86d9cf6b0d" ascendingOrDescending="UNSPECIFIED" column-ref="COL22" name="ACCOUNT_HOLDER_ID" physicalName="ACCOUNT_HOLDER_ID" />
+    </index>
+    <index id="IDX29" populated="true" UUID="e1c100aa-295c-416a-9db0-8cda8ff7312a" clustered="false" filterCondition="" name="PRIMARY_KEY_3" physicalName="primary_key_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="true" >
+     <index-column id="IDC30" populated="true" UUID="5b132a63-16a0-4668-833e-23760b1c9043" ascendingOrDescending="ASCENDING" column-ref="COL22" name="ACCOUNT_HOLDER_ID" physicalName="ACCOUNT_HOLDER_ID" />
+    </index>
+    <index id="IDX31" populated="true" UUID="7b895055-d673-4f61-a0fd-b6a1c3b8ca18" clustered="false" filterCondition="" name="CONSTRAINT_3_INDEX_3" physicalName="constraint_3_index_3" primaryKeyIndex="false" qualifier="EXPENSES" unique="false" >
+     <index-column id="IDC32" populated="true" UUID="03a40145-faec-4d72-98f3-2f01aac569d0" ascendingOrDescending="ASCENDING" column-ref="COL23" name="AUTHORIZING_ACCOUNT_HOLDER_ID" physicalName="AUTHORIZING_ACCOUNT_HOLDER_ID" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB33" populated="true" UUID="4d5b08d8-3080-4a61-8674-6aae7e5fdef0" name="CHARGE" objectType="TABLE" physicalName="CHARGE" >
+   <remarks></remarks>
+   <folder id="FOLTAB331" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL34" populated="true" UUID="eb164a03-24c4-4edf-bbe5-260dea8462b5" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_ID_seq" defaultValue="" name="CHARGE_ID" nullable="0" physicalName="CHARGE_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL35" populated="true" UUID="b6cd3caf-6a87-40f5-b3e3-a5be467bd00c" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL36" populated="true" UUID="d4a5c863-ce8d-4a20-9354-72d9ddb36d8f" autoIncrement="false" autoIncrementSequenceName="CHARGE_CHARGE_AMOUNT_seq" defaultValue="" name="CHARGE_AMOUNT" nullable="0" physicalName="CHARGE_AMOUNT" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
+     <remarks></remarks>
+    </column>
+    <column id="COL37" populated="true" UUID="f7a1ecd9-c0dd-4a7b-8035-dbbb2c392548" autoIncrement="false" autoIncrementSequenceName="CHARGE_DESCRIPTION_seq" defaultValue="" name="DESCRIPTION" nullable="0" physicalName="DESCRIPTION" precision="1000" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB333" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB332" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB334" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX38" populated="true" UUID="a71aeacd-31d8-455e-a91e-a88474d23a27" clustered="false" name="CHARGE_ID" physicalName="CHARGE_ID" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC39" populated="true" UUID="8a43c738-66a9-49fa-84f3-f86ca282ea12" ascendingOrDescending="UNSPECIFIED" column-ref="COL34" name="CHARGE_ID" physicalName="CHARGE_ID" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB40" populated="true" UUID="0d4b7b67-3983-4a9b-9533-aca666981182" name="CREDIT_CARD" objectType="TABLE" physicalName="CREDIT_CARD" >
+   <remarks></remarks>
+   <folder id="FOLTAB401" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL41" populated="true" UUID="60ab69f5-873e-422c-915d-0e2fb06f904a" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_CREDIT_CARD_ID_seq" defaultValue="" name="CREDIT_CARD_ID" nullable="0" physicalName="CREDIT_CARD_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL42" populated="true" UUID="53f3e29a-4b08-4633-bc7f-5ee6c0d58673" autoIncrement="false" autoIncrementSequenceName="CREDIT_CARD_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="ACCOUNT_HOLDER_ID" nullable="0" physicalName="ACCOUNT_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB403" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB402" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB404" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX43" populated="true" UUID="49697bd4-ec4d-48d8-a43f-cd9a875599c9" clustered="false" name="CREDIT_CARD_ID" physicalName="CREDIT_CARD_ID" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC44" populated="true" UUID="5e33983a-2e2e-476f-b583-6740dfa7c15a" ascendingOrDescending="UNSPECIFIED" column-ref="COL41" name="CREDIT_CARD_ID" physicalName="CREDIT_CARD_ID" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB45" populated="true" UUID="76d76801-e4b5-4601-ab0a-75d407363570" name="CHARGE_BATCH" objectType="TABLE" physicalName="CHARGE_BATCH" >
+   <remarks>the batch of new charges as imported from a credit card source. this is simply the unit to describe imported charges.</remarks>
+   <folder id="FOLTAB451" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL46" populated="true" UUID="6a26d71f-590f-4231-8081-1f957854becd" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_CHARGE_BATCH_ID_seq" defaultValue="" name="CHARGE_BATCH_ID" nullable="0" physicalName="CHARGE_BATCH_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL47" populated="true" UUID="3b152623-46e6-4aa6-8a22-afb2debb4b54" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_IMPORT_TIME_seq" defaultValue="" name="IMPORT_TIME" nullable="0" physicalName="IMPORT_TIME" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
+     <remarks></remarks>
+    </column>
+    <column id="COL48" populated="true" UUID="ead7f752-dd7d-4930-9135-b446f324dd5d" autoIncrement="false" autoIncrementSequenceName="CHARGE_BATCH_ACCOUNT_HOLDER_ID_seq" defaultValue="" name="ACCOUNT_HOLDER_ID" nullable="0" physicalName="ACCOUNT_HOLDER_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-5" userDefinedTypeUUID="433cc8af-284d-4abb-8ef7-08ebcb34dbf1" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB453" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB452" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB454" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX49" populated="true" UUID="494278c0-9443-4eac-80a5-ffde1bfff39b" clustered="false" name="CHARGE_BATCH_ID" physicalName="CHARGE_BATCH_ID" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC50" populated="true" UUID="f5606182-230d-407c-b623-52b94bc13f88" ascendingOrDescending="UNSPECIFIED" column-ref="COL46" name="CHARGE_BATCH_ID" physicalName="CHARGE_BATCH_ID" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+   <relationship id="REL51" populated="true" UUID="074f3170-bd1f-4e99-93ef-b66de67d7e2d" deferrability="7" deleteRule="1" fk-table-ref="TAB21" fkCardinality="7" identifying="false" name="CONSTRAINT_3" physicalName="constraint_3" pk-table-ref="TAB21" pkCardinality="2" updateRule="1" >
+    <column-mapping id="CMP52" populated="true" UUID="f8b1e229-ece3-4d81-9ec8-71e52fc2ea21" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   </relationship>
+   <relationship id="REL53" populated="true" UUID="97f88fb0-77e8-4333-9814-0b474a9a9a1b" deferrability="7" deleteRule="3" fk-table-ref="TAB40" fkCardinality="7" identifying="false" name="CREDIT_CARD_ACCOUNT_HOLDER_fk" physicalName="CREDIT_CARD_ACCOUNT_HOLDER_fk" pk-table-ref="TAB21" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP54" populated="true" UUID="01469420-25d7-4ad6-9b25-9ef5eface453" fk-column-ref="COL42" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   </relationship>
+   <relationship id="REL55" populated="true" UUID="6896857b-7d5c-4d62-90d9-eddd0c113fb2" deferrability="7" deleteRule="3" fk-table-ref="TAB45" fkCardinality="7" identifying="false" name="CHARGE_BATCH_ACCOUNT_HOLDER_fk" physicalName="CHARGE_BATCH_ACCOUNT_HOLDER_fk" pk-table-ref="TAB21" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP56" populated="true" UUID="71406dd3-dd3e-431b-997f-203d0ff77826" fk-column-ref="COL48" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL22" />
+   </relationship>
+   <relationship id="REL57" populated="true" UUID="91fb6ebc-bba4-4538-8a05-36b189db946b" deferrability="7" deleteRule="3" fk-table-ref="TAB33" fkCardinality="7" identifying="false" name="CHARGE_CHARGE_BATCH_fk" physicalName="CHARGE_CHARGE_BATCH_fk" pk-table-ref="TAB45" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP58" populated="true" UUID="9e9962ca-a63e-431d-a72f-90fa2bf58fae" fk-column-ref="COL35" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL46" />
+   </relationship>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
+ <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.414213562373095" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB21" x="449" y="38" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB33" x="253" y="382" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB40" x="650" y="316" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB45" x="118" y="205" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL51" pkConnection="0.4984423676012461" fkConnection="0.24390243902439024" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
+  <table-link relationship-ref="REL53" pkConnection="0.7535014005602241" fkConnection="0.5257352941176471" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL57" pkConnection="0.601063829787234" fkConnection="0.4019138755980861" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL55" pkConnection="0.06162464985994398" fkConnection="0.5402298850574713" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="20"/>
+ </play-pen>
+ <critic-manager>
+  <critic-grouping platformType="Generic" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PrimaryKeyCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.RelationshipMappingTypeCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.EmptyRelationshipCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericSequenceNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetDefaultOnColumnWithNoDefaultCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetNullOnNonNullableColumnCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DuplicateNameCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="DB2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DB2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="H2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.H2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="HSQLDB" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.HSQLDBUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="MySQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLCommentCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="Oracle" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OraclePhysicalNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="PostgreSQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PostgreSQLReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerUnsupportedFeaturesCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2000" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2000UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2005" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2005UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+ </critic-manager>
+ <profiles topNCount="10">
+  </profiles>
+  <olap>
+  </olap>
+  <olap-gui>
+  </olap-gui>
+</architect-project>
