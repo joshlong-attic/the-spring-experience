@@ -14,7 +14,7 @@ import java.util.Date;
  *
  * @author Josh Long
  */
-public class ProcessFieldInterceptors extends EmptyInterceptor   {
+public class AuditingEntityFieldInterceptor extends EmptyInterceptor   {
 
 	@Override
 	public boolean onFlushDirty(Object o, Serializable serializable, Object[] objects, Object[] objects1, String[] strings, Type[] types) {
