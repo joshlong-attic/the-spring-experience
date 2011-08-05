@@ -14,12 +14,12 @@ import javax.persistence.TypedQuery;
  * @author Josh Long
  */
 @Service
-public class JpaExpenseHolderService {
+public class ExpenseHolderService {
 
 
-	@PersistenceContext EntityManager entityManager;
+	@PersistenceContext private EntityManager entityManager;
 
-	private String ehLoginQuery = String.format("select from %s eh where eh.email = :email and eh.password = :password", ExpenseHolder.class.getName());
+	private String ehLoginQuery = String.format("select eh from %s eh where eh.email = :email and eh.password = :password", ExpenseHolder.class.getName());
 
 
 	@Transactional(readOnly = true)
@@ -52,11 +52,11 @@ public class JpaExpenseHolderService {
 		eh.setPassword(pw);
 		eh.setLastName(lastName);
 		eh.setEmail(email);
-
 		entityManager.persist(eh);
-
 		return eh;
 	}
+
+
 
 
 }
