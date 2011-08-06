@@ -334,7 +334,7 @@ public class ManagedFileService {
 			entityManager.persist(managedFile);
 
 			//storageNode.setBytesUsed(storageNode.getBytesUsed() + needed);
-		//	entityManager.merge(storageNode);
+			//	entityManager.merge(storageNode);
 
 			if (log.isDebugEnabled()) {
 				log.debug(String.format("assigned storagenode.id==%s to managedfile.id==%s",

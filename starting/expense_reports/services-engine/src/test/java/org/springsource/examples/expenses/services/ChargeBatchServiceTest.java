@@ -1,5 +1,9 @@
 package org.springsource.examples.expenses.services;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.Hibernate;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,6 +12,17 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
+import org.springsource.examples.expenses.model.Charge;
+import org.springsource.examples.expenses.model.ChargeBatch;
+import org.springsource.examples.expenses.model.ExpenseHolder;
+import org.springsource.examples.expenses.services.util.BeanPropertyPredicate;
+import org.springsource.examples.expenses.services.util.EntityIdPredicate;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * put the {@link org.springsource.examples.expenses.model.ChargeBatch} service through its paces.
@@ -20,5 +35,45 @@ import org.springsource.examples.expenses.config.ServiceConfiguration;
 @Transactional
 public class ChargeBatchServiceTest {
 
-	@Test public void testFoo() throws Throwable {}
+	@Inject ExpenseHolderService expenseHolderService;
+	@Inject ChargeBatchService chargeBatchService;
+
+	private ExpenseHolder expenseHolder;
+
+	@Before
+	public void before() throws Throwable {
+		expenseHolder = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw");
+	}
+
+	@Inject EntityManagerFactory entityManagerFactory ;
+
+	@Test
+	public void testCreatingChargeBatches() throws Throwable {
+
+		ChargeBatch batch ;
+
+		batch= chargeBatchService.createChargeBatch(this.expenseHolder.getExpenseHolderId(), new Date());
+
+		Assert.assertEquals(batch.getExpenseHolder().getExpenseHolderId(), expenseHolder.getExpenseHolderId());
+
+		Charge cappuccino = chargeBatchService.createCharge(batch.getChargeBatchId(), 1.20, "a cappuccino");
+		Charge steak = chargeBatchService.createCharge(batch.getChargeBatchId(), 26.32, "steak");
+
+		batch = chargeBatchService.getChargeBatchById(batch.getChargeBatchId());
+
+		Set<Charge> charges = chargeBatchService.getChargeBatchCharges(batch.getChargeBatchId());
+
+		Assert.assertTrue( charges.size() == 2);
+
+		//todo get SessionFactory
+
+
+		Assert.assertTrue(CollectionUtils.exists(charges, new EntityIdPredicate( entityManagerFactory, cappuccino.getClass(),cappuccino.getChargeId() )));
+
+//		Assert.assertTrue(CollectionUtils.exists(charges, new BeanPropertyPredicate("chargeId",cappuccino.getChargeId())));
+//
+//		Assert.assertTrue(CollectionUtils.exists( charges, new BeanPropertyPredicate("chargeId",steak.getChargeId())));
+
+
+	}
 }

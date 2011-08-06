@@ -38,7 +38,6 @@ public class AuditingJpaEntityFieldListener {
 		setProperty(object, this.dateModified, d);
 	}
 
-
 	protected void setProperty(Object obj, String propertyName, Date date) {
 		Assert.notNull(obj, "the object can't be null");
 		try {

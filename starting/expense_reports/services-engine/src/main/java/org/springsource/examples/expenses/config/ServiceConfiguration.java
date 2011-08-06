@@ -33,18 +33,19 @@ public class ServiceConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
 
 		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
- 		jpaVendorAdapter.setGenerateDdl(true);
+		jpaVendorAdapter.setGenerateDdl(true);
 		jpaVendorAdapter.setShowSql(true);
 
-		Map<String,String> props = new HashMap<String,String>() ;
+		Map<String, String> props = new HashMap<String, String>();
 
 		// validate or create
-		props.put("hibernate.hbm2ddl.auto","validate" );
+		props.put("hibernate.hbm2ddl.auto", "validate");
 
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
 		localContainerEntityManagerFactoryBean.setJpaPropertyMap(props);
+
 
 		String entityPackage = Charge.class.getPackage().getName();
 		localContainerEntityManagerFactoryBean.setPackagesToScan(new String[]{entityPackage});
