@@ -10,9 +10,7 @@ import org.springsource.examples.expenses.model.*;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Service charged with managing the approval, routing and creation of expense reports.
@@ -138,9 +136,16 @@ public class ExpenseReportService {
 	@Transactional(readOnly = true)
 	public Collection<ExpenseReportLine> getExpenseReportLines(long expenseReportId) {
 		ExpenseReport er = getExpenseReportById(expenseReportId);
+
 		Set<ExpenseReportLine> lines = er.getExpenseReportLines();
-		Hibernate.initialize(lines);
-		return lines;
+
+		List<ExpenseReportLine> linesList = new ArrayList<ExpenseReportLine>();
+
+		for(ExpenseReportLine erl:lines)
+		linesList.add(erl);
+
+
+		return linesList ;
 	}
 
 	@Transactional(readOnly = true)
@@ -271,7 +276,7 @@ public class ExpenseReportService {
 	}
 
 	@Transactional
-	public Attachment createExpenseReportLineAttachment(long expenseReportLineId, long managedFileId) {
+	public Attachment createExpenseReportLineAttachment(long expenseReportLineId, long managedFileId ,String description) {
 
 		ManagedFile managedFile = managedFileService.getManagedFileById(managedFileId);
 
@@ -279,6 +284,7 @@ public class ExpenseReportService {
 
 		Attachment attachment = new Attachment();
 		attachment.setExpenseReportLine(erl);
+		attachment.setDescription(description);
 		attachment.setManagedFile(managedFile);
 
 		entityManager.persist(attachment);
