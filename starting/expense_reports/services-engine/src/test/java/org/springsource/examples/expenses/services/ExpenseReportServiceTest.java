@@ -1,0 +1,30 @@
+package org.springsource.examples.expenses.services;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
+import org.springsource.examples.expenses.config.ServiceConfiguration;
+
+import javax.inject.Inject;
+
+
+/**
+ * put the {@link ExpenseReportService} through its paces.
+ *
+ * @author Josh Long
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ServiceConfiguration.class})
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
+public class ExpenseReportServiceTest {
+	@Inject private ExpenseReportService expenseReportService;
+
+	@Test public void testFoo(){ }
+
+}
