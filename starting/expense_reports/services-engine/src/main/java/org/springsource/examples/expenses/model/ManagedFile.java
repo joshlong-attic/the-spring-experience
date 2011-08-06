@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "managed_file", schema = "public")
 public class ManagedFile implements java.io.Serializable {
 	private long managedFileId;
+	private StorageNode storageNode;
 	private String extension;
 	private double byteSize;
 	private String originalFileName;
@@ -34,8 +35,9 @@ public class ManagedFile implements java.io.Serializable {
 		this.priority = priority;
 	}
 
-	public ManagedFile(long managedFileId, String extension, double byteSize, String originalFileName, boolean ready, String mountPrefix, int priority, Set<Attachment> attachments) {
+	public ManagedFile(long managedFileId, StorageNode storageNode, String extension, double byteSize, String originalFileName, boolean ready, String mountPrefix, int priority, Set<Attachment> attachments) {
 		this.managedFileId = managedFileId;
+		this.storageNode = storageNode;
 		this.extension = extension;
 		this.byteSize = byteSize;
 		this.originalFileName = originalFileName;
@@ -91,6 +93,16 @@ public class ManagedFile implements java.io.Serializable {
 
 	public void setManagedFileId(long managedFileId) {
 		this.managedFileId = managedFileId;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "storage_node_id")
+	public StorageNode getStorageNode() {
+		return this.storageNode;
+	}
+
+	public void setStorageNode(StorageNode storageNode) {
+		this.storageNode = storageNode;
 	}
 
 	@Column(name = "extension", nullable = false, length = 10)

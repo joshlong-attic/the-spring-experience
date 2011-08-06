@@ -1,5 +1,6 @@
 package org.springsource.examples.expenses.services;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.examples.expenses.model.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Josh Long
  */
+@Service
 public class ExpenseReportService {
 
 	@PersistenceContext private EntityManager entityManager;

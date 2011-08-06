@@ -18,6 +18,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Driver;
+import java.util.HashMap;
+import java.util.Map;
 
 @ComponentScan("org.springsource.examples.expenses.services")
 @Configuration
@@ -31,12 +33,16 @@ public class ServiceConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws Exception {
 
 		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-		jpaVendorAdapter.setGenerateDdl(true);
+ 	//	jpaVendorAdapter.setGenerateDdl(true);
 		jpaVendorAdapter.setShowSql(true);
+
+		Map<String,String> props = new HashMap<String,String>() ;
+		props.put("hibernate.hbm2ddl.auto","validate" );//"validate");
 
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
+		localContainerEntityManagerFactoryBean.setJpaPropertyMap(props);
 
 		String entityPackage = Charge.class.getPackage().getName();
 		localContainerEntityManagerFactoryBean.setPackagesToScan(new String[]{entityPackage});
@@ -48,8 +54,8 @@ public class ServiceConfiguration {
 
 	@Bean
 	public PlatformTransactionManager transactionManager() throws Exception {
-		EntityManagerFactory entityManagerFactory =this.entityManagerFactory().getObject();
-		return new JpaTransactionManager(entityManagerFactory) ;
+		EntityManagerFactory entityManagerFactory = this.entityManagerFactory().getObject();
+		return new JpaTransactionManager(entityManagerFactory);
 	}
 
 	@Bean

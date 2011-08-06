@@ -44,8 +44,9 @@ public class AuditingJpaEntityFieldListener {
 		try {
 			BeanUtils.setProperty(obj, propertyName, date);
 		} catch (Exception e) {
-			if (log.isErrorEnabled())
+			if (log.isErrorEnabled()) {
 				log.error("Error when trying to set a property on an entity", e);
+			}
 		}
 	}
 }
