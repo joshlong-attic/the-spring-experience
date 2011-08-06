@@ -141,11 +141,13 @@ public class ExpenseReportService {
 
 		List<ExpenseReportLine> linesList = new ArrayList<ExpenseReportLine>();
 
-		for(ExpenseReportLine erl:lines)
-		linesList.add(erl);
+		for (ExpenseReportLine erl : lines) {
+			Hibernate.initialize(erl.getCharge());
+			linesList.add(erl);
+		}
 
 
-		return linesList ;
+		return linesList;
 	}
 
 	@Transactional(readOnly = true)
@@ -276,7 +278,7 @@ public class ExpenseReportService {
 	}
 
 	@Transactional
-	public Attachment createExpenseReportLineAttachment(long expenseReportLineId, long managedFileId ,String description) {
+	public Attachment createExpenseReportLineAttachment(long expenseReportLineId, long managedFileId, String description) {
 
 		ManagedFile managedFile = managedFileService.getManagedFileById(managedFileId);
 

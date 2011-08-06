@@ -12,6 +12,7 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
@@ -30,8 +31,8 @@ import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ServiceConfiguration.class})
-@TransactionConfiguration(defaultRollback = false)
-//@Transactional
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 public class ExpenseReportServiceTest {
 
 
@@ -78,20 +79,12 @@ public class ExpenseReportServiceTest {
 
 		Assert.assertTrue(expenseReport.getExpenseHolder().getExpenseHolderId() == bottom.getExpenseHolderId());
 
-		transactionTemplate.execute(new TransactionCallback<Object>() {
-			@Override
-			public Object doInTransaction(TransactionStatus status) {
-				Collection<ExpenseReportLine> lineItems = expenseReportService.getExpenseReportLines(expenseReport.getExpenseReportId());
-				for (ExpenseReportLine el : lineItems) {
-					Assert.assertTrue((el.isRequiresReceipt() && el.getCharge().getChargeAmount() > maxAmount) || !el.isRequiresReceipt());
-					ManagedFile jpgForReceiptScan = managedFileService.createManagedFile("cheese_cake_factory_" + (Math.random() * 100) + ".jpg", "jpg", ManagedFileMountPrefix.DEFAULT, 1024 * ((Math.random() * 200) + 2), 0);
-					Attachment attachment = expenseReportService.createExpenseReportLineAttachment(el.getExpenseReportLineId(), jpgForReceiptScan.getManagedFileId(), "this is a bit blurred because it was taken at an angle from my camera phone.");
-				}
-
-				return null;
-			}
-		});
-
+		Collection<ExpenseReportLine> lineItems = expenseReportService.getExpenseReportLines(expenseReport.getExpenseReportId());
+		for (ExpenseReportLine el : lineItems) {
+			Assert.assertTrue((el.isRequiresReceipt() && el.getCharge().getChargeAmount() > maxAmount) || !el.isRequiresReceipt());
+			ManagedFile jpgForReceiptScan = managedFileService.createManagedFile("cheese_cake_factory_" + (Math.random() * 100) + ".jpg", "jpg", ManagedFileMountPrefix.DEFAULT, 1024 * ((Math.random() * 200) + 2), 0);
+			Attachment attachment = expenseReportService.createExpenseReportLineAttachment(el.getExpenseReportLineId(), jpgForReceiptScan.getManagedFileId(), "this is a bit blurred because it was taken at an angle from my camera phone.");
+		}
 		expenseReportService.submitExpenseReportForApproval(expenseReport.getExpenseReportId());
 
 		ExpenseReportAuthorization authorization;
