@@ -22,7 +22,7 @@ import javax.inject.Inject;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ServiceConfiguration.class})
 @TransactionConfiguration(defaultRollback = true)
 @Transactional
-public class AccountHolderServiceTest {
+public class ExpenseHolderServiceTest {
 
 	@Inject private ExpenseHolderService expenseHolderService;
 

@@ -15,6 +15,7 @@ public class ExpenseReport implements java.io.Serializable {
 	private long expenseReportId;
 	private ExpenseHolder expenseHolder;
 	private Set<ExpenseReportLine> expenseReportLines = new HashSet<ExpenseReportLine>(0);
+	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 
 	public ExpenseReport() {
 	}
@@ -24,10 +25,11 @@ public class ExpenseReport implements java.io.Serializable {
 		this.expenseHolder = expenseHolder;
 	}
 
-	public ExpenseReport(long expenseReportId, ExpenseHolder expenseHolder, Set<ExpenseReportLine> expenseReportLines) {
+	public ExpenseReport(long expenseReportId, ExpenseHolder expenseHolder, Set<ExpenseReportLine> expenseReportLines, Set<ExpenseReportAuthorization> expenseReportAuthorizations) {
 		this.expenseReportId = expenseReportId;
 		this.expenseHolder = expenseHolder;
 		this.expenseReportLines = expenseReportLines;
+		this.expenseReportAuthorizations = expenseReportAuthorizations;
 	}
 
 	private java.util.Date dateCreated;
@@ -95,5 +97,14 @@ public class ExpenseReport implements java.io.Serializable {
 
 	public void setExpenseReportLines(Set<ExpenseReportLine> expenseReportLines) {
 		this.expenseReportLines = expenseReportLines;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expenseReport")
+	public Set<ExpenseReportAuthorization> getExpenseReportAuthorizations() {
+		return this.expenseReportAuthorizations;
+	}
+
+	public void setExpenseReportAuthorizations(Set<ExpenseReportAuthorization> expenseReportAuthorizations) {
+		this.expenseReportAuthorizations = expenseReportAuthorizations;
 	}
 }

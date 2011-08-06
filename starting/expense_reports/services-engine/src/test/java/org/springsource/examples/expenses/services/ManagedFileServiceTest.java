@@ -51,9 +51,10 @@ public class ManagedFileServiceTest {
 
 	@Test
 	public void testPriorityAlgorithmWorks() throws Throwable {
-		Assert.assertTrue(node.getPriority() == managedFile.getPriority());
+		Assert.assertTrue("the priority is suitbly unique that only one node could match it, " +
+				                  "and thus should have been assigned to the managed file. " +
+				                  "If not, that's an error.",node.getPriority() == managedFile.getPriority());
 	}
-
 
 	@Test
 	public void testCreatingManagedFiles() throws Throwable {

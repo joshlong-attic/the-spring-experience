@@ -18,6 +18,7 @@ public class ExpenseHolder implements java.io.Serializable {
 	private String lastName;
 	private String email;
 	private String password;
+	private double unjustifiedChargeAmountThreshold;
 	private Set<ExpenseReport> expenseReports = new HashSet<ExpenseReport>(0);
 	private Set<CreditCard> creditCards = new HashSet<CreditCard>(0);
 	private Set<ChargeBatch> chargeBatchs = new HashSet<ChargeBatch>(0);
@@ -26,21 +27,23 @@ public class ExpenseHolder implements java.io.Serializable {
 	public ExpenseHolder() {
 	}
 
-	public ExpenseHolder(long expenseHolderId, String firstName, String lastName, String email, String password) {
+	public ExpenseHolder(long expenseHolderId, String firstName, String lastName, String email, String password, double unjustifiedChargeAmountThreshold) {
 		this.expenseHolderId = expenseHolderId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.unjustifiedChargeAmountThreshold = unjustifiedChargeAmountThreshold;
 	}
 
-	public ExpenseHolder(long expenseHolderId, ExpenseHolder authorizingExpenseHolder, String firstName, String lastName, String email, String password, Set<ExpenseReport> expenseReports, Set<CreditCard> creditCards, Set<ChargeBatch> chargeBatchs, Set<ExpenseHolder> expenseHolders) {
+	public ExpenseHolder(long expenseHolderId, ExpenseHolder authorizingExpenseHolder, String firstName, String lastName, String email, String password, double unjustifiedChargeAmountThreshold, Set<ExpenseReport> expenseReports, Set<CreditCard> creditCards, Set<ChargeBatch> chargeBatchs, Set<ExpenseHolder> expenseHolders) {
 		this.expenseHolderId = expenseHolderId;
 		this.authorizingExpenseHolder = authorizingExpenseHolder;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.unjustifiedChargeAmountThreshold = unjustifiedChargeAmountThreshold;
 		this.expenseReports = expenseReports;
 		this.creditCards = creditCards;
 		this.chargeBatchs = chargeBatchs;
@@ -139,6 +142,15 @@ public class ExpenseHolder implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Column(name = "unjustified_charge_amount_threshold", nullable = false, precision = 17, scale = 17)
+	public double getUnjustifiedChargeAmountThreshold() {
+		return this.unjustifiedChargeAmountThreshold;
+	}
+
+	public void setUnjustifiedChargeAmountThreshold(double unjustifiedChargeAmountThreshold) {
+		this.unjustifiedChargeAmountThreshold = unjustifiedChargeAmountThreshold;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expenseHolder")

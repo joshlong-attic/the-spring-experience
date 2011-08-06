@@ -16,25 +16,28 @@ public class ExpenseReportLine implements java.io.Serializable {
 	private Charge charge;
 	private ExpenseReport expenseReport;
 	private boolean personalExpense;
+	private boolean requiresReceipt;
 	private String justification;
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
 	public ExpenseReportLine() {
 	}
 
-	public ExpenseReportLine(long expenseReportLineId, Charge charge, ExpenseReport expenseReport, boolean personalExpense, String justification) {
+	public ExpenseReportLine(long expenseReportLineId, Charge charge, ExpenseReport expenseReport, boolean personalExpense, boolean requiresReceipt, String justification) {
 		this.expenseReportLineId = expenseReportLineId;
 		this.charge = charge;
 		this.expenseReport = expenseReport;
 		this.personalExpense = personalExpense;
+		this.requiresReceipt = requiresReceipt;
 		this.justification = justification;
 	}
 
-	public ExpenseReportLine(long expenseReportLineId, Charge charge, ExpenseReport expenseReport, boolean personalExpense, String justification, Set<Attachment> attachments) {
+	public ExpenseReportLine(long expenseReportLineId, Charge charge, ExpenseReport expenseReport, boolean personalExpense, boolean requiresReceipt, String justification, Set<Attachment> attachments) {
 		this.expenseReportLineId = expenseReportLineId;
 		this.charge = charge;
 		this.expenseReport = expenseReport;
 		this.personalExpense = personalExpense;
+		this.requiresReceipt = requiresReceipt;
 		this.justification = justification;
 		this.attachments = attachments;
 	}
@@ -114,6 +117,15 @@ public class ExpenseReportLine implements java.io.Serializable {
 
 	public void setPersonalExpense(boolean personalExpense) {
 		this.personalExpense = personalExpense;
+	}
+
+	@Column(name = "requires_receipt", nullable = false)
+	public boolean isRequiresReceipt() {
+		return this.requiresReceipt;
+	}
+
+	public void setRequiresReceipt(boolean requiresReceipt) {
+		this.requiresReceipt = requiresReceipt;
 	}
 
 	@Column(name = "justification", nullable = false, length = 1000)

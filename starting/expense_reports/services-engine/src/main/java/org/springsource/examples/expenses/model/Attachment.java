@@ -13,14 +13,16 @@ public class Attachment implements java.io.Serializable {
 	private long attachmentId;
 	private ManagedFile managedFile;
 	private ExpenseReportLine expenseReportLine;
+	private String description;
 
 	public Attachment() {
 	}
 
-	public Attachment(long attachmentId, ManagedFile managedFile, ExpenseReportLine expenseReportLine) {
+	public Attachment(long attachmentId, ManagedFile managedFile, ExpenseReportLine expenseReportLine, String description) {
 		this.attachmentId = attachmentId;
 		this.managedFile = managedFile;
 		this.expenseReportLine = expenseReportLine;
+		this.description = description;
 	}
 
 	private java.util.Date dateCreated;
@@ -89,5 +91,14 @@ public class Attachment implements java.io.Serializable {
 
 	public void setExpenseReportLine(ExpenseReportLine expenseReportLine) {
 		this.expenseReportLine = expenseReportLine;
+	}
+
+	@Column(name = "description", nullable = false, length = 1000)
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }
