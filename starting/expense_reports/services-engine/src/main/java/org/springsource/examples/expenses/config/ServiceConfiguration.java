@@ -39,7 +39,7 @@ public class ServiceConfiguration {
 		Map<String, String> props = new HashMap<String, String>();
 
 		// validate or create
-		props.put("hibernate.hbm2ddl.auto", "validate");
+		props.put("hibernate.hbm2ddl.auto", "create");
 
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);

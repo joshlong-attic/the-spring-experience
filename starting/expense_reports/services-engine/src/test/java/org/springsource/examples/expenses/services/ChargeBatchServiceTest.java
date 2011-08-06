@@ -1,7 +1,6 @@
 package org.springsource.examples.expenses.services;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.hibernate.Hibernate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,12 +14,10 @@ import org.springsource.examples.expenses.config.ServiceConfiguration;
 import org.springsource.examples.expenses.model.Charge;
 import org.springsource.examples.expenses.model.ChargeBatch;
 import org.springsource.examples.expenses.model.ExpenseHolder;
-import org.springsource.examples.expenses.services.util.BeanPropertyPredicate;
 import org.springsource.examples.expenses.services.util.EntityIdPredicate;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.Set;
 
@@ -37,6 +34,7 @@ public class ChargeBatchServiceTest {
 
 	@Inject ExpenseHolderService expenseHolderService;
 	@Inject ChargeBatchService chargeBatchService;
+	@Inject EntityManagerFactory entityManagerFactory;
 
 	private ExpenseHolder expenseHolder;
 
@@ -45,14 +43,12 @@ public class ChargeBatchServiceTest {
 		expenseHolder = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw");
 	}
 
-	@Inject EntityManagerFactory entityManagerFactory ;
-
 	@Test
 	public void testCreatingChargeBatches() throws Throwable {
 
-		ChargeBatch batch ;
+		ChargeBatch batch;
 
-		batch= chargeBatchService.createChargeBatch(this.expenseHolder.getExpenseHolderId(), new Date());
+		batch = chargeBatchService.createChargeBatch(this.expenseHolder.getExpenseHolderId(), new Date());
 
 		Assert.assertEquals(batch.getExpenseHolder().getExpenseHolderId(), expenseHolder.getExpenseHolderId());
 
@@ -63,16 +59,9 @@ public class ChargeBatchServiceTest {
 
 		Set<Charge> charges = chargeBatchService.getChargeBatchCharges(batch.getChargeBatchId());
 
-		Assert.assertTrue( charges.size() == 2);
-
-		//todo get SessionFactory
-
-
-		Assert.assertTrue(CollectionUtils.exists(charges, new EntityIdPredicate( entityManagerFactory, cappuccino.getClass(),cappuccino.getChargeId() )));
-
-//		Assert.assertTrue(CollectionUtils.exists(charges, new BeanPropertyPredicate("chargeId",cappuccino.getChargeId())));
-//
-//		Assert.assertTrue(CollectionUtils.exists( charges, new BeanPropertyPredicate("chargeId",steak.getChargeId())));
+		Assert.assertTrue(charges.size() == 2);
+		Assert.assertTrue(CollectionUtils.exists(charges, new EntityIdPredicate(entityManagerFactory, Charge.class, cappuccino.getChargeId())));
+		Assert.assertTrue(CollectionUtils.exists(charges, new EntityIdPredicate(entityManagerFactory, Charge.class, steak.getChargeId())));
 
 
 	}
