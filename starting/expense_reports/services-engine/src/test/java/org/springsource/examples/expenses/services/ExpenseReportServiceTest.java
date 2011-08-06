@@ -43,8 +43,6 @@ public class ExpenseReportServiceTest {
 
 	private ExpenseHolder top, topMiddle, bottomMiddle, bottom;
 
-	private TransactionTemplate transactionTemplate;
-
 	private ChargeBatch batch;
 
 	private double maxAmount = 25;
@@ -65,11 +63,6 @@ public class ExpenseReportServiceTest {
 		batch = chargeBatchService.createChargeBatch(this.bottom.getExpenseHolderId(), new Date());
 		chargeBatchService.createCharge(batch.getChargeBatchId(), 1.20, "a cappuccino");
 		chargeBatchService.createCharge(batch.getChargeBatchId(), 26.32, "steak");
-	}
-
-	@Inject
-	public void setTransactionManager( PlatformTransactionManager transactionManager){
-		 transactionTemplate =new TransactionTemplate(transactionManager);
 	}
 
 	@Test
