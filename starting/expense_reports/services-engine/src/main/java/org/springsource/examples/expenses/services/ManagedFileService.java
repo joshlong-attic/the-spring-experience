@@ -36,7 +36,7 @@ public class ManagedFileService {
 
 	@PersistenceContext private EntityManager entityManager;
 
-	@Value("#{5}") private int numberOfVolumes = 5;
+	private int numberOfVolumes = 5;
 
 	@Inject private PlatformTransactionManager platformTransactionManager;
 
