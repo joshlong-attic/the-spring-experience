@@ -2,6 +2,7 @@ package org.springsource.examples.expenses.services;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.examples.expenses.model.*;
@@ -9,7 +10,6 @@ import org.springsource.examples.expenses.model.*;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.print.DocFlavor;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
@@ -26,16 +26,14 @@ public class ExpenseReportService {
 	/**
 	 * callback for all operations that need to systematically ascend the authorization chain, e.g., from employee to CEO
 	 */
-
 	public static interface AuthorizationChainIterationCallback {
 		boolean ascendTheChainOfAuthorization(ExpenseHolder current, ExpenseHolder superior);
-
 	}
 
 	// well known states for an ExpenseReport to be in
 	public static final String EXPENSE_REPORT_STATE_DRAFT = "DRAFT";
-
 	public static final String EXPENSE_REPORT_STATE_FINAL = "FINAL";
+	public static final String EXPENSE_REPORT_STATE_ERROR = "ERROR";
 
 	@PersistenceContext private EntityManager entityManager;
 
@@ -59,13 +57,11 @@ public class ExpenseReportService {
 
 	// first, set the existing authorizations back to 'no response required.'
 	protected void rescindResponseStatus(ExpenseReport expenseReport) {
-
 		final Set<ExpenseReportAuthorization> authorizations = expenseReport.getExpenseReportAuthorizations();
 		for (ExpenseReportAuthorization authorization : authorizations) {
 			authorization.setRequiresResponse(false);
 			entityManager.merge(authorization);
 		}
-
 	}
 
 	@Transactional(readOnly = true)
@@ -107,7 +103,6 @@ public class ExpenseReportService {
 			public boolean ascendTheChainOfAuthorization(ExpenseHolder current, ExpenseHolder superior) {
 				// ignore the root / current ExpenseHolder
 				// at start of iteration, 'current' will be equal to the Eh that submitted report, which won't have an ExpenseReportAuthorization
-				/*if(log.isDebugEnabled()) log.debug*/
 
 				if (superior != null) {
 					if (log.isDebugEnabled()) {
@@ -117,9 +112,9 @@ public class ExpenseReportService {
 						ExpenseHolder authorizingExpenseHolder = expenseReportAuthorization.getAuthorizingExpenseHolder();
 						if (authorizingExpenseHolder.getExpenseHolderId() == superior.getExpenseHolderId()) {
 
-							boolean hasBeenLookedAt=expenseReportAuthorization.isApproved()  ||expenseReportAuthorization.isRejected();
+							boolean hasBeenLookedAt = expenseReportAuthorization.isApproved() || expenseReportAuthorization.isRejected();
 
-							if (! hasBeenLookedAt) {  // then we've found the first authorization that needs a response
+							if (!hasBeenLookedAt) {  // then we've found the first authorization that needs a response
 								expenseReportAuthorization.setRequiresResponse(true);
 								entityManager.merge(expenseReportAuthorization);
 								return false;
@@ -140,8 +135,16 @@ public class ExpenseReportService {
 		return entityManager.find(ExpenseReportAuthorization.class, expenseReportAuthorizationId);
 	}
 
-	@Transactional
-	public Collection<ExpenseReportAuthorization> getExpenseReportAuthorizationForExpenseReport(long expenseReportId) {
+	@Transactional(readOnly = true)
+	public Collection<ExpenseReportLine> getExpenseReportLines(long expenseReportId) {
+		ExpenseReport er = getExpenseReportById(expenseReportId);
+		Set<ExpenseReportLine> lines = er.getExpenseReportLines();
+		Hibernate.initialize(lines);
+		return lines;
+	}
+
+	@Transactional(readOnly = true)
+	public Collection<ExpenseReportAuthorization> getExpenseReportAuthorizationsForExpenseReport(long expenseReportId) {
 		ExpenseReport expenseReport = getExpenseReportById(expenseReportId);
 		return expenseReport.getExpenseReportAuthorizations();
 	}
@@ -157,6 +160,21 @@ public class ExpenseReportService {
 		entityManager.merge(authorization);
 
 		activateNextAuthorization(authorization.getExpenseReport().getExpenseReportId());
+	}
+
+	@Transactional
+	public void rejectExpenseReportAuthorization(long expenseReportAuthorizationId, String feedback) {
+
+		ExpenseReportAuthorization authorization = getExpenseReportAuthorizationById(expenseReportAuthorizationId);
+		authorization.setRejected(true);
+		authorization.setRejectedTime(new Date());
+		authorization.setDescriptionOfResponse(feedback);
+		entityManager.merge(authorization);
+
+		ExpenseReport er = authorization.getExpenseReport();
+		rescindResponseStatus(er);
+		er.setState(EXPENSE_REPORT_STATE_ERROR);
+		entityManager.merge(er);
 
 	}
 
@@ -226,7 +244,6 @@ public class ExpenseReportService {
 	public ExpenseReportLine createExpenseReportLine(long expenseReportId, long chargeId) {
 		Charge charge = chargeBatchService.getChargeById(chargeId);
 		ExpenseReport expenseReport = getExpenseReportById(expenseReportId);
-
 
 		ExpenseReportLine expenseReportLine = new ExpenseReportLine();
 		expenseReportLine.setCharge(charge);

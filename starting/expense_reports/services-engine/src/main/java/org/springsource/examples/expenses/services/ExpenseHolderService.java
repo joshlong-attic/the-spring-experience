@@ -19,11 +19,9 @@ public class ExpenseHolderService {
 
 	@PersistenceContext private EntityManager entityManager;
 
-	private String ehLoginQuery = String.format("select eh from %s eh where eh.email = :email and eh.password = :password", ExpenseHolder.class.getName());
-
-
 	@Transactional(readOnly = true)
 	public ExpenseHolder login(String email, String pw) {
+		String ehLoginQuery = String.format("select eh from %s eh where eh.email = :email and eh.password = :password", ExpenseHolder.class.getName());
 		TypedQuery<ExpenseHolder> qu = entityManager.createQuery(ehLoginQuery, ExpenseHolder.class);
 		qu.setParameter("email", email);
 		qu.setParameter("password", pw);
@@ -46,10 +44,11 @@ public class ExpenseHolderService {
 	}
 
 	@Transactional
-	public ExpenseHolder createExpenseHolder(String firstName, String lastName, String email, String pw) {
+	public ExpenseHolder createExpenseHolder(String firstName, String lastName, String email, String pw, double maxExpenditureAmt) {
 		ExpenseHolder eh = new ExpenseHolder();
 		eh.setFirstName(firstName);
 		eh.setPassword(pw);
+		eh.setUnjustifiedChargeAmountThreshold(maxExpenditureAmt);
 		eh.setLastName(lastName);
 		eh.setEmail(email);
 		entityManager.persist(eh);

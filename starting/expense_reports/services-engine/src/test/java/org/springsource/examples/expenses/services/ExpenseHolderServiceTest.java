@@ -26,9 +26,10 @@ public class ExpenseHolderServiceTest {
 
 	@Inject private ExpenseHolderService expenseHolderService;
 
+	private double maxExpenditureWithoutJustification = 25.0 ;
 	@Test
 	public void testAuditing() throws Throwable {
-		ExpenseHolder eh = expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password");
+		ExpenseHolder eh = expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password",maxExpenditureWithoutJustification);
 		Assert.assertNotNull(eh.getDateCreated() != null);
 		Assert.assertNotNull(eh.getDateModified() != null);
 		Assert.assertEquals(eh.getDateModified(), eh.getDateCreated());
@@ -36,7 +37,7 @@ public class ExpenseHolderServiceTest {
 
 	@Test
 	public void testAccountHolderCreation() throws Throwable {
-		ExpenseHolder eh = expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password");
+		ExpenseHolder eh = expenseHolderService.createExpenseHolder("Josh", "Long", "josh.long@springsource.com", "password",maxExpenditureWithoutJustification);
 		Assert.assertNotNull(eh);
 		Assert.assertTrue(eh.getExpenseHolderId() > 0);
 	}
@@ -45,7 +46,7 @@ public class ExpenseHolderServiceTest {
 	public void testLogin() throws Throwable {
 		String email = "john.doe@email.com";
 		String password = "password";
-		ExpenseHolder expenseHolder = this.expenseHolderService.createExpenseHolder("John", "Doe", email, password);
+		ExpenseHolder expenseHolder = this.expenseHolderService.createExpenseHolder("John", "Doe", email, password,maxExpenditureWithoutJustification);
 		Assert.assertNotNull("the expenseHolder is not null", expenseHolder);
 		ExpenseHolder sameOne = expenseHolderService.login(email, password);
 		Assert.assertEquals(sameOne.getExpenseHolderId(), expenseHolder.getExpenseHolderId());
@@ -53,8 +54,8 @@ public class ExpenseHolderServiceTest {
 
 	@Test
 	public void testAuthorizingExpenseHolderCreation() throws Exception {
-		ExpenseHolder eh = expenseHolderService.createExpenseHolder("John", "Doe", "john.doe@email.com", "password");
-		ExpenseHolder authorizingEh = expenseHolderService.createExpenseHolder("Jane", "Doe", "jane.doe@email.com", "password");
+		ExpenseHolder eh = expenseHolderService.createExpenseHolder("John", "Doe", "john.doe@email.com", "password",maxExpenditureWithoutJustification);
+		ExpenseHolder authorizingEh = expenseHolderService.createExpenseHolder("Jane", "Doe", "jane.doe@email.com", "password",maxExpenditureWithoutJustification);
 		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(eh.getExpenseHolderId(), authorizingEh.getExpenseHolderId());
 		long authorizingEhId = expenseHolderService.getExpenseHolderById(eh.getExpenseHolderId()).getAuthorizingExpenseHolder().getExpenseHolderId();
 		Assert.assertTrue(authorizingEhId > 0);

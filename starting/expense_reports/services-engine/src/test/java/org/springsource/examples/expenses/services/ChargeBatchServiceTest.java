@@ -40,7 +40,7 @@ public class ChargeBatchServiceTest {
 
 	@Before
 	public void before() throws Throwable {
-		expenseHolder = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw");
+		expenseHolder = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw",25);
 	}
 
 	@Test

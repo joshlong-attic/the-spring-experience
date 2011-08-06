@@ -44,14 +44,14 @@ public class ChargeBatchService {
 	@Transactional
 	public Charge createCharge(long chargeBatchId, double chargeAmt, String description) {
 		ChargeBatch batch = getChargeBatchById(chargeBatchId);
-		Charge c = new Charge();
-		c.setChargeAmount(chargeAmt);
-		c.setChargeBatch(batch);
-		c.setDescription(description);
-		batch.getCharges().add(c);
-		entityManager.persist(c);
+		Charge charge = new Charge();
+		charge.setChargeAmount(chargeAmt);
+		charge.setChargeBatch(batch);
+		charge.setDescription(description);
+		batch.getCharges().add(charge);
+		entityManager.persist(charge);
 		entityManager.merge(batch);
-		return c;
+		return charge;
 	}
 
 	@Transactional(readOnly = true)

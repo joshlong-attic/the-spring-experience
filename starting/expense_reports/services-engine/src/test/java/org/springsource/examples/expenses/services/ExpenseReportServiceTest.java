@@ -1,6 +1,9 @@
 package org.springsource.examples.expenses.services;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,14 +12,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.model.ChargeBatch;
-import org.springsource.examples.expenses.model.ExpenseHolder;
-import org.springsource.examples.expenses.model.ExpenseReport;
-import org.springsource.examples.expenses.model.ExpenseReportAuthorization;
+import org.springsource.examples.expenses.model.*;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -28,7 +28,7 @@ import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ServiceConfiguration.class})
-@TransactionConfiguration(defaultRollback = false)
+@TransactionConfiguration
 @Transactional
 public class ExpenseReportServiceTest {
 
@@ -36,23 +36,23 @@ public class ExpenseReportServiceTest {
 	@Inject private ExpenseReportService expenseReportService;
 	@Inject private ExpenseHolderService expenseHolderService;
 
-	private ExpenseHolder top, topmiddle, bottommiddle, middle;
-	private ExpenseHolder bottom;
+	private ExpenseHolder top, topMiddle, bottomMiddle, bottom;
 
-	// charges imported from a credit card, no doubt
 	private ChargeBatch batch;
+
+	private double maxAmount = 25;
 
 	@Before
 	public void before() throws Throwable {
 
-		top = expenseHolderService.createExpenseHolder("Authorizer", "0", "authorizer0@email.com", "password");
-		topmiddle = expenseHolderService.createExpenseHolder("Authorizer", "1", "authorizer1@email.com", "password");
-		bottommiddle = expenseHolderService.createExpenseHolder("Authorizer", "2", "authorizer2@email.com", "password");
-		bottom = expenseHolderService.createExpenseHolder("John", "Doe", "jdoe@email.com", "password");
+		top = expenseHolderService.createExpenseHolder("Authorizer", "0", "authorizer0@email.com", "password", maxAmount);
+		topMiddle = expenseHolderService.createExpenseHolder("Authorizer", "1", "authorizer1@email.com", "password", maxAmount);
+		bottomMiddle = expenseHolderService.createExpenseHolder("Authorizer", "2", "authorizer2@email.com", "password", maxAmount);
+		bottom = expenseHolderService.createExpenseHolder("John", "Doe", "jdoe@email.com", "password", maxAmount);
 
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(topmiddle.getExpenseHolderId(), top.getExpenseHolderId());
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottommiddle.getExpenseHolderId(), topmiddle.getExpenseHolderId());
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottom.getExpenseHolderId(), bottommiddle.getExpenseHolderId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(topMiddle.getExpenseHolderId(), top.getExpenseHolderId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottomMiddle.getExpenseHolderId(), topMiddle.getExpenseHolderId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottom.getExpenseHolderId(), bottomMiddle.getExpenseHolderId());
 
 		// create an expense report
 		batch = chargeBatchService.createChargeBatch(this.bottom.getExpenseHolderId(), new Date());
@@ -65,16 +65,39 @@ public class ExpenseReportServiceTest {
 	public void testCreateExpenseReport() throws Throwable {
 
 		ExpenseReport expenseReport = expenseReportService.createExpenseReportFromChargeBatch(this.bottom.getExpenseHolderId(), batch.getChargeBatchId());
-		Assert.isTrue(expenseReport.getExpenseHolder().getExpenseHolderId() == bottom.getExpenseHolderId());
+		Assert.assertTrue(expenseReport.getExpenseHolder().getExpenseHolderId() == bottom.getExpenseHolderId());
+
+		Collection<ExpenseReportLine> lineItems = expenseReportService.getExpenseReportLines(expenseReport.getExpenseReportId());
+
+		for (ExpenseReportLine el : lineItems) {
+			Assert.assertTrue((el.isRequiresReceipt() && el.getCharge().getChargeAmount() > maxAmount) || !el.isRequiresReceipt());
+		}
 
 		expenseReportService.submitExpenseReportForApproval(expenseReport.getExpenseReportId());
 
 		ExpenseReportAuthorization authorization;
-
+		int depth = 0;
 		while ((authorization = expenseReportService.getNextExpenseReportAuthorization(expenseReport.getExpenseReportId())) != null) {
-			System.out.println(ToStringBuilder.reflectionToString(authorization));
+
+			if (depth == 0) {
+				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == bottomMiddle.getExpenseHolderId());
+			}
+			if (depth == 1) {
+				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == topMiddle.getExpenseHolderId());
+			}
+			if (depth == 2) {
+				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == top.getExpenseHolderId());
+			}
+
+			if(log.isDebugEnabled()) {
+				log.debug(ToStringBuilder.reflectionToString(authorization));
+			}
+
 			expenseReportService.approveExpenseReportAuthorization(authorization.getExpenseReportAuthorizationId(), "well done!");
+			depth += 1;
 		}
 	}
+
+	private Log log = LogFactory.getLog(getClass());
 
 }
