@@ -1,9 +1,8 @@
-package org.springsource.examples.expenses.expenses;
+package org.springsource.examples.expenses.reports;
 
-import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.users.ExpenseHolder;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,71 +10,15 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-@Table(name = "expense_report", schema = "public")
-public class ExpenseReport implements java.io.Serializable {
+public class ExpenseReport   {
 	private long expenseReportId;
 	private ExpenseHolder expenseHolder;
 	private String state;
 	private Set<ExpenseReportLine> expenseReportLines = new HashSet<ExpenseReportLine>(0);
 	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 
-	public ExpenseReport() {
-	}
-
-	public ExpenseReport(long expenseReportId, ExpenseHolder expenseHolder, String state) {
-		this.expenseReportId = expenseReportId;
-		this.expenseHolder = expenseHolder;
-		this.state = state;
-	}
-
-	public ExpenseReport(long expenseReportId, ExpenseHolder expenseHolder, String state, Set<ExpenseReportLine> expenseReportLines, Set<ExpenseReportAuthorization> expenseReportAuthorizations) {
-		this.expenseReportId = expenseReportId;
-		this.expenseHolder = expenseHolder;
-		this.state = state;
-		this.expenseReportLines = expenseReportLines;
-		this.expenseReportAuthorizations = expenseReportAuthorizations;
-	}
-
-	private java.util.Date dateCreated;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_created", nullable = false, length = 10)
-	public Date getDateCreated() {
-		return this.dateCreated;
-	}
-
-	public void setDateCreated(Date dc) {
-		this.dateCreated = dc;
-	}
-
-
-	private java.util.Date dateModified;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_modified", nullable = false, length = 10)
-	public Date getDateModified() {
-		return this.dateModified;
-	}
-
-	public void setDateModified(Date dc) {
-		this.dateModified = dc;
-	}
-
-
-	private java.lang.Long version;
-
-	@javax.persistence.Version
-	public java.lang.Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(java.lang.Long value) {
-		this.version = value;
-	}
-
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	@Column(name = "expense_report_id", unique = true, nullable = false)
 	public long getExpenseReportId() {
 		return this.expenseReportId;
 	}
@@ -94,7 +37,6 @@ public class ExpenseReport implements java.io.Serializable {
 		this.expenseHolder = expenseHolder;
 	}
 
-	@Column(name = "state", nullable = false, length = 20)
 	public String getState() {
 		return this.state;
 	}

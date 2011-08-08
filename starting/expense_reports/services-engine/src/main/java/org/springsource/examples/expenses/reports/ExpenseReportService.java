@@ -1,15 +1,17 @@
-package org.springsource.examples.expenses.expenses;
+package org.springsource.examples.expenses.reports;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.*;
+import org.springsource.examples.expenses.charges.Charge;
+import org.springsource.examples.expenses.charges.ChargeBatch;
+import org.springsource.examples.expenses.charges.ChargeBatchService;
 import org.springsource.examples.expenses.fs.ManagedFile;
 import org.springsource.examples.expenses.fs.ManagedFileService;
-import org.springsource.examples.expenses.user.ExpenseHolder;
-import org.springsource.examples.expenses.user.ExpenseHolderService;
+import org.springsource.examples.expenses.users.ExpenseHolder;
+import org.springsource.examples.expenses.users.ExpenseHolderService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -23,6 +25,12 @@ import java.util.*;
  */
 @Service
 public class ExpenseReportService {
+
+	/**
+	 * behind the scens, the code will store Strings, but we'll surface an enum as part of the domain
+	 */
+	public static enum ExpenseReportState {DRAFT, FINAL,ERROR }
+
 	private Log log = LogFactory.getLog(getClass());
 
 	/**
@@ -33,9 +41,6 @@ public class ExpenseReportService {
 	}
 
 	// well known states for an ExpenseReport to be in
-	public static final String EXPENSE_REPORT_STATE_DRAFT = "DRAFT";
-	public static final String EXPENSE_REPORT_STATE_FINAL = "FINAL";
-	public static final String EXPENSE_REPORT_STATE_ERROR = "ERROR";
 
 	@PersistenceContext private EntityManager entityManager;
 
@@ -50,7 +55,7 @@ public class ExpenseReportService {
 		ExpenseHolder eh = expenseHolderService.getExpenseHolderById(expenseHolderId);
 		ExpenseReport expenseReport = new ExpenseReport();
 		expenseReport.setExpenseHolder(eh);
-		expenseReport.setState(EXPENSE_REPORT_STATE_DRAFT);
+		expenseReport.setState(ExpenseReportState.DRAFT.name());
 		entityManager.persist(expenseReport);
 		addRequiredAuthorizations(expenseReport);
 		entityManager.merge(expenseReport);
@@ -184,7 +189,7 @@ public class ExpenseReportService {
 
 		ExpenseReport er = authorization.getExpenseReport();
 		rescindResponseStatus(er);
-		er.setState(EXPENSE_REPORT_STATE_ERROR);
+		er.setState(ExpenseReportState.ERROR.name());
 		entityManager.merge(er);
 
 	}
@@ -211,7 +216,7 @@ public class ExpenseReportService {
 	@Transactional
 	public void submitExpenseReportForApproval(long expenseReportId) {
 		ExpenseReport expenseReport = getExpenseReportById(expenseReportId);
-		expenseReport.setState(EXPENSE_REPORT_STATE_FINAL);
+		expenseReport.setState(ExpenseReportState.FINAL.name());
 		entityManager.merge(expenseReport);
 		activateNextAuthorization(expenseReportId);
 	}

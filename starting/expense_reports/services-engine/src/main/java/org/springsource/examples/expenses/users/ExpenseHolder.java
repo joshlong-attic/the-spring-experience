@@ -1,11 +1,10 @@
-package org.springsource.examples.expenses.user;
+package org.springsource.examples.expenses.users;
 
-import org.springsource.examples.expenses.ChargeBatch;
-import org.springsource.examples.expenses.expenses.ExpenseReport;
-import org.springsource.examples.expenses.expenses.ExpenseReportAuthorization;
+import org.springsource.examples.expenses.charges.ChargeBatch;
+import org.springsource.examples.expenses.reports.ExpenseReport;
+import org.springsource.examples.expenses.reports.ExpenseReportAuthorization;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ExpenseHolder implements java.io.Serializable {
+public class ExpenseHolder   {
 	private long expenseHolderId;
 	private ExpenseHolder authorizingExpenseHolder;
 	private String firstName;
@@ -26,8 +25,6 @@ public class ExpenseHolder implements java.io.Serializable {
 	private Set<ChargeBatch> chargeBatchs = new HashSet<ChargeBatch>(0);
 	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 	private Set<ExpenseHolder> expenseHolders = new HashSet<ExpenseHolder>(0);
-
-
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)

@@ -12,20 +12,36 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springsource.examples.expenses.Charge;
+import org.springsource.examples.expenses.charges.Charge;
+import org.springsource.examples.expenses.charges.ChargeBatch;
+import org.springsource.examples.expenses.fs.ManagedFile;
+import org.springsource.examples.expenses.fs.StorageNode;
+import org.springsource.examples.expenses.reports.*;
+import org.springsource.examples.expenses.users.CreditCard;
+import org.springsource.examples.expenses.users.ExpenseHolder;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Driver;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
-@ComponentScan("org.springsource.examples.expenses.services")
+
+// todo package this whole thing into a war
+// todo would be more natural to root all this stuff under 'services' or something as opposed to the web configuration-related stuff. then i could simply specify one package below
+@ComponentScan(basePackages = {
+  "org.springsource.examples.expenses.reports",
+  "org.springsource.examples.expenses.charges",
+  "org.springsource.examples.expenses.users",
+  "org.springsource.examples.expenses.fs"})
 @Configuration
 @PropertySource("classpath:/services.properties")
 @EnableTransactionManagement
 public class ServiceConfiguration {
+
 
 	@Inject private Environment environment;
 
@@ -47,8 +63,14 @@ public class ServiceConfiguration {
 		localContainerEntityManagerFactoryBean.setJpaPropertyMap(props);
 
 
-		String entityPackage = Charge.class.getPackage().getName();
-		localContainerEntityManagerFactoryBean.setPackagesToScan(new String[]{entityPackage});
+		Class<?>[] entityClasses = { Charge.class, ChargeBatch.class, ManagedFile.class, StorageNode.class, Attachment.class, ExpenseReport.class, ExpenseReportAuthorization.class, ExpenseReportLine.class, ExpenseReportService.class, CreditCard.class, ExpenseHolder.class};
+		Set<String> packages = new HashSet<String>();
+
+		for (Class<?> clzz : entityClasses) {
+			packages.add(clzz.getPackage().getName());
+		}
+
+		localContainerEntityManagerFactoryBean.setPackagesToScan(packages.toArray(new String[packages.size()]));
 
 		// look ma, no persistence.xml !
 		return localContainerEntityManagerFactoryBean;

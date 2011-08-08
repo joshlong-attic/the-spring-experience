@@ -1,14 +1,12 @@
-package org.springsource.examples.expenses.user;
+package org.springsource.examples.expenses.users;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @author Josh Long
  */
 @Entity
-@Table(name = "credit_card", schema = "public")
-public class CreditCard implements java.io.Serializable {
+public class CreditCard   {
 	private long creditCardId;
 	private ExpenseHolder expenseHolder;
 
@@ -22,7 +20,6 @@ public class CreditCard implements java.io.Serializable {
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	@Column(name = "credit_card_id", unique = true, nullable = false)
 	public long getCreditCardId() {
 		return this.creditCardId;
 	}

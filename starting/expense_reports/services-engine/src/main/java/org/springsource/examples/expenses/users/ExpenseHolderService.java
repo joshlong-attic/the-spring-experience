@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.user;
+package org.springsource.examples.expenses.users;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

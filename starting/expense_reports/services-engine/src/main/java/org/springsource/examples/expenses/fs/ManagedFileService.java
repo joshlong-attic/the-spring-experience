@@ -26,11 +26,12 @@ public class ManagedFileService {
 
 	private String assetPathMask = "%010d/%010d.%s";
 
-	private static String MANAGED_FILE_MNT_DIRECTORY = "managedFiles";
+	private static String MANAGED_FILE_MOUNT_DIRECTORY = "managedFiles";
 
 	private Log log = LogFactory.getLog(getClass());
 
-	@Value("#{systemProperties['user.home']}") private String rootFileSystem;
+	@Value("#{systemProperties['user.home']}")
+	private String rootFileSystem;
 
 	@PersistenceContext private EntityManager entityManager;
 
@@ -91,8 +92,8 @@ public class ManagedFileService {
 	/*
 	 todo a better paritioning scheme besides modula? This approach assumes volumes mounted at the root, /media/d001, ... /media/../d005, etc.
 	 */
-	private long deriveFolderIdFor(long mfid) {
-		return mfid % this.numberOfVolumes;
+	private long deriveFolderIdFor(long managedFileId) {
+		return managedFileId % this.numberOfVolumes;
 	}
 
 	@Transactional(readOnly = true)
@@ -175,13 +176,13 @@ public class ManagedFileService {
 	}
 
 	private String mapPrefixToWeb(String mPrefix) {
-		return String.format("%s/%s", MANAGED_FILE_MNT_DIRECTORY, mPrefix);
+		return String.format("%s/%s", MANAGED_FILE_MOUNT_DIRECTORY, mPrefix);
 	}
 
 
 	private File mapPrefixToFileSystem(String prefix) {
 		File usrHome = new File(this.rootFileSystem);
-		File cdfs = new File(usrHome, MANAGED_FILE_MNT_DIRECTORY);
+		File cdfs = new File(usrHome, MANAGED_FILE_MOUNT_DIRECTORY);
 		return new File(cdfs, prefix);
 	}
 

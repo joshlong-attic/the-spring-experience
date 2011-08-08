@@ -1,9 +1,8 @@
 package org.springsource.examples.expenses.fs;
 
-import org.springsource.examples.expenses.Attachment;
+import org.springsource.examples.expenses.reports.Attachment;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ManagedFile implements java.io.Serializable {
+public class ManagedFile   {
 	private long managedFileId;
 	private StorageNode storageNode;
 	private String extension;
@@ -21,31 +20,6 @@ public class ManagedFile implements java.io.Serializable {
 	private String mountPrefix;
 	private int priority;
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
-
-	public ManagedFile() {
-	}
-
-	public ManagedFile(long managedFileId, String extension, double byteSize, String originalFileName, boolean ready, String mountPrefix, int priority) {
-		this.managedFileId = managedFileId;
-		this.extension = extension;
-		this.byteSize = byteSize;
-		this.originalFileName = originalFileName;
-		this.ready = ready;
-		this.mountPrefix = mountPrefix;
-		this.priority = priority;
-	}
-
-	public ManagedFile(long managedFileId, StorageNode storageNode, String extension, double byteSize, String originalFileName, boolean ready, String mountPrefix, int priority, Set<Attachment> attachments) {
-		this.managedFileId = managedFileId;
-		this.storageNode = storageNode;
-		this.extension = extension;
-		this.byteSize = byteSize;
-		this.originalFileName = originalFileName;
-		this.ready = ready;
-		this.mountPrefix = mountPrefix;
-		this.priority = priority;
-		this.attachments = attachments;
-	}
 
 
 	@Id

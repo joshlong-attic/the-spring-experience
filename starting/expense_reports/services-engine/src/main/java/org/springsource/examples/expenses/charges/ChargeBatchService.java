@@ -1,10 +1,10 @@
-package org.springsource.examples.expenses;
+package org.springsource.examples.expenses.charges;
 
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.user.ExpenseHolder;
-import org.springsource.examples.expenses.user.ExpenseHolderService;
+import org.springsource.examples.expenses.users.ExpenseHolder;
+import org.springsource.examples.expenses.users.ExpenseHolderService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Set;
 
 /**
- * service to manage {@link org.springsource.examples.expenses.Charge charges} and {@link org.springsource.examples.expenses.ChargeBatch charge batches}.
+ * service to manage {@link Charge charges} and {@link ChargeBatch charge batches}.
  * <p/>
  * <p/>
  * NB: {@link Charge}s are assumed to be in a single, normalized currency. Presumably, they will be normalized when imported.
@@ -74,7 +74,7 @@ public class ChargeBatchService {
 	 * <p/>
 	 * This simply provides a convenient way to group chronic imports.
 	 * <p/>
-	 * The charge batch may or may not be an abstraction that the user of the system needs to know about.
+	 * The charge batch may or may not be an abstraction that the users of the system needs to know about.
 	 *
 	 * @param expenseHolderId the id of the expense holder
 	 * @param importTimeStamp when this batch was created.
