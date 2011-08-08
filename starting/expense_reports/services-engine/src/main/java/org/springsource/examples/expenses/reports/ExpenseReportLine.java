@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ExpenseReportLine   {
+public class ExpenseReportLine {
 	private long expenseReportLineId;
 	private Charge charge;
 	private ExpenseReport expenseReport;

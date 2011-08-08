@@ -10,12 +10,11 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ExpenseReport   {
+public class ExpenseReport {
 	private long expenseReportId;
 	private ExpenseHolder expenseHolder;
 	private String state;
 	private Set<ExpenseReportLine> expenseReportLines = new HashSet<ExpenseReportLine>(0);
-	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
@@ -52,14 +51,5 @@ public class ExpenseReport   {
 
 	public void setExpenseReportLines(Set<ExpenseReportLine> expenseReportLines) {
 		this.expenseReportLines = expenseReportLines;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expenseReport")
-	public Set<ExpenseReportAuthorization> getExpenseReportAuthorizations() {
-		return this.expenseReportAuthorizations;
-	}
-
-	public void setExpenseReportAuthorizations(Set<ExpenseReportAuthorization> expenseReportAuthorizations) {
-		this.expenseReportAuthorizations = expenseReportAuthorizations;
 	}
 }

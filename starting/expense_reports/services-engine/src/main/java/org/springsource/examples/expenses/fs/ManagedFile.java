@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ManagedFile   {
+public class ManagedFile {
 	private long managedFileId;
 	private StorageNode storageNode;
 	private String extension;

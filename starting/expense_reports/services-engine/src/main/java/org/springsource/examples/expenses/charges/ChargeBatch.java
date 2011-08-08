@@ -11,7 +11,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ChargeBatch   {
+public class ChargeBatch {
 	private long chargeBatchId;
 	private ExpenseHolder expenseHolder;
 	private Date importTime;

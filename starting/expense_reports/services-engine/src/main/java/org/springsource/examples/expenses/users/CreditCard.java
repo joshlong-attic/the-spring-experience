@@ -6,7 +6,7 @@ import javax.persistence.*;
  * @author Josh Long
  */
 @Entity
-public class CreditCard   {
+public class CreditCard {
 	private long creditCardId;
 	private ExpenseHolder expenseHolder;
 

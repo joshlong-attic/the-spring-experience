@@ -3,13 +3,12 @@ package org.springsource.examples.expenses.reports;
 import org.springsource.examples.expenses.fs.ManagedFile;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * @author Josh Long
  */
 @Entity
-public class Attachment   {
+public class Attachment {
 	private long attachmentId;
 	private ManagedFile managedFile;
 	private ExpenseReportLine expenseReportLine;

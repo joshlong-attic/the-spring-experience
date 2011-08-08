@@ -3,7 +3,6 @@ package org.springsource.examples.expenses.charges;
 import org.springsource.examples.expenses.reports.ExpenseReportLine;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class Charge   {
+public class Charge {
 	private long chargeId;
 	private ChargeBatch chargeBatch;
 	private double chargeAmount;

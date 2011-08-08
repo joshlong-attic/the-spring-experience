@@ -80,23 +80,5 @@ public class ExpenseReportServiceTest {
 			Attachment attachment = expenseReportService.createExpenseReportLineAttachment(el.getExpenseReportLineId(), jpgForReceiptScan.getManagedFileId(), "this is a bit blurred because it was taken at an angle from my camera phone.");
 		}
 		expenseReportService.submitExpenseReportForApproval(expenseReport.getExpenseReportId());
-
-		ExpenseReportAuthorization authorization;
-		int depth = 0;
-		while ((authorization = expenseReportService.getNextExpenseReportAuthorization(expenseReport.getExpenseReportId())) != null) {
-
-			if (depth == 0) {
-				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == bottomMiddle.getExpenseHolderId());
-			}
-			if (depth == 1) {
-				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == topMiddle.getExpenseHolderId());
-			}
-			if (depth == 2) {
-				Assert.assertTrue(authorization.getAuthorizingExpenseHolder().getExpenseHolderId() == top.getExpenseHolderId());
-			}
-			expenseReportService.approveExpenseReportAuthorization(authorization.getExpenseReportAuthorizationId(), "well done!");
-
-			depth += 1;
-		}
 	}
 }

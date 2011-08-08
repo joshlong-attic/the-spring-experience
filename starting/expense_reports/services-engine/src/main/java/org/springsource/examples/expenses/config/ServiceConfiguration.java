@@ -16,7 +16,10 @@ import org.springsource.examples.expenses.charges.Charge;
 import org.springsource.examples.expenses.charges.ChargeBatch;
 import org.springsource.examples.expenses.fs.ManagedFile;
 import org.springsource.examples.expenses.fs.StorageNode;
-import org.springsource.examples.expenses.reports.*;
+import org.springsource.examples.expenses.reports.Attachment;
+import org.springsource.examples.expenses.reports.ExpenseReport;
+import org.springsource.examples.expenses.reports.ExpenseReportLine;
+import org.springsource.examples.expenses.reports.ExpenseReportService;
 import org.springsource.examples.expenses.users.CreditCard;
 import org.springsource.examples.expenses.users.ExpenseHolder;
 
@@ -33,10 +36,10 @@ import java.util.Set;
 // todo package this whole thing into a war
 // todo would be more natural to root all this stuff under 'services' or something as opposed to the web configuration-related stuff. then i could simply specify one package below
 @ComponentScan(basePackages = {
-  "org.springsource.examples.expenses.reports",
-  "org.springsource.examples.expenses.charges",
-  "org.springsource.examples.expenses.users",
-  "org.springsource.examples.expenses.fs"})
+		                              "org.springsource.examples.expenses.reports",
+		                              "org.springsource.examples.expenses.charges",
+		                              "org.springsource.examples.expenses.users",
+		                              "org.springsource.examples.expenses.fs"})
 @Configuration
 @PropertySource("classpath:/services.properties")
 @EnableTransactionManagement
@@ -63,7 +66,7 @@ public class ServiceConfiguration {
 		localContainerEntityManagerFactoryBean.setJpaPropertyMap(props);
 
 
-		Class<?>[] entityClasses = { Charge.class, ChargeBatch.class, ManagedFile.class, StorageNode.class, Attachment.class, ExpenseReport.class, ExpenseReportAuthorization.class, ExpenseReportLine.class, ExpenseReportService.class, CreditCard.class, ExpenseHolder.class};
+		Class<?>[] entityClasses = {Charge.class, ChargeBatch.class, ManagedFile.class, StorageNode.class, Attachment.class, ExpenseReport.class, ExpenseReportLine.class, ExpenseReportService.class, CreditCard.class, ExpenseHolder.class};
 		Set<String> packages = new HashSet<String>();
 
 		for (Class<?> clzz : entityClasses) {

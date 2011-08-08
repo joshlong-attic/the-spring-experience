@@ -2,7 +2,6 @@ package org.springsource.examples.expenses.users;
 
 import org.springsource.examples.expenses.charges.ChargeBatch;
 import org.springsource.examples.expenses.reports.ExpenseReport;
-import org.springsource.examples.expenses.reports.ExpenseReportAuthorization;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,7 +11,7 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-public class ExpenseHolder   {
+public class ExpenseHolder {
 	private long expenseHolderId;
 	private ExpenseHolder authorizingExpenseHolder;
 	private String firstName;
@@ -23,7 +22,6 @@ public class ExpenseHolder   {
 	private Set<ExpenseReport> expenseReports = new HashSet<ExpenseReport>(0);
 	private Set<CreditCard> creditCards = new HashSet<CreditCard>(0);
 	private Set<ChargeBatch> chargeBatchs = new HashSet<ChargeBatch>(0);
-	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 	private Set<ExpenseHolder> expenseHolders = new HashSet<ExpenseHolder>(0);
 
 	@Id
@@ -111,15 +109,6 @@ public class ExpenseHolder   {
 
 	public void setChargeBatchs(Set<ChargeBatch> chargeBatchs) {
 		this.chargeBatchs = chargeBatchs;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorizingExpenseHolder")
-	public Set<ExpenseReportAuthorization> getExpenseReportAuthorizations() {
-		return this.expenseReportAuthorizations;
-	}
-
-	public void setExpenseReportAuthorizations(Set<ExpenseReportAuthorization> expenseReportAuthorizations) {
-		this.expenseReportAuthorizations = expenseReportAuthorizations;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorizingExpenseHolder")
