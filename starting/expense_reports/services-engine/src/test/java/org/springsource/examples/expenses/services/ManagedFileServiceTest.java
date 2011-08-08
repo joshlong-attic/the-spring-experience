@@ -13,7 +13,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.examples.expenses.fs.ManagedFile;
-import org.springsource.examples.expenses.fs.ManagedFileMountPrefix;
 import org.springsource.examples.expenses.fs.ManagedFileService;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
 import org.springsource.examples.expenses.fs.StorageNode;
@@ -47,7 +46,7 @@ public class ManagedFileServiceTest {
 			log.debug(String.format("random priority is %s", randomNumberPriority + ""));
 		}
 		node = managedFileService.createStorageNode("test", 10000000000000L, randomNumberPriority);
-		managedFile = managedFileService.createManagedFile(file.getAbsolutePath(), managedFileService.getFilePathExtension(file.getAbsolutePath()), ManagedFileMountPrefix.DEFAULT, 1024, randomNumberPriority);
+		managedFile = managedFileService.createManagedFile(file.getAbsolutePath(), managedFileService.getFilePathExtension(file.getAbsolutePath()), 1024, randomNumberPriority);
 		managedFileService.setManagedFileReady(managedFile.getManagedFileId(), true);
 	}
 

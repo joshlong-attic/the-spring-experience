@@ -14,10 +14,9 @@ import org.springsource.examples.expenses.charges.ChargeBatchService;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
 import org.springsource.examples.expenses.reports.*;
 import org.springsource.examples.expenses.fs.ManagedFile;
-import org.springsource.examples.expenses.fs.ManagedFileMountPrefix;
 import org.springsource.examples.expenses.fs.ManagedFileService;
-import org.springsource.examples.expenses.users.ExpenseHolder;
-import org.springsource.examples.expenses.users.ExpenseHolderService;
+import org.springsource.examples.expenses.users.User;
+import org.springsource.examples.expenses.users.UserService;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -40,9 +39,9 @@ public class ExpenseReportServiceTest {
 	@Inject private ManagedFileService managedFileService;
 	@Inject private ChargeBatchService chargeBatchService;
 	@Inject private ExpenseReportService expenseReportService;
-	@Inject private ExpenseHolderService expenseHolderService;
+	@Inject private UserService expenseHolderService;
 
-	private ExpenseHolder top, topMiddle, bottomMiddle, bottom;
+	private User top, topMiddle, bottomMiddle, bottom;
 
 	private ChargeBatch batch;
 
@@ -56,12 +55,12 @@ public class ExpenseReportServiceTest {
 		bottomMiddle = expenseHolderService.createExpenseHolder("Authorizer", "2", "authorizer2@email.com", "password", maxAmount);
 		bottom = expenseHolderService.createExpenseHolder("John", "Doe", "jdoe@email.com", "password", maxAmount);
 
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(topMiddle.getExpenseHolderId(), top.getExpenseHolderId());
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottomMiddle.getExpenseHolderId(), topMiddle.getExpenseHolderId());
-		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottom.getExpenseHolderId(), bottomMiddle.getExpenseHolderId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(topMiddle.getUserId(), top.getUserId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottomMiddle.getUserId(), topMiddle.getUserId());
+		expenseHolderService.assignAuthorizingExpenseHolderToExpenseHolder(bottom.getUserId(), bottomMiddle.getUserId());
 
 		// create an expense report
-		batch = chargeBatchService.createChargeBatch(this.bottom.getExpenseHolderId(), new Date());
+		batch = chargeBatchService.createChargeBatch(this.bottom.getUserId(), new Date());
 		chargeBatchService.createCharge(batch.getChargeBatchId(), 1.20, "a cappuccino");
 		chargeBatchService.createCharge(batch.getChargeBatchId(), 26.32, "steak");
 	}
@@ -69,14 +68,14 @@ public class ExpenseReportServiceTest {
 	@Test
 	public void testCreateExpenseReport() throws Throwable {
 
-		final ExpenseReport expenseReport = expenseReportService.createExpenseReportFromChargeBatch(this.bottom.getExpenseHolderId(), batch.getChargeBatchId());
+		final ExpenseReport expenseReport = expenseReportService.createExpenseReportFromChargeBatch(this.bottom.getUserId(), batch.getChargeBatchId());
 
-		Assert.assertTrue(expenseReport.getExpenseHolder().getExpenseHolderId() == bottom.getExpenseHolderId());
+		Assert.assertTrue(expenseReport.getUser().getUserId() == bottom.getUserId());
 
-		Collection<ExpenseReportLine> lineItems = expenseReportService.getExpenseReportLines(expenseReport.getExpenseReportId());
-		for (ExpenseReportLine el : lineItems) {
+		Collection<LineItem> lineItemItems = expenseReportService.getExpenseReportLines(expenseReport.getExpenseReportId());
+		for (LineItem el : lineItemItems) {
 			Assert.assertTrue((el.isRequiresReceipt() && el.getCharge().getChargeAmount() > maxAmount) || !el.isRequiresReceipt());
-			ManagedFile jpgForReceiptScan = managedFileService.createManagedFile("cheese_cake_factory_" + (Math.random() * 100) + ".jpg", "jpg", ManagedFileMountPrefix.DEFAULT, 1024 * ((Math.random() * 200) + 2), 0);
+			ManagedFile jpgForReceiptScan = managedFileService.createManagedFile("cheese_cake_factory_" + (Math.random() * 100) + ".jpg", "jpg",   1024 * ((Math.random() * 200) + 2), 0);
 			Attachment attachment = expenseReportService.createExpenseReportLineAttachment(el.getExpenseReportLineId(), jpgForReceiptScan.getManagedFileId(), "this is a bit blurred because it was taken at an angle from my camera phone.");
 		}
 		expenseReportService.submitExpenseReportForApproval(expenseReport.getExpenseReportId());

@@ -85,7 +85,7 @@ public class ManagedFileService {
 			log.debug("storage node:" + storageNodeForManagedFile.getStorageNodeId());
 		}
 		String mountPrefix = storageNodeForManagedFile.getMountPrefix();
-		String pathString = String.format("/%s/%s/media/" + assetPathMask, mapPrefixToWeb(mf.getMountPrefix()), mountPrefix, rootFolderId, lid, mf.getExtension());
+		String pathString = String.format("/%s/%s/media/" + assetPathMask, buildFileSystemPrefix(), mountPrefix, rootFolderId, lid, mf.getExtension());
 		return String.format("%s%s", StringUtils.defaultString(host), pathString);
 	}
 
@@ -113,7 +113,7 @@ public class ManagedFileService {
 		}
 
 		String mountPrefix = sn.getMountPrefix();
-		return String.format("%s/%s/media/" + assetPathMask, mapPrefixToFileSystem(managedFile.getMountPrefix()), mountPrefix, rootFolderId, lid, managedFile.getExtension());
+		return String.format("%s/%s/media/" + assetPathMask, buildFileSystemPrefix(), mountPrefix, rootFolderId, lid, managedFile.getExtension());
 	}
 
 	@Transactional
@@ -180,10 +180,9 @@ public class ManagedFileService {
 	}
 
 
-	private File mapPrefixToFileSystem(String prefix) {
+	private File buildFileSystemPrefix() {
 		File usrHome = new File(this.rootFileSystem);
-		File cdfs = new File(usrHome, MANAGED_FILE_MOUNT_DIRECTORY);
-		return new File(cdfs, prefix);
+		return new File(usrHome, MANAGED_FILE_MOUNT_DIRECTORY);
 	}
 
 
@@ -241,7 +240,7 @@ public class ManagedFileService {
 
 
 	@Transactional
-	public ManagedFile createManagedFile(String originalFileName, String extension, ManagedFileMountPrefix prefix, double byteSize, int priority) {
+	public ManagedFile createManagedFile(String originalFileName, String extension, double byteSize, int priority) {
 
 		ManagedFile managedFile = new ManagedFile();
 		managedFile.setByteSize(byteSize);
@@ -249,21 +248,13 @@ public class ManagedFileService {
 		managedFile.setOriginalFileName(originalFileName);
 		managedFile.setReady(false);
 		managedFile.setPriority(priority);
-		String mfPrefix = null;
-		if (null == prefix) {
-			mfPrefix = ManagedFileMountPrefix.DEFAULT.name().toLowerCase(); // prefix.name().toLowerCase()
-		} else {
-			mfPrefix = prefix.name().toLowerCase();
-		}
-
-		managedFile.setMountPrefix(mfPrefix);
 		entityManager.persist(managedFile);
 
 
 		StorageNode storageNodeForManagedFile = getStorageNodeForManagedFile(managedFile.getManagedFileId());
 		if (log.isDebugEnabled()) {
 			log.debug(String.format("the storage node for managed file # %s is # %s",
-					                       managedFile.getManagedFileId(), storageNodeForManagedFile.getStorageNodeId()));
+							   managedFile.getManagedFileId(), storageNodeForManagedFile.getStorageNodeId()));
 		}
 		entityManager.merge(managedFile);
 
@@ -332,9 +323,6 @@ public class ManagedFileService {
 			managedFile.setStorageNode(storageNode);
 			entityManager.persist(managedFile);
 
-			//storageNode.setBytesUsed(storageNode.getBytesUsed() + needed);
-			//	entityManager.merge(storageNode);
-
 			if (log.isDebugEnabled()) {
 				log.debug(String.format("assigned storagenode.id==%s to managedfile.id==%s",
 						                       storageNode.getStorageNodeId(), managedFile.getManagedFileId()));
@@ -368,39 +356,40 @@ public class ManagedFileService {
 			}
 		});
 		final int priority = mf.getPriority();
-		StorageNode sn = null;
-		sn = (StorageNode) CollectionUtils.find(nodes, new Predicate() {
+		StorageNode storageNode = null;
+		storageNode = (StorageNode) CollectionUtils.find(nodes, new Predicate() {
 			public boolean evaluate(Object o) {
 				StorageNode sn = (StorageNode) o;
 				return sn.getPriority() == priority && (sn.getBytesUsed() <= (.95 * sn.getTotalByteCapacity()));
 			}
 		});
-		if (null != sn) {
+		if (null != storageNode) {
 			if (log.isDebugEnabled()) {
-				log.debug("am assigning " + sn.getMountPrefix() + " to mf " + mf.getManagedFileId());
+				log.debug("am assigning " + storageNode.getMountPrefix() + " to mf " + mf.getManagedFileId());
 			}
 		}
 
-		if (sn == null) {
+		if (storageNode == null) {
 
-			sn = (StorageNode) CollectionUtils.find(nodes, new Predicate() {
+			storageNode = (StorageNode) CollectionUtils.find(nodes, new Predicate() {
 				public boolean evaluate(Object o) {
 					StorageNode sn = (StorageNode) o;
 					return sn.getPriority() != priority && (sn.getBytesUsed() <= (.95 * sn.getTotalByteCapacity()));
 				}
 			});
-			if (null != sn) {
+			if (null != storageNode) {
 				if (log.isDebugEnabled()) {
-					log.debug("assigning " + sn.getMountPrefix() + " to managed file " + mf.getManagedFileId());
+					log.debug("assigning " + storageNode.getMountPrefix() + " to managed file " + mf.getManagedFileId());
 				}
 			}
 		}
 
-		if (sn == null) {
+		if (storageNode == null) {
 			throw new RuntimeException(String.format("Can't allocate disk storage! No space for a managed file with priority %s on _ANY_ nodes!", mf.getPriority()));
 		}
 
-		addManagedFileToStorageNode(managedFileId, sn.getStorageNodeId());
+		addManagedFileToStorageNode(managedFileId, storageNode.getStorageNodeId());
+
 		return getStorageNodeById(getManagedFileById(managedFileId).getStorageNode().getStorageNodeId());
 	}
 }

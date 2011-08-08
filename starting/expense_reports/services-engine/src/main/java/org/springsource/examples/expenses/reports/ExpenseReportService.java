@@ -8,8 +8,8 @@ import org.springsource.examples.expenses.charges.ChargeBatch;
 import org.springsource.examples.expenses.charges.ChargeBatchService;
 import org.springsource.examples.expenses.fs.ManagedFile;
 import org.springsource.examples.expenses.fs.ManagedFileService;
-import org.springsource.examples.expenses.users.ExpenseHolder;
-import org.springsource.examples.expenses.users.ExpenseHolderService;
+import org.springsource.examples.expenses.users.User;
+import org.springsource.examples.expenses.users.UserService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -31,7 +31,7 @@ public class ExpenseReportService {
 	 * behind the scenes, the code will store Strings, but we'll surface an enum as part of the surface API
 	 */
 	public static enum ExpenseReportState {
-		DRAFT, FINAL, ERROR
+		DRAFT, FINAL
 	}
 
 
@@ -40,15 +40,15 @@ public class ExpenseReportService {
 
 	@Inject private ManagedFileService managedFileService;
 
-	@Inject private ExpenseHolderService expenseHolderService;
+	@Inject private UserService expenseHolderService;
 
 	@Inject private ChargeBatchService chargeBatchService;
 
 	@Transactional
 	public ExpenseReport createExpenseReport(long expenseHolderId) {
-		ExpenseHolder eh = expenseHolderService.getExpenseHolderById(expenseHolderId);
+		User eh = expenseHolderService.getExpenseHolderById(expenseHolderId);
 		ExpenseReport expenseReport = new ExpenseReport();
-		expenseReport.setExpenseHolder(eh);
+		expenseReport.setUser(eh);
 		expenseReport.setState(ExpenseReportState.DRAFT.name());
 		entityManager.persist(expenseReport);
 		entityManager.merge(expenseReport);
@@ -57,14 +57,14 @@ public class ExpenseReportService {
 
 
 	@Transactional(readOnly = true)
-	public Collection<ExpenseReportLine> getExpenseReportLines(long expenseReportId) {
+	public Collection<LineItem> getExpenseReportLines(long expenseReportId) {
 		ExpenseReport er = getExpenseReportById(expenseReportId);
 
-		Set<ExpenseReportLine> lines = er.getExpenseReportLines();
+		Set<LineItem> lineItems = er.getLineItems();
 
-		List<ExpenseReportLine> linesList = new ArrayList<ExpenseReportLine>();
+		List<LineItem> linesList = new ArrayList<LineItem>();
 
-		for (ExpenseReportLine erl : lines) {
+		for (LineItem erl : lineItems) {
 			Hibernate.initialize(erl.getCharge());
 			linesList.add(erl);
 		}
@@ -97,33 +97,33 @@ public class ExpenseReportService {
 	}
 
 	@Transactional
-	public ExpenseReportLine createExpenseReportLine(long expenseReportId, long chargeId) {
+	public LineItem createExpenseReportLine(long expenseReportId, long chargeId) {
 		Charge charge = chargeBatchService.getChargeById(chargeId);
 		ExpenseReport expenseReport = getExpenseReportById(expenseReportId);
 
-		ExpenseReportLine expenseReportLine = new ExpenseReportLine();
-		expenseReportLine.setCharge(charge);
-		expenseReportLine.setExpenseReport(expenseReport);
+		LineItem lineItem = new LineItem();
+		lineItem.setCharge(charge);
+		lineItem.setExpenseReport(expenseReport);
 
-		entityManager.persist(expenseReportLine);
-		validateExpenseReportLine(expenseReportLine);
-		entityManager.merge(expenseReportLine);
-		return expenseReportLine;
+		entityManager.persist(lineItem);
+		validateExpenseReportLine(lineItem);
+		entityManager.merge(lineItem);
+		return lineItem;
 	}
 
 
-	protected void validateExpenseReportLine(ExpenseReportLine expenseReportLine) {
-		ExpenseHolder expenseHolder = expenseReportLine.getExpenseReport().getExpenseHolder();
-		double maxExpenditureAllowed = expenseHolder.getUnjustifiedChargeAmountThreshold();
-		Charge charge = expenseReportLine.getCharge();
-		if (charge.getChargeAmount() > maxExpenditureAllowed) {
-			expenseReportLine.setRequiresReceipt(true);
+	protected void validateExpenseReportLine(LineItem lineItem) {
+		User user = lineItem.getExpenseReport().getUser();
+		double expensableAmountWithoutReceipt = user.getExpensableAmountWithoutReceipt();
+		Charge charge = lineItem.getCharge();
+		if (charge.getChargeAmount() > expensableAmountWithoutReceipt) {
+			lineItem.setRequiresReceipt(true);
 		}
 	}
 
 	@Transactional(readOnly = true)
-	public ExpenseReportLine getExpenseReportLineById(long erLid) {
-		return entityManager.find(ExpenseReportLine.class, erLid);
+	public LineItem getExpenseReportLineById(long erLid) {
+		return entityManager.find(LineItem.class, erLid);
 	}
 
 	@Transactional
@@ -131,14 +131,17 @@ public class ExpenseReportService {
 
 		ManagedFile managedFile = managedFileService.getManagedFileById(managedFileId);
 
-		ExpenseReportLine erl = getExpenseReportLineById(expenseReportLineId);
+		LineItem lineItem = getExpenseReportLineById(expenseReportLineId);
 
 		Attachment attachment = new Attachment();
-		attachment.setExpenseReportLine(erl);
+		attachment.setLineItem(lineItem);
 		attachment.setDescription(description);
 		attachment.setManagedFile(managedFile);
 
 		entityManager.persist(attachment);
+
+		lineItem.getAttachments().add(attachment);
+		entityManager.merge(lineItem);
 
 		return attachment;
 	}

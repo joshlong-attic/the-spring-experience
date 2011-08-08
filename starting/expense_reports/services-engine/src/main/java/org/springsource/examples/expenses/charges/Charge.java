@@ -1,12 +1,16 @@
 package org.springsource.examples.expenses.charges;
 
-import org.springsource.examples.expenses.reports.ExpenseReportLine;
+import org.springsource.examples.expenses.reports.LineItem;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
+ *
+ * A {@link Charge} is a non reconciled charge that has come from some sort of credit card source. (The placeholder entity
+ * to represent that source is {@link org.springsource.examples.expenses.users.CreditCard}.
+ *
  * @author Josh Long
  */
 @Entity
@@ -15,7 +19,7 @@ public class Charge {
 	private ChargeBatch chargeBatch;
 	private double chargeAmount;
 	private String description;
-	private Set<ExpenseReportLine> expenseReportLines = new HashSet<ExpenseReportLine>(0);
+	private Set<LineItem> lineItems = new HashSet<LineItem>(0);
 
 
 	@Id
@@ -58,11 +62,11 @@ public class Charge {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "charge")
-	public Set<ExpenseReportLine> getExpenseReportLines() {
-		return this.expenseReportLines;
+	public Set<LineItem> getLineItems() {
+		return this.lineItems;
 	}
 
-	public void setExpenseReportLines(Set<ExpenseReportLine> expenseReportLines) {
-		this.expenseReportLines = expenseReportLines;
+	public void setLineItems(Set<LineItem> lineItems) {
+		this.lineItems = lineItems;
 	}
 }

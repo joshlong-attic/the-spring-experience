@@ -3,8 +3,8 @@ package org.springsource.examples.expenses.charges;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.users.ExpenseHolder;
-import org.springsource.examples.expenses.users.ExpenseHolderService;
+import org.springsource.examples.expenses.users.User;
+import org.springsource.examples.expenses.users.UserService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -25,7 +25,7 @@ public class ChargeBatchService {
 
 	@PersistenceContext private EntityManager entityManager;
 
-	@Inject private ExpenseHolderService expenseHolderService;
+	@Inject private UserService expenseHolderService;
 
 	/**
 	 * creates a charge for a charge batch. A single charge typically corresponds to a charge on a credit card.
@@ -36,7 +36,7 @@ public class ChargeBatchService {
 	 * represents a unique, isolated, quantifiable charge (perhaps with a description from the vendor, e.g., "Starbucks ventura blvd").
 	 *
 	 * @param chargeBatchId the id of the charge batch
-	 * @param chargeAmt     the liability amount that this charge represents to the {@link ExpenseHolder}
+	 * @param chargeAmt     the liability amount that this charge represents to the {@link org.springsource.examples.expenses.users.User}
 	 * @param description   a description of the charge (as perhaps might appear on the credit card company's line items). Example: "starbucks ventura blvd 5555"
 	 * @return a {@link Charge} object (that has been attached the appropriate {@link ChargeBatch}
 	 */
@@ -68,7 +68,7 @@ public class ChargeBatchService {
 	}
 
 	/**
-	 * Umbrella object. Represents a grouping of a specific time, as well as a specific {@link ExpenseHolder}.
+	 * Umbrella object. Represents a grouping of a specific time, as well as a specific {@link org.springsource.examples.expenses.users.User}.
 	 * <p/>
 	 * You might imagine that a system imports {@link Charge}s as part of a {@link ChargeBatch} every day at midnight.
 	 * <p/>
@@ -83,10 +83,10 @@ public class ChargeBatchService {
 	@Transactional
 	public ChargeBatch createChargeBatch(long expenseHolderId, Date importTimeStamp) {
 
-		ExpenseHolder expenseHolder = expenseHolderService.getExpenseHolderById(expenseHolderId);
+		User user = expenseHolderService.getExpenseHolderById(expenseHolderId);
 
 		ChargeBatch chargeBatch = new ChargeBatch();
-		chargeBatch.setExpenseHolder(expenseHolder);
+		chargeBatch.setUser(user);
 		chargeBatch.setImportTime(importTimeStamp);
 
 		entityManager.persist(chargeBatch);

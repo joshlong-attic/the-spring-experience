@@ -18,10 +18,10 @@ import org.springsource.examples.expenses.fs.ManagedFile;
 import org.springsource.examples.expenses.fs.StorageNode;
 import org.springsource.examples.expenses.reports.Attachment;
 import org.springsource.examples.expenses.reports.ExpenseReport;
-import org.springsource.examples.expenses.reports.ExpenseReportLine;
+import org.springsource.examples.expenses.reports.LineItem;
 import org.springsource.examples.expenses.reports.ExpenseReportService;
 import org.springsource.examples.expenses.users.CreditCard;
-import org.springsource.examples.expenses.users.ExpenseHolder;
+import org.springsource.examples.expenses.users.User;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
@@ -66,7 +66,7 @@ public class ServiceConfiguration {
 		localContainerEntityManagerFactoryBean.setJpaPropertyMap(props);
 
 
-		Class<?>[] entityClasses = {Charge.class, ChargeBatch.class, ManagedFile.class, StorageNode.class, Attachment.class, ExpenseReport.class, ExpenseReportLine.class, ExpenseReportService.class, CreditCard.class, ExpenseHolder.class};
+		Class<?>[] entityClasses = {Charge.class, ChargeBatch.class, ManagedFile.class, StorageNode.class, Attachment.class, ExpenseReport.class, LineItem.class, ExpenseReportService.class, CreditCard.class, User.class};
 		Set<String> packages = new HashSet<String>();
 
 		for (Class<?> clzz : entityClasses) {

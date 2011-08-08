@@ -14,9 +14,9 @@ import org.springsource.examples.expenses.charges.Charge;
 import org.springsource.examples.expenses.charges.ChargeBatch;
 import org.springsource.examples.expenses.charges.ChargeBatchService;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.users.ExpenseHolder;
-import org.springsource.examples.expenses.users.ExpenseHolderService;
-import org.springsource.examples.expenses.util.EntityIdPredicate;
+import org.springsource.examples.expenses.users.User;
+import org.springsource.examples.expenses.users.UserService;
+import org.springsource.examples.expenses.util.predicates.EntityIdPredicate;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
@@ -34,15 +34,15 @@ import java.util.Set;
 @Transactional
 public class ChargeBatchServiceTest {
 
-	@Inject ExpenseHolderService expenseHolderService;
+	@Inject UserService expenseHolderService;
 	@Inject ChargeBatchService chargeBatchService;
 	@Inject EntityManagerFactory entityManagerFactory;
 
-	private ExpenseHolder expenseHolder;
+	private User user;
 
 	@Before
 	public void before() throws Throwable {
-		expenseHolder = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw",25);
+		user = expenseHolderService.createExpenseHolder("josh", "long", "email@email.com", "pw",25);
 	}
 
 	@Test
@@ -50,9 +50,9 @@ public class ChargeBatchServiceTest {
 
 		ChargeBatch batch;
 
-		batch = chargeBatchService.createChargeBatch(this.expenseHolder.getExpenseHolderId(), new Date());
+		batch = chargeBatchService.createChargeBatch(this.user.getUserId(), new Date());
 
-		Assert.assertEquals(batch.getExpenseHolder().getExpenseHolderId(), expenseHolder.getExpenseHolderId());
+		Assert.assertEquals(batch.getUser().getUserId(), user.getUserId());
 
 		Charge cappuccino = chargeBatchService.createCharge(batch.getChargeBatchId(), 1.20, "a cappuccino");
 		Charge steak = chargeBatchService.createCharge(batch.getChargeBatchId(), 26.32, "steak");

@@ -1,6 +1,6 @@
 package org.springsource.examples.expenses.charges;
 
-import org.springsource.examples.expenses.users.ExpenseHolder;
+import org.springsource.examples.expenses.users.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,19 +8,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ *
+ * An aggregate object for {@link Charge} objects.
+ *
+ * Might not be surfaced to the user directly, but serves as a useful
+ * aggregation of imported charges. ("Once per day, per user"? "Last month"? etc.)
+ *
  * @author Josh Long
  */
 @Entity
 public class ChargeBatch {
 	private long chargeBatchId;
-	private ExpenseHolder expenseHolder;
+	private User user;
 	private Date importTime;
 	private Set<Charge> charges = new HashSet<Charge>(0);
 
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	@Column(name = "charge_batch_id", unique = true, nullable = false)
 	public long getChargeBatchId() {
 		return this.chargeBatchId;
 	}
@@ -30,17 +35,16 @@ public class ChargeBatch {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_holder_id", nullable = false)
-	public ExpenseHolder getExpenseHolder() {
-		return this.expenseHolder;
+	@JoinColumn(name = "user_id", nullable = false)
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setExpenseHolder(ExpenseHolder expenseHolder) {
-		this.expenseHolder = expenseHolder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "import_time", nullable = false, length = 29)
 	public Date getImportTime() {
 		return this.importTime;
 	}

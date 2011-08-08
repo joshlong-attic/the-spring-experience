@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ *
+ * Metadata to describe a file, as written on a file system.
+ *
  * @author Josh Long
  */
 @Entity
@@ -17,7 +20,6 @@ public class ManagedFile {
 	private double byteSize;
 	private String originalFileName;
 	private boolean ready;
-	private String mountPrefix;
 	private int priority;
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
@@ -72,14 +74,6 @@ public class ManagedFile {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
-	}
-
-	public String getMountPrefix() {
-		return this.mountPrefix;
-	}
-
-	public void setMountPrefix(String mountPrefix) {
-		this.mountPrefix = mountPrefix;
 	}
 
 	public int getPriority() {

@@ -3,19 +3,23 @@ package org.springsource.examples.expenses.users;
 import javax.persistence.*;
 
 /**
+ *
+ * A placeholder entity to describe where the charges came from. Typically this is a {@link CreditCard} which
+ * the user has used and is now liable for.
+ *
  * @author Josh Long
  */
 @Entity
 public class CreditCard {
 	private long creditCardId;
-	private ExpenseHolder expenseHolder;
+	private User user;
 
 	public CreditCard() {
 	}
 
-	public CreditCard(long creditCardId, ExpenseHolder expenseHolder) {
+	public CreditCard(long creditCardId, User user) {
 		this.creditCardId = creditCardId;
-		this.expenseHolder = expenseHolder;
+		this.user = user;
 	}
 
 	@Id
@@ -30,11 +34,11 @@ public class CreditCard {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expense_holder_id", nullable = false)
-	public ExpenseHolder getExpenseHolder() {
-		return this.expenseHolder;
+	public User getUser() {
+		return this.user;
 	}
 
-	public void setExpenseHolder(ExpenseHolder expenseHolder) {
-		this.expenseHolder = expenseHolder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
