@@ -1,7 +1,5 @@
 package org.springsource.examples.expenses.services;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,13 +8,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
+import org.springsource.examples.expenses.*;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.model.*;
+import org.springsource.examples.expenses.expenses.ExpenseReport;
+import org.springsource.examples.expenses.expenses.ExpenseReportAuthorization;
+import org.springsource.examples.expenses.expenses.ExpenseReportLine;
+import org.springsource.examples.expenses.expenses.ExpenseReportService;
+import org.springsource.examples.expenses.fs.ManagedFile;
+import org.springsource.examples.expenses.fs.ManagedFileMountPrefix;
+import org.springsource.examples.expenses.fs.ManagedFileService;
+import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolderService;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -68,7 +71,7 @@ public class ExpenseReportServiceTest {
 	@Test
 	public void testCreateExpenseReport() throws Throwable {
 
-		final 	ExpenseReport expenseReport = expenseReportService.createExpenseReportFromChargeBatch(this.bottom.getExpenseHolderId(), batch.getChargeBatchId());
+		final ExpenseReport expenseReport = expenseReportService.createExpenseReportFromChargeBatch(this.bottom.getExpenseHolderId(), batch.getChargeBatchId());
 
 		Assert.assertTrue(expenseReport.getExpenseHolder().getExpenseHolderId() == bottom.getExpenseHolderId());
 

@@ -1,4 +1,8 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses.user;
+
+import org.springsource.examples.expenses.ChargeBatch;
+import org.springsource.examples.expenses.expenses.ExpenseReport;
+import org.springsource.examples.expenses.expenses.ExpenseReportAuthorization;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,8 +13,6 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
-@Table(name = "expense_holder", schema = "public")
 public class ExpenseHolder implements java.io.Serializable {
 	private long expenseHolderId;
 	private ExpenseHolder authorizingExpenseHolder;
@@ -25,73 +27,10 @@ public class ExpenseHolder implements java.io.Serializable {
 	private Set<ExpenseReportAuthorization> expenseReportAuthorizations = new HashSet<ExpenseReportAuthorization>(0);
 	private Set<ExpenseHolder> expenseHolders = new HashSet<ExpenseHolder>(0);
 
-	public ExpenseHolder() {
-	}
 
-	public ExpenseHolder(long expenseHolderId, String firstName, String lastName, String email, String password, double unjustifiedChargeAmountThreshold) {
-		this.expenseHolderId = expenseHolderId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.unjustifiedChargeAmountThreshold = unjustifiedChargeAmountThreshold;
-	}
-
-	public ExpenseHolder(long expenseHolderId, ExpenseHolder authorizingExpenseHolder, String firstName, String lastName, String email, String password, double unjustifiedChargeAmountThreshold, Set<ExpenseReport> expenseReports, Set<CreditCard> creditCards, Set<ChargeBatch> chargeBatchs, Set<ExpenseReportAuthorization> expenseReportAuthorizations, Set<ExpenseHolder> expenseHolders) {
-		this.expenseHolderId = expenseHolderId;
-		this.authorizingExpenseHolder = authorizingExpenseHolder;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.unjustifiedChargeAmountThreshold = unjustifiedChargeAmountThreshold;
-		this.expenseReports = expenseReports;
-		this.creditCards = creditCards;
-		this.chargeBatchs = chargeBatchs;
-		this.expenseReportAuthorizations = expenseReportAuthorizations;
-		this.expenseHolders = expenseHolders;
-	}
-
-	private java.util.Date dateCreated;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_created", nullable = false, length = 10)
-	public Date getDateCreated() {
-		return this.dateCreated;
-	}
-
-	public void setDateCreated(Date dc) {
-		this.dateCreated = dc;
-	}
-
-
-	private java.util.Date dateModified;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_modified", nullable = false, length = 10)
-	public Date getDateModified() {
-		return this.dateModified;
-	}
-
-	public void setDateModified(Date dc) {
-		this.dateModified = dc;
-	}
-
-
-	private java.lang.Long version;
-
-	@javax.persistence.Version
-	public java.lang.Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(java.lang.Long value) {
-		this.version = value;
-	}
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	@Column(name = "expense_holder_id", unique = true, nullable = false)
 	public long getExpenseHolderId() {
 		return this.expenseHolderId;
 	}
@@ -110,7 +49,6 @@ public class ExpenseHolder implements java.io.Serializable {
 		this.authorizingExpenseHolder = authorizingExpenseHolder;
 	}
 
-	@Column(name = "first_name", nullable = false)
 	public String getFirstName() {
 		return this.firstName;
 	}
@@ -119,7 +57,6 @@ public class ExpenseHolder implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@Column(name = "last_name", nullable = false)
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -128,7 +65,6 @@ public class ExpenseHolder implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	@Column(name = "email", nullable = false)
 	public String getEmail() {
 		return this.email;
 	}
@@ -137,7 +73,6 @@ public class ExpenseHolder implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "password", nullable = false, length = 1000)
 	public String getPassword() {
 		return this.password;
 	}
@@ -146,7 +81,6 @@ public class ExpenseHolder implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Column(name = "unjustified_charge_amount_threshold", nullable = false, precision = 17, scale = 17)
 	public double getUnjustifiedChargeAmountThreshold() {
 		return this.unjustifiedChargeAmountThreshold;
 	}

@@ -1,4 +1,6 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses.expenses;
+
+import org.springsource.examples.expenses.user.ExpenseHolder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -7,7 +9,6 @@ import java.util.Date;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
 @Table(name = "expense_report_authorization", schema = "public")
 public class ExpenseReportAuthorization implements java.io.Serializable {
 	private long expenseReportAuthorizationId;

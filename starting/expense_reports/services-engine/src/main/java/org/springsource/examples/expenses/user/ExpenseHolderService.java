@@ -1,15 +1,14 @@
-package org.springsource.examples.expenses.services;
+package org.springsource.examples.expenses.user;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.model.ExpenseHolder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- * Simple service that handles managing state associated with {@link org.springsource.examples.expenses.model.ExpenseHolder} entities.
+ * Simple service that handles managing state associated with {@link ExpenseHolder} entities.
  *
  * @author Josh Long
  */

@@ -1,11 +1,15 @@
-package org.springsource.examples.expenses.services;
+package org.springsource.examples.expenses.expenses;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.model.*;
+import org.springsource.examples.expenses.*;
+import org.springsource.examples.expenses.fs.ManagedFile;
+import org.springsource.examples.expenses.fs.ManagedFileService;
+import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolderService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

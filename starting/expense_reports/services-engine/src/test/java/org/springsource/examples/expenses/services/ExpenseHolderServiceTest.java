@@ -8,8 +8,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolderService;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.model.ExpenseHolder;
 
 import javax.inject.Inject;
 

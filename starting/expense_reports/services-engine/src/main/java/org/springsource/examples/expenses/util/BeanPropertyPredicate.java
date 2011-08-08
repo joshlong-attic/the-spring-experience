@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.services.util;
+package org.springsource.examples.expenses.util;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.Predicate;

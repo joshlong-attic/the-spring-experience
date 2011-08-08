@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses.fs;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +9,6 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
 @Table(name = "storage_node", schema = "public")
 public class StorageNode implements java.io.Serializable {
 	private long storageNodeId;

@@ -12,9 +12,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springsource.examples.expenses.fs.ManagedFile;
+import org.springsource.examples.expenses.fs.ManagedFileMountPrefix;
+import org.springsource.examples.expenses.fs.ManagedFileService;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.model.ManagedFile;
-import org.springsource.examples.expenses.model.StorageNode;
+import org.springsource.examples.expenses.fs.StorageNode;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -83,9 +85,9 @@ public class ManagedFileServiceTest {
 	}
 
 	/**
-	 * The bytes used by a {@link ManagedFile} are not reflected in the {@link StorageNode storage nodes} {@link StorageNode#bytesUsed} property
-	 * <em>until</em> the {@link ManagedFile#ready} property is set to <code>true</code>. Once set, the {@link ManagedFileService#deleteManagedFile(long)}
-	 * method must take into account that the number's been added and subtract it. But, it must not do so if the file's not {@link ManagedFile#ready}, otherwise
+	 * The bytes used by a {@link org.springsource.examples.expenses.fs.ManagedFile} are not reflected in the {@link StorageNode storage nodes} {@link StorageNode#bytesUsed} property
+	 * <em>until</em> the {@link org.springsource.examples.expenses.fs.ManagedFile#ready} property is set to <code>true</code>. Once set, the {@link org.springsource.examples.expenses.fs.ManagedFileService#deleteManagedFile(long)}
+	 * method must take into account that the number's been added and subtract it. But, it must not do so if the file's not {@link org.springsource.examples.expenses.fs.ManagedFile#ready}, otherwise
 	 * we risk out of bounds type problems (deleting bytes that weren't added, etc.)
 	 *
 	 * @throws Throwable if anything should go wrong.

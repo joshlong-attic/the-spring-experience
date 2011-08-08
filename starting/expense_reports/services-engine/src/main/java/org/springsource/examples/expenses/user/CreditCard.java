@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses.user;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -7,7 +7,6 @@ import java.util.Date;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
 @Table(name = "credit_card", schema = "public")
 public class CreditCard implements java.io.Serializable {
 	private long creditCardId;
@@ -19,43 +18,6 @@ public class CreditCard implements java.io.Serializable {
 	public CreditCard(long creditCardId, ExpenseHolder expenseHolder) {
 		this.creditCardId = creditCardId;
 		this.expenseHolder = expenseHolder;
-	}
-
-	private java.util.Date dateCreated;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_created", nullable = false, length = 10)
-	public Date getDateCreated() {
-		return this.dateCreated;
-	}
-
-	public void setDateCreated(Date dc) {
-		this.dateCreated = dc;
-	}
-
-
-	private java.util.Date dateModified;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_modified", nullable = false, length = 10)
-	public Date getDateModified() {
-		return this.dateModified;
-	}
-
-	public void setDateModified(Date dc) {
-		this.dateModified = dc;
-	}
-
-
-	private java.lang.Long version;
-
-	@javax.persistence.Version
-	public java.lang.Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(java.lang.Long value) {
-		this.version = value;
 	}
 
 	@Id

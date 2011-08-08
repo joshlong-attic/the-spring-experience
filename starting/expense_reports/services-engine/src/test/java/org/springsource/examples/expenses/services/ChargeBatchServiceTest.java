@@ -10,11 +10,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springsource.examples.expenses.*;
 import org.springsource.examples.expenses.config.ServiceConfiguration;
-import org.springsource.examples.expenses.model.Charge;
-import org.springsource.examples.expenses.model.ChargeBatch;
-import org.springsource.examples.expenses.model.ExpenseHolder;
-import org.springsource.examples.expenses.services.util.EntityIdPredicate;
+import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolderService;
+import org.springsource.examples.expenses.util.EntityIdPredicate;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Set;
 
 /**
- * put the {@link org.springsource.examples.expenses.model.ChargeBatch} service through its paces.
+ * put the {@link org.springsource.examples.expenses.ChargeBatch} service through its paces.
  *
  * @author Josh Long
  */

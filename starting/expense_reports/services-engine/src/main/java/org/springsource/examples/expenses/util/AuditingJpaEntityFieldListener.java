@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.services.util;
+package org.springsource.examples.expenses.util;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;

@@ -1,11 +1,10 @@
-package org.springsource.examples.expenses.services;
+package org.springsource.examples.expenses;
 
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.expenses.model.Charge;
-import org.springsource.examples.expenses.model.ChargeBatch;
-import org.springsource.examples.expenses.model.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolder;
+import org.springsource.examples.expenses.user.ExpenseHolderService;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -14,7 +13,7 @@ import java.util.Date;
 import java.util.Set;
 
 /**
- * service to manage {@link org.springsource.examples.expenses.model.Charge charges} and {@link org.springsource.examples.expenses.model.ChargeBatch charge batches}.
+ * service to manage {@link org.springsource.examples.expenses.Charge charges} and {@link org.springsource.examples.expenses.ChargeBatch charge batches}.
  * <p/>
  * <p/>
  * NB: {@link Charge}s are assumed to be in a single, normalized currency. Presumably, they will be normalized when imported.

@@ -1,4 +1,7 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses;
+
+import org.springsource.examples.expenses.expenses.ExpenseReportLine;
+import org.springsource.examples.expenses.fs.ManagedFile;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -7,7 +10,6 @@ import java.util.Date;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
 @Table(name = "attachment", schema = "public")
 public class Attachment implements java.io.Serializable {
 	private long attachmentId;

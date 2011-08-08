@@ -1,4 +1,4 @@
-package org.springsource.examples.expenses.services.util;
+package org.springsource.examples.expenses.util;
 
 import org.apache.commons.collections.Predicate;
 import org.hibernate.SessionFactory;
@@ -18,7 +18,6 @@ import javax.persistence.EntityManagerFactory;
  */
 public class EntityIdPredicate implements Predicate {
 
-	// delegate
 	private BeanPropertyPredicate beanPropertyPredicateDelegate;
 
 	public EntityIdPredicate(SessionFactory factory, Class<?> clzz, Object toMatch) {

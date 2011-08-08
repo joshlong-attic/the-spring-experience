@@ -1,4 +1,6 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses;
+
+import org.springsource.examples.expenses.user.ExpenseHolder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +11,6 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
 @Table(name = "charge_batch", schema = "public")
 public class ChargeBatch implements java.io.Serializable {
 	private long chargeBatchId;

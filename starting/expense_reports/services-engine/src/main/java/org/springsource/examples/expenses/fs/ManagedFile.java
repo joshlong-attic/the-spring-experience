@@ -1,4 +1,6 @@
-package org.springsource.examples.expenses.model;
+package org.springsource.examples.expenses.fs;
+
+import org.springsource.examples.expenses.Attachment;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,8 +11,6 @@ import java.util.Set;
  * @author Josh Long
  */
 @Entity
-@EntityListeners(org.springsource.examples.expenses.services.util.AuditingJpaEntityFieldListener.class)
-@Table(name = "managed_file", schema = "public")
 public class ManagedFile implements java.io.Serializable {
 	private long managedFileId;
 	private StorageNode storageNode;
@@ -47,46 +47,9 @@ public class ManagedFile implements java.io.Serializable {
 		this.attachments = attachments;
 	}
 
-	private java.util.Date dateCreated;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_created", nullable = false, length = 10)
-	public Date getDateCreated() {
-		return this.dateCreated;
-	}
-
-	public void setDateCreated(Date dc) {
-		this.dateCreated = dc;
-	}
-
-
-	private java.util.Date dateModified;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_modified", nullable = false, length = 10)
-	public Date getDateModified() {
-		return this.dateModified;
-	}
-
-	public void setDateModified(Date dc) {
-		this.dateModified = dc;
-	}
-
-
-	private java.lang.Long version;
-
-	@javax.persistence.Version
-	public java.lang.Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(java.lang.Long value) {
-		this.version = value;
-	}
 
 	@Id
 	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-	@Column(name = "managed_file_id", unique = true, nullable = false)
 	public long getManagedFileId() {
 		return this.managedFileId;
 	}
@@ -105,7 +68,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.storageNode = storageNode;
 	}
 
-	@Column(name = "extension", nullable = false, length = 10)
 	public String getExtension() {
 		return this.extension;
 	}
@@ -114,7 +76,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.extension = extension;
 	}
 
-	@Column(name = "byte_size", nullable = false, precision = 17, scale = 17)
 	public double getByteSize() {
 		return this.byteSize;
 	}
@@ -123,7 +84,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.byteSize = byteSize;
 	}
 
-	@Column(name = "original_file_name", nullable = false)
 	public String getOriginalFileName() {
 		return this.originalFileName;
 	}
@@ -132,7 +92,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.originalFileName = originalFileName;
 	}
 
-	@Column(name = "ready", nullable = false)
 	public boolean isReady() {
 		return this.ready;
 	}
@@ -141,7 +100,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.ready = ready;
 	}
 
-	@Column(name = "mount_prefix", nullable = false, length = 10)
 	public String getMountPrefix() {
 		return this.mountPrefix;
 	}
@@ -150,7 +108,6 @@ public class ManagedFile implements java.io.Serializable {
 		this.mountPrefix = mountPrefix;
 	}
 
-	@Column(name = "priority", nullable = false)
 	public int getPriority() {
 		return this.priority;
 	}
