@@ -16,7 +16,6 @@ import java.util.Set;
  *
  * @author Josh Long
  */
-@Entity
 public class ChargeBatch {
 	private long chargeBatchId;
 	private User user;
@@ -24,8 +23,6 @@ public class ChargeBatch {
 	private Set<Charge> charges = new HashSet<Charge>(0);
 
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getChargeBatchId() {
 		return this.chargeBatchId;
 	}
@@ -34,8 +31,6 @@ public class ChargeBatch {
 		this.chargeBatchId = chargeBatchId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
 	public User getUser() {
 		return this.user;
 	}
@@ -44,7 +39,6 @@ public class ChargeBatch {
 		this.user = user;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getImportTime() {
 		return this.importTime;
 	}
@@ -53,7 +47,6 @@ public class ChargeBatch {
 		this.importTime = importTime;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "chargeBatch")
 	public Set<Charge> getCharges() {
 		return this.charges;
 	}

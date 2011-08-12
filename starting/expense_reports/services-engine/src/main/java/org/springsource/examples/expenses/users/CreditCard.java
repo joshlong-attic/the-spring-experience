@@ -9,7 +9,7 @@ import javax.persistence.*;
  *
  * @author Josh Long
  */
-@Entity
+
 public class CreditCard {
 	private long creditCardId;
 	private User user;
@@ -22,8 +22,6 @@ public class CreditCard {
 		this.user = user;
 	}
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getCreditCardId() {
 		return this.creditCardId;
 	}
@@ -31,9 +29,6 @@ public class CreditCard {
 	public void setCreditCardId(long creditCardId) {
 		this.creditCardId = creditCardId;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_holder_id", nullable = false)
 	public User getUser() {
 		return this.user;
 	}

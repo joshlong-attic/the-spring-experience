@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Josh Long
  */
-@Entity
+
 public class ManagedFile {
 	private long managedFileId;
 	private StorageNode storageNode;
@@ -23,9 +23,6 @@ public class ManagedFile {
 	private int priority;
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
-
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getManagedFileId() {
 		return this.managedFileId;
 	}
@@ -34,8 +31,6 @@ public class ManagedFile {
 		this.managedFileId = managedFileId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "storage_node_id")
 	public StorageNode getStorageNode() {
 		return this.storageNode;
 	}
@@ -84,7 +79,6 @@ public class ManagedFile {
 		this.priority = priority;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "managedFile")
 	public Set<Attachment> getAttachments() {
 		return this.attachments;
 	}

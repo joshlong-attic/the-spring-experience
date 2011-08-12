@@ -14,15 +14,13 @@ import java.util.Set;
  *
  * @author Josh Long
  */
-@Entity
+
 public class ExpenseReport {
 	private long expenseReportId;
 	private User user;
 	private String state;
 	private Set<LineItem> lineItems = new HashSet<LineItem>(0);
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getExpenseReportId() {
 		return this.expenseReportId;
 	}
@@ -31,8 +29,6 @@ public class ExpenseReport {
 		this.expenseReportId = expenseReportId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_holder_id", nullable = false)
 	public User getUser() {
 		return this.user;
 	}
@@ -49,7 +45,6 @@ public class ExpenseReport {
 		this.state = state;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "expenseReport")
 	public Set<LineItem> getLineItems() {
 		return this.lineItems;
 	}

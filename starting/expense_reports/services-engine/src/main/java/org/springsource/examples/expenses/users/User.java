@@ -15,7 +15,6 @@ import java.util.Set;
  *
  * @author Josh Long
  */
-@Entity
 public class User {
 	private long userId;
 	private User authorizingUser;
@@ -29,8 +28,6 @@ public class User {
 	private Set<ChargeBatch> chargeBatchs = new HashSet<ChargeBatch>(0);
 	private Set<User> users = new HashSet<User>(0);
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getUserId() {
 		return this.userId;
 	}
@@ -39,8 +36,6 @@ public class User {
 		this.userId = userId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "authorizing_expense_holder_id")
 	public User getAuthorizingUser() {
 		return this.authorizingUser;
 	}
@@ -89,7 +84,7 @@ public class User {
 		this.expensableAmountWithoutReceipt = expensableAmountWithoutReceipt;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+
 	public Set<ExpenseReport> getExpenseReports() {
 		return this.expenseReports;
 	}
@@ -98,7 +93,6 @@ public class User {
 		this.expenseReports = expenseReports;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<CreditCard> getCreditCards() {
 		return this.creditCards;
 	}
@@ -107,7 +101,6 @@ public class User {
 		this.creditCards = creditCards;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
 	public Set<ChargeBatch> getChargeBatchs() {
 		return this.chargeBatchs;
 	}
@@ -116,7 +109,6 @@ public class User {
 		this.chargeBatchs = chargeBatchs;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorizingUser")
 	public Set<User> getUsers() {
 		return this.users;
 	}

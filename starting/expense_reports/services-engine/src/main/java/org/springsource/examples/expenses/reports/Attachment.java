@@ -11,15 +11,13 @@ import javax.persistence.*;
  *
  * @author Josh Long
  */
-@Entity
+
 public class Attachment {
 	private long attachmentId;
 	private ManagedFile managedFile;
 	private LineItem lineItem;
 	private String description;
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getAttachmentId() {
 		return this.attachmentId;
 	}
@@ -27,9 +25,6 @@ public class Attachment {
 	public void setAttachmentId(long attachmentId) {
 		this.attachmentId = attachmentId;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "managed_file_id", nullable = false)
 	public ManagedFile getManagedFile() {
 		return this.managedFile;
 	}
@@ -37,9 +32,6 @@ public class Attachment {
 	public void setManagedFile(ManagedFile managedFile) {
 		this.managedFile = managedFile;
 	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "line_item_id", nullable = false)
 	public LineItem getLineItem() {
 		return this.lineItem;
 	}

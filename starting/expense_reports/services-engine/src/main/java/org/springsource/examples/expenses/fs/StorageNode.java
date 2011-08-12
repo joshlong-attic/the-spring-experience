@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * @author Josh Long
  */
-@Entity
+
 public class StorageNode {
 	private long storageNodeId;
 	private int priority;
@@ -18,8 +18,6 @@ public class StorageNode {
 	private double totalByteCapacity;
 	private Set<ManagedFile> managedFiles = new HashSet<ManagedFile>(0);
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getStorageNodeId() {
 		return this.storageNodeId;
 	}
@@ -76,7 +74,6 @@ public class StorageNode {
 		this.totalByteCapacity = totalByteCapacity;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "storageNode")
 	public Set<ManagedFile> getManagedFiles() {
 		return this.managedFiles;
 	}

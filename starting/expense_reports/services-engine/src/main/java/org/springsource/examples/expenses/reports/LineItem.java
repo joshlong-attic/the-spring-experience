@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author Josh Long
  */
-@Entity
+
 public class LineItem {
 	private long expenseReportLineId;
 	private Charge charge;
@@ -23,8 +23,6 @@ public class LineItem {
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
 
-	@Id
-	@javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
 	public long getExpenseReportLineId() {
 		return this.expenseReportLineId;
 	}
@@ -33,8 +31,6 @@ public class LineItem {
 		this.expenseReportLineId = expenseReportLineId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "charge_id", nullable = false)
 	public Charge getCharge() {
 		return this.charge;
 	}
@@ -43,8 +39,6 @@ public class LineItem {
 		this.charge = charge;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "expense_report_id", nullable = false)
 	public ExpenseReport getExpenseReport() {
 		return this.expenseReport;
 	}
@@ -77,7 +71,6 @@ public class LineItem {
 		this.justification = justification;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "lineItem")
 	public Set<Attachment> getAttachments() {
 		return this.attachments;
 	}
