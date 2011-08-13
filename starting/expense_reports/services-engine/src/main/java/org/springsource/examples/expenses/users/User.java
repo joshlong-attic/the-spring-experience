@@ -3,12 +3,10 @@ package org.springsource.examples.expenses.users;
 import org.springsource.examples.expenses.charges.ChargeBatch;
 import org.springsource.examples.expenses.reports.ExpenseReport;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * Describes the actor that creates and is liable for expenses. A {@link User user }
  * must reconcile those {@link org.springsource.examples.expenses.charges.Charge charges}
  * in the {@link ExpenseReport expense reports} that he or she submits.
@@ -16,7 +14,6 @@ import java.util.Set;
  * @author Josh Long
  */
 public class User {
-	private long userId;
 	private User authorizingUser;
 	private String firstName;
 	private String lastName;
@@ -26,14 +23,15 @@ public class User {
 	private Set<ExpenseReport> expenseReports = new HashSet<ExpenseReport>(0);
 	private Set<CreditCard> creditCards = new HashSet<CreditCard>(0);
 	private Set<ChargeBatch> chargeBatchs = new HashSet<ChargeBatch>(0);
-	private Set<User> users = new HashSet<User>(0);
 
-	public long getUserId() {
-		return this.userId;
+	public User() {
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public User(String firstName, String lastName, String email, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 	}
 
 	public User getAuthorizingUser() {
@@ -72,8 +70,13 @@ public class User {
 		return this.password;
 	}
 
+	// todo
+	private String encrypePassword(String password) {
+		return password;
+	}
+
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = encrypePassword(password);
 	}
 
 	public double getExpensableAmountWithoutReceipt() {
@@ -109,11 +112,11 @@ public class User {
 		this.chargeBatchs = chargeBatchs;
 	}
 
-	public Set<User> getUsers() {
-		return this.users;
+	public CreditCard addCreditCard(String label) {
+		CreditCard card = new CreditCard(this, label);
+		this.getCreditCards().add(card);
+		return card;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+
 }

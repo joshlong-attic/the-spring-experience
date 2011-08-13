@@ -1,13 +1,12 @@
 package org.springsource.examples.expenses.reports;
 
 import org.springsource.examples.expenses.charges.Charge;
+import org.springsource.examples.expenses.fs.ManagedFile;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * A {@link LineItem} is basically an unjustified, unreconciled {@link Charge}.
  *
  * @author Josh Long
@@ -75,7 +74,12 @@ public class LineItem {
 		return this.attachments;
 	}
 
-	public void setAttachments(Set<Attachment> attachments) {
-		this.attachments = attachments;
+
+	public Attachment addAttachment(String description, ManagedFile file) {
+		Attachment attachment = new Attachment();
+		attachment.setManagedFile(file);
+		attachment.setDescription(description);
+		getAttachments().add(attachment);
+		return attachment;
 	}
 }

@@ -1,13 +1,12 @@
 package org.springsource.examples.expenses.charges;
 
 import org.springsource.examples.expenses.reports.LineItem;
+import org.springsource.examples.expenses.users.CreditCard;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * A {@link Charge} is a non reconciled charge that has come from some sort of credit card source. (The placeholder entity
  * to represent that source is {@link org.springsource.examples.expenses.users.CreditCard}.
  *
@@ -18,8 +17,17 @@ public class Charge {
 	private ChargeBatch chargeBatch;
 	private double chargeAmount;
 	private String description;
+	private CreditCard creditCard;
 	private Set<LineItem> lineItems = new HashSet<LineItem>(0);
 
+	public CreditCard getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(CreditCard creditCard) {
+
+		this.creditCard = creditCard;
+	}
 
 
 	public long getChargeId() {

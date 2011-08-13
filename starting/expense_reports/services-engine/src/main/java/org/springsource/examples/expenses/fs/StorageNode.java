@@ -1,6 +1,5 @@
 package org.springsource.examples.expenses.fs;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +16,7 @@ public class StorageNode {
 	private String mountPrefix;
 	private double totalByteCapacity;
 	private Set<ManagedFile> managedFiles = new HashSet<ManagedFile>(0);
+
 
 	public long getStorageNodeId() {
 		return this.storageNodeId;

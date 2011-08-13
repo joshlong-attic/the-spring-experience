@@ -1,20 +1,19 @@
 package org.springsource.examples.expenses.fs;
 
+import org.springframework.util.Assert;
 import org.springsource.examples.expenses.reports.Attachment;
 
-import javax.persistence.*;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
  * Metadata to describe a file, as written on a file system.
  *
  * @author Josh Long
  */
 
 public class ManagedFile {
-	private long managedFileId;
 	private StorageNode storageNode;
 	private String extension;
 	private double byteSize;
@@ -23,12 +22,21 @@ public class ManagedFile {
 	private int priority;
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
-	public long getManagedFileId() {
-		return this.managedFileId;
+	public ManagedFile(StorageNode storageNode, File file) {
+		Assert.notNull(file, "the file can't be null");
+		this.storageNode = storageNode;
+		this.originalFileName = file.getName();
+		this.byteSize = file.length();
+		this.extension = deriveExtension(file);
 	}
 
-	public void setManagedFileId(long managedFileId) {
-		this.managedFileId = managedFileId;
+	private String deriveExtension(File file) {
+		String name = file.getName();
+		if (name != null && name.lastIndexOf(".") != -1) {
+			String ext = name.substring(name.lastIndexOf("."));
+			return ext.toLowerCase();
+		}
+		return null;
 	}
 
 	public StorageNode getStorageNode() {
@@ -79,11 +87,4 @@ public class ManagedFile {
 		this.priority = priority;
 	}
 
-	public Set<Attachment> getAttachments() {
-		return this.attachments;
-	}
-
-	public void setAttachments(Set<Attachment> attachments) {
-		this.attachments = attachments;
-	}
 }
