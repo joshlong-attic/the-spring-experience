@@ -1,6 +1,5 @@
 package org.springsource.examples.expenses.reports;
 
-import org.springsource.examples.expenses.charges.Charge;
 import org.springsource.examples.expenses.fs.ManagedFile;
 
 import java.util.HashSet;
@@ -13,71 +12,96 @@ import java.util.Set;
  */
 
 public class LineItem {
-	private long expenseReportLineId;
-	private Charge charge;
+	private long lineItemId;
+	private long chargeId;
 	private ExpenseReport expenseReport;
 	private boolean personalExpense;
 	private boolean requiresReceipt;
-	private String justification;
+    private double amount ;
+
+    /**
+     * does this conflcit with {@link #requiresReceipt}?
+     */
+    private  boolean valid ;
+
+	private String category ;
+
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
+    public double getAmount() {
+        return amount;
+    }
 
-	public long getExpenseReportLineId() {
-		return this.expenseReportLineId;
-	}
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
-	public void setExpenseReportLineId(long expenseReportLineId) {
-		this.expenseReportLineId = expenseReportLineId;
-	}
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
 
-	public Charge getCharge() {
-		return this.charge;
-	}
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
-	public void setCharge(Charge charge) {
-		this.charge = charge;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	public ExpenseReport getExpenseReport() {
-		return this.expenseReport;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public void setExpenseReport(ExpenseReport expenseReport) {
-		this.expenseReport = expenseReport;
-	}
+    public long getChargeId() {
+        return chargeId;
+    }
 
-	public boolean isPersonalExpense() {
-		return this.personalExpense;
-	}
+    public void setChargeId(long chargeId) {
+        this.chargeId = chargeId;
+    }
 
-	public void setPersonalExpense(boolean personalExpense) {
-		this.personalExpense = personalExpense;
-	}
+    public ExpenseReport getExpenseReport() {
+        return expenseReport;
+    }
 
-	public boolean isRequiresReceipt() {
-		return this.requiresReceipt;
-	}
+    public void setExpenseReport(ExpenseReport expenseReport) {
+        this.expenseReport = expenseReport;
+    }
 
-	public void setRequiresReceipt(boolean requiresReceipt) {
-		this.requiresReceipt = requiresReceipt;
-	}
+    public long getLineItemId() {
+        return lineItemId;
+    }
 
-	public String getJustification() {
-		return this.justification;
-	}
+    public void setLineItemId(long lineItemId) {
+        this.lineItemId = lineItemId;
+    }
 
-	public void setJustification(String justification) {
-		this.justification = justification;
-	}
+    public boolean isPersonalExpense() {
+        return personalExpense;
+    }
 
-	public Set<Attachment> getAttachments() {
-		return this.attachments;
-	}
+    public void setPersonalExpense(boolean personalExpense) {
+        this.personalExpense = personalExpense;
+    }
 
+    public boolean isRequiresReceipt() {
+        return requiresReceipt;
+    }
 
-	public Attachment addAttachment(String description, ManagedFile file) {
-		Attachment attachment = new Attachment();
-		attachment.setManagedFile(file);
+    public void setRequiresReceipt(boolean requiresReceipt) {
+        this.requiresReceipt = requiresReceipt;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    public Attachment addAttachment(String description, ManagedFile file) {
+		Attachment attachment = new Attachment( file);
 		attachment.setDescription(description);
 		getAttachments().add(attachment);
 		return attachment;

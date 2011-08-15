@@ -1,102 +1,120 @@
 package org.springsource.examples.expenses.reports;
 
 import org.springframework.util.Assert;
-import org.springsource.examples.expenses.charges.Charge;
-import org.springsource.examples.expenses.charges.ChargeBatch;
-import org.springsource.examples.expenses.users.User;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A collection of {@link LineItem}s, which in turn are merely reconciled, imported
- * {@link org.springsource.examples.expenses.charges.Charge charges} from
- * a {@link org.springsource.examples.expenses.charges.ChargeBatch charge batch}.
- *
  * @author Josh Long
  */
 
 public class ExpenseReport {
-	private long expenseReportId;
-	private User user;
-	private ExpenseReportState state;
-	private Set<LineItem> lineItems = new HashSet<LineItem>(0);
 
-	/**
-	 * which states can the report be in?
-	 */
-	public static enum ExpenseReportState {
-		FINAL, DRAFT
-	}
+    /**
+     * the validation strategy
+     */
+    private LineItemValidationStrategy lineItemValidationStrategy = new DefaultLineItemValidationStrategy();
 
-	public ExpenseReport(User user, ExpenseReportState state) {
-		this.user = user;
-		this.state = state;
-		Assert.notNull(this.state, "the 'state' can't be null");
-	}
+    /**
+     * the id of this expense report
+     */
+    private long expenseReportId;
 
-	public ExpenseReport(User usr) {
-		this(usr, ExpenseReportState.DRAFT);
-	}
+    /**
+     * the user ID
+     */
+    private String userId ;
 
-	public long getExpenseReportId() {
-		return this.expenseReportId;
-	}
+    /**
+     * the state of the {@link ExpenseReport}
+     */
+    private ExpenseReportState state;
 
-	public void setExpenseReportId(long expenseReportId) {
-		this.expenseReportId = expenseReportId;
-	}
+    /**
+     *  the line items for this expense report
+     */
+    private Set<LineItem> lineItems = new HashSet<LineItem>();
 
-	public User getUser() {
-		return this.user;
-	}
+    /**
+     * which states can the report be in?
+     */
+    public static enum ExpenseReportState {
+        New, PendingReview, Rejected , Closed
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public ExpenseReport(String  userId, ExpenseReportState state) {
+        this.state = state;
+        this.userId = userId;
+        Assert.notNull(this.state, "the 'state' can't be null");
+        Assert.notNull(this.userId,  "the 'userId' can't be null");
+    }
 
-	public void markAsFinal() {
-		this.state = ExpenseReportState.FINAL;
-	}
+    public ExpenseReport(String  userId ) {
+        this(userId, ExpenseReportState.New);
+    }
 
-	public void markAsDraft() {
-		this.state = ExpenseReportState.DRAFT;
-	}
+    public long getExpenseReportId() {
+        return expenseReportId;
+    }
 
-	public Set<LineItem> getLineItems() {
-		return this.lineItems;
-	}
+    public void setExpenseReportId(long expenseReportId) {
+        this.expenseReportId = expenseReportId;
+    }
 
-	public void setLineItems(Set<LineItem> lineItems) {
-		this.lineItems = lineItems;
-	}
+    public Set<LineItem> getLineItems() {
+        return lineItems;
+    }
 
-	public static ExpenseReport buildExpenseReportFromChargeBatch(LineItemValidationStrategy lineItemValidationStrategy, User user, ChargeBatch batch) {
-		ExpenseReport expenseReport = new ExpenseReport(user);
-		for (Charge c : batch.getCharges()) {
-			expenseReport.addLineItemFromCharge(lineItemValidationStrategy, c);
-		}
-		expenseReport.markAsDraft();
-		return expenseReport;
-	}
+    public void setLineItemValidationStrategy(LineItemValidationStrategy lineItemValidationStrategy) {
+        this.lineItemValidationStrategy = lineItemValidationStrategy;
+    }
 
-	public LineItem addLineItem(LineItemValidationStrategy lineItemValidationStrategy, LineItem li) {
-		if (lineItemValidationStrategy.lineItemRequiresReceipt(li)) {
-			li.setRequiresReceipt(true);
-		}
+    public ExpenseReportState getState() {
+        return state;
+    }
 
-		getLineItems().add(li);
+    /**
+     * reassess the state of this entity
+     *
+     * @return is the {@code ExpenseReport} in a known state.
+     *
+     */
+    protected boolean validate(){
+       boolean valid = true;
+        for (LineItem li : getLineItems()) {
+            boolean liValid = lineItemValidationStrategy.lineItemRequiresReceipt(li) && (li.getAttachments().size() == 0);
+            li.setRequiresReceipt(liValid);
+            if (!liValid)
+                valid = false;
+        }
+        return valid;
+    }
 
-		return li;
-	}
+    public boolean isValid() {
+      return validate();
+    }
 
-	//todo i dont like the idea of this LineItemValidationStrategy
-	// todo being passed around? maybe some sort of threadlocal holder?
-	public LineItem addLineItemFromCharge(LineItemValidationStrategy lineItemValidationStrategy, Charge charge) {
-		LineItem li = new LineItem();
-		li.setCharge(charge);
-		li.setExpenseReport(this);
+    public LineItem addLineItem(LineItem li) {
+        getLineItems().add(li);
+        validate();
+        return li;
+    }
 
-		return addLineItem(lineItemValidationStrategy, li);
-	}
+    /**
+     * We have a {@link Charge charge} entity, but this model should not be afflcited with any knowledge of that entity.
+     *
+     * It is merely the interface or boundry entity between systems. This system doesn't have a concept of a charge entity
+     *
+     * @param chargeId the ID fo the charge (which can then be used to later consult the details of the charge)
+     * @param chargeAmt the amount of the charge (copied wholesale from the charge)
+     * @return a {@link LineItem}
+     */
+    public LineItem addLineItemFromCharge(long chargeId, double chargeAmt) {
+        LineItem li = new LineItem();
+        li.setChargeId(chargeId);
+        li.setExpenseReport(this);
+        li.setAmount(chargeAmt);
+        return addLineItem(li);
+    }
 }

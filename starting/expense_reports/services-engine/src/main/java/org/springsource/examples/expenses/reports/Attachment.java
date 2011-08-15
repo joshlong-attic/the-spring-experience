@@ -9,7 +9,6 @@ import org.springsource.examples.expenses.fs.ManagedFile;
  *
  * @author Josh Long
  */
-
 public class Attachment {
 
 	private long attachmentId;
@@ -17,6 +16,10 @@ public class Attachment {
 	private ManagedFile managedFile;
 
 	private String description;
+
+    public Attachment( ManagedFile file ){
+        this.managedFile = file ;
+    }
 
 	public long getAttachmentId() {
 		return this.attachmentId;

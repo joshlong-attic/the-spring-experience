@@ -14,17 +14,14 @@ import java.util.Set;
  */
 
 public class ManagedFile {
-	private StorageNode storageNode;
 	private String extension;
 	private double byteSize;
 	private String originalFileName;
 	private boolean ready;
 	private int priority;
-	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
-	public ManagedFile(StorageNode storageNode, File file) {
+	public ManagedFile( File file) {
 		Assert.notNull(file, "the file can't be null");
-		this.storageNode = storageNode;
 		this.originalFileName = file.getName();
 		this.byteSize = file.length();
 		this.extension = deriveExtension(file);
@@ -39,13 +36,6 @@ public class ManagedFile {
 		return null;
 	}
 
-	public StorageNode getStorageNode() {
-		return this.storageNode;
-	}
-
-	public void setStorageNode(StorageNode storageNode) {
-		this.storageNode = storageNode;
-	}
 
 	public String getExtension() {
 		return this.extension;

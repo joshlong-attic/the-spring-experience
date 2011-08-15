@@ -9,7 +9,7 @@ public class DefaultLineItemValidationStrategy implements LineItemValidationStra
 	@Override
 	public boolean lineItemRequiresReceipt(LineItem item) {
 		Assert.notNull(item, "the 'lineItem' must not be null");
-		double charge = item.getCharge().getChargeAmount();
+		double charge = item.getAmount();
 		return (charge > maxAbsoluteValue);
 	}
 }
