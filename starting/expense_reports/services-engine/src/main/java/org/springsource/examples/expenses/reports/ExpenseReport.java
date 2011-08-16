@@ -80,6 +80,8 @@ public class ExpenseReport {
      *
      * @return is the {@code ExpenseReport} in a known state.
      */
+     /* todo fixme after refactoring!
+
     protected boolean validate() {
         boolean valid = true;
         for (LineItem lineItem : getLineItems()) {
@@ -91,33 +93,21 @@ public class ExpenseReport {
         }
         return valid;
     }
+    */
 
     public boolean isValid() {
-        return validate();
+	    // todo fixme after refactoring
+	    return false ;
+     //    return validate();
     }
 
-    public LineItem addLineItem(LineItem li) {
-        getLineItems().add(li);
-        validate();
-        return li;
-    }
+   public LineItem createLineItem (Charge charge ){
+	  LineItem item  = new LineItem(charge.getChargeId(), charge.getAmount());
+	   item.setCategory(charge.getVendor()) ;
+	   getLineItems().add(item) ;
+	   return item ;
+   }
 
-    /**
-     * We have a {@link Charge charge} entity, but this model should not be afflcited with any knowledge of that entity.
-     * <p/>
-     * It is merely the interface or boundry entity between systems. This system doesn't have a concept of a charge entity
-     *
-     * @param chargeId  the ID fo the charge (which can then be used to later consult the details of the charge)
-     * @param chargeAmt the amount of the charge (copied wholesale from the charge)
-     * @return a {@link LineItem}
-     */
-    public LineItem addLineItemFromCharge(long chargeId, double chargeAmt) {
-        LineItem li = new LineItem();
-        li.setChargeId(chargeId);
-        li.setExpenseReport(this);
-        li.setAmount(chargeAmt);
-        return addLineItem(li);
-    }
 
     public void fileReport (){
         Assert.isTrue(isValid(),"you can't submit an ExpenseReport unless it's valid");

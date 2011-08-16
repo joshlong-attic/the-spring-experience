@@ -1,11 +1,8 @@
 package org.springsource.examples.expenses.fs;
 
 import org.springframework.util.Assert;
-import org.springsource.examples.expenses.reports.Attachment;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Metadata to describe a file, as written on a file system.

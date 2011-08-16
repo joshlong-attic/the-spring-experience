@@ -9,31 +9,24 @@ import org.springsource.examples.expenses.fs.ManagedFile;
  */
 
 public class LineItem {
+
 	private long lineItemId;
-	private long chargeId;
-	private Attachment receipt;
+	private ManagedFile receipt;
 	private String category;
 	private double amount;
+	private long chargeId;
 
 	public LineItem(long chargeId, double amount) {
 		this.chargeId = chargeId;
 		this.amount = amount;
 	}
 
+	public ManagedFile getReceipt() {
+		return receipt;
+	}
+
 	public double getAmount() {
 		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
-	public void setReceipt(Attachment attachment) {
-		this.receipt = attachment;
-	}
-
-	public Attachment getReceipt() {
-		return receipt;
 	}
 
 	public String getCategory() {
@@ -48,20 +41,11 @@ public class LineItem {
 		return chargeId;
 	}
 
-	public void setChargeId(long chargeId) {
-		this.chargeId = chargeId;
-	}
-
 	public long getLineItemId() {
 		return lineItemId;
 	}
 
-	public void setLineItemId(long lineItemId) {
-		this.lineItemId = lineItemId;
-	}
 
-	public void setReceipt(String description, ManagedFile file) {
-		Attachment attachment = new Attachment(file);
-		attachment.setDescription(description);
-	}
+
+
 }

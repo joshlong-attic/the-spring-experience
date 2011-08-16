@@ -12,7 +12,20 @@ public class Charge {
 	private double amount;
 	private String vendor ;
 
-	public Charge() {
+	public boolean isReconciled() {
+		return reconciled;
+	}
+
+	public long getChargeId() {
+		return chargeId;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public String getVendor() {
+		return vendor;
 	}
 
 	public Charge(boolean reconciled, long chargeId, double amount, String vendor) {
@@ -21,36 +34,5 @@ public class Charge {
 		this.amount = amount;
 		this.vendor = vendor;
 	}
-
-	public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public long getChargeId() {
-        return chargeId;
-    }
-
-    public void setChargeId(long chargeId) {
-        this.chargeId = chargeId;
-    }
-
-    public boolean isReconciled() {
-        return reconciled;
-    }
-
-    public void setReconciled(boolean reconciled) {
-        this.reconciled = reconciled;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
+ 
 }
