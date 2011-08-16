@@ -41,7 +41,6 @@ public class ExpenseReport {
 		for (Expense expense : getExpenses()) {
 			if (!expenseValidationStrategy.validate(expense)) {
 				valid = false;
-				// todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
 			}
 		}
 		return valid;
