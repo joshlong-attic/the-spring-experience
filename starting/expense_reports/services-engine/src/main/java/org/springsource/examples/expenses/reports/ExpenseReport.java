@@ -36,8 +36,9 @@ public class ExpenseReport {
 
 	public Expense addExpense(Charge charge) {
 
-		if(!this.state.equals(ExpenseReportState.OPEN))
+		if (!this.state.equals(ExpenseReportState.OPEN)) {
 			throw new IllegalStateException("you can't add expenses to a closed expense report.");
+		}
 
 		Expense item = new Expense(charge.getId(), charge.getAmount());
 		item.setCategory(charge.getCategory());
@@ -46,11 +47,11 @@ public class ExpenseReport {
 	}
 
 	public boolean validate() {
-		boolean valid =  getExpenses().size() > 0 ;
+		boolean valid = getExpenses().size() > 0;
 		for (Expense lineItem : getExpenses()) {
 			if (!expenseValidationStrategy.validate(lineItem)) {
-				valid=false;
-				lineItem.flag("receipt-required"); // todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
+				valid = false;
+				lineItem.flag("Receipt required"); // todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
 			} else {
 				lineItem.unflag();
 			}

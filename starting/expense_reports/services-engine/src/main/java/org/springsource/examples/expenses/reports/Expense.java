@@ -14,17 +14,17 @@ public class Expense {
 	private double amount;
 	private Long chargeId;
 	private ManagedFile receipt;
-	private boolean error;
-	private String errorDescription;
+	private boolean flagged;
+	private String flag;
 
 	public void flag(String mesg) {
-		this.error = true;
-		this.errorDescription = mesg;
+		this.flagged = true;
+		this.flag = mesg;
 	}
 
 	public void unflag() {
-		this.error =false;
-		this.errorDescription = null ;
+		this.flagged =false;
+		this.flag = null ;
 	}
 
 	public void setCategory(String category) {
@@ -56,19 +56,17 @@ public class Expense {
 		this.receipt = receipt;
 	}
 
-	public boolean isInError() {
-		return error;
+	public boolean isFlagged() {
+		return flagged;
 	}
 
-	public void setError(boolean error) {
-		this.error = error;
+	public void setFlagged(boolean flagged) {
+		this.flagged = flagged;
 	}
 
-	public String getErrorDescription() {
-		return errorDescription;
+	public String getFlag(){
+	    return flag;
 	}
 
-	public void setErrorDescription(String errorDescription) {
-		this.errorDescription = errorDescription;
-	}
+
 }

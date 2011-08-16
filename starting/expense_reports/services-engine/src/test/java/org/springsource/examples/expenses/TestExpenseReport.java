@@ -35,14 +35,14 @@ public class TestExpenseReport {
 	}
 
 	@Test
-	public void testExpensiveExpenseValidation () throws Throwable  {
+	public void testExpensiveExpenseValidation() throws Throwable {
 		ExpenseReport expenseReport = new ExpenseReport();
 		expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
 	}
 
 	@Test
-	public void testExpensiveExpenseReconciliation () throws Throwable {
+	public void testExpensiveExpenseReconciliation() throws Throwable {
 		ExpenseReport expenseReport = new ExpenseReport();
 		Expense expense = expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
@@ -60,13 +60,28 @@ public class TestExpenseReport {
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReport.ExpenseReportState.IN_REVIEW));
 
 		// approver spots a bad expense
-		Set<Expense> expenseSet  = expenseReport.getExpenses();
-		Expense expense  =expenseSet.iterator().next()  ;
+		Set<Expense> expenseSet = expenseReport.getExpenses();
+		Expense expense = expenseSet.iterator().next();
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
-		expense.flag( error );
-		Assert.assertTrue(expense.isInError());
+		expense.flag(error);
+		Assert.assertTrue(expense.isFlagged());
 		Assert.assertTrue(expense.getErrorDescription().equals(error));
 	}
 
+	@Test
+	public void testRejectionAndReconciliation () throws Throwable {
+
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		expenseReport.setPendingReview();
+		Set<Expense> expenseSet = expenseReport.getExpenses();
+		Expense expense = expenseSet.iterator().next();
+		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
+		expense.flag(error);
+		Assert.assertTrue(expense.isFlagged());
+		Assert.assertTrue(expense.getErrorDescription().equals(error));
+
+
+	}
 
 }
