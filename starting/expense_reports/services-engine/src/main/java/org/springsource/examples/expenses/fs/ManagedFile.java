@@ -16,6 +16,11 @@ public class ManagedFile {
 	private String originalFileName;
 	private boolean ready;
 
+	public ManagedFile(String extension, double byteSize, String originalFileName ) {
+		this.extension = extension;
+		this.byteSize = byteSize;
+		this.originalFileName = originalFileName;
+	}
 
 	public ManagedFile( File file) {
 		Assert.notNull(file, "the file can't be null");
@@ -23,6 +28,7 @@ public class ManagedFile {
 		this.byteSize = file.length();
 		this.extension = deriveExtension(file);
 	}
+
 
 	private String deriveExtension(File file) {
 		String name = file.getName();
@@ -36,13 +42,6 @@ public class ManagedFile {
 
 	public String getExtension() {
 		return this.extension;
-	}
-
-
-	public ManagedFile(String extension, double byteSize, String originalFileName ) {
-		this.extension = extension;
-		this.byteSize = byteSize;
-		this.originalFileName = originalFileName;
 	}
 
 	public double getByteSize() {

@@ -1,7 +1,5 @@
 package org.springsource.examples.expenses.reports;
 
-import org.springframework.util.Assert;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,11 +21,6 @@ public class ExpenseReport {
 	private long id;
 
 	/**
-	 * the user ID
-	 */
-	private String userId;
-
-	/**
 	 * the state of the {@link ExpenseReport}
 	 */
 	private ExpenseReportState state;
@@ -44,15 +37,9 @@ public class ExpenseReport {
 		New, PendingReview, Closed
 	}
 
-	public ExpenseReport(String userId, ExpenseReportState state) {
-		this.state = state;
-		this.userId = userId;
-		Assert.notNull(this.state, "the 'state' can't be null");
-		Assert.notNull(this.userId, "the 'userId' can't be null");
-	}
-
 	public ExpenseReport(String userId) {
-		this(userId, ExpenseReportState.New);
+		this.state =ExpenseReportState.New;
+
 	}
 
 	public long getId() {
@@ -99,7 +86,7 @@ public class ExpenseReport {
 
 	public Expense createLineItem(Charge charge) {
 		Expense item = new Expense(charge.getChargeId(), charge.getAmount());
-		item.setCategory(charge.getVendor());
+		item.setCategory(charge.getCategory());
 		getExpenses().add(item);
 		return item;
 	}
@@ -118,7 +105,7 @@ public class ExpenseReport {
 
 	public void closeReport() {
 		if (!isValid()) {
-			throw new IllegalStateException("the report's not valid and can't be filed.");
+			throw new IllegalStateException("the report's not valid and can't be closed.");
 		}
 		this.state = ExpenseReportState.Closed;
 	}

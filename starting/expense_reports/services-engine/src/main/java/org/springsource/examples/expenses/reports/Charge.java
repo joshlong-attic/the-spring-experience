@@ -10,7 +10,7 @@ public class Charge {
     private boolean reconciled ;
 	private long chargeId;
 	private double amount;
-	private String vendor ;
+	private String category;
 
 	public boolean isReconciled() {
 		return reconciled;
@@ -24,15 +24,15 @@ public class Charge {
 		return amount;
 	}
 
-	public String getVendor() {
-		return vendor;
+	public String getCategory() {
+		return category;
 	}
 
-	public Charge(boolean reconciled, long chargeId, double amount, String vendor) {
+	public Charge(boolean reconciled, long chargeId, double amount, String category) {
 		this.reconciled = reconciled;
 		this.chargeId = chargeId;
 		this.amount = amount;
-		this.vendor = vendor;
+		this.category = category;
 	}
  
 }
