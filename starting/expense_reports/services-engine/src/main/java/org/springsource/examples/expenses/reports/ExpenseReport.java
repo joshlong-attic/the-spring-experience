@@ -34,8 +34,7 @@ public class ExpenseReport {
 	public boolean validate() {
 		boolean valid = true;
 		for (Expense lineItem : getExpenses()) {
-			boolean needsReceipt = expenseValidationStrategy.validate(lineItem)   ;
-			if (needsReceipt) {
+			if (!expenseValidationStrategy.validate(lineItem)) {
 				valid = false;
 			}
 		}

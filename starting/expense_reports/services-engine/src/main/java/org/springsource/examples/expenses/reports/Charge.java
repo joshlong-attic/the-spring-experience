@@ -2,12 +2,13 @@ package org.springsource.examples.expenses.reports;
 
 
 /**
- *  a {@link Charge} is a free-standing entity that represents the boundry between an external credit card system and the
- *  expense report system.  Essentially, charges may be selected and then added into {@link Expense}s.
+ * a {@link Charge} is a free-standing entity that represents the boundry between an external credit card system and the
+ * expense report system.  Essentially, charges may be selected and then added into {@link Expense}s.
+ *
  * @author Josh Long
  */
 public class Charge {
-    private boolean reconciled ;
+	private boolean reconciled;
 	private double amount;
 	private String category;
 	private Long id;
@@ -34,5 +35,5 @@ public class Charge {
 		this.amount = amount;
 		this.category = category;
 	}
- 
+
 }

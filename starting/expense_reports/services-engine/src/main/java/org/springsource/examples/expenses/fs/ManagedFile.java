@@ -14,14 +14,16 @@ public class ManagedFile {
 	private String originalFileName;
 	private boolean ready;
 
-	public ManagedFile(String extension, double byteSize, String originalFileName ) {
+	public ManagedFile(String extension, double byteSize, String originalFileName) {
 		this.extension = extension;
 		this.byteSize = byteSize;
 		this.originalFileName = originalFileName;
 	}
 
-	public ManagedFile( File file) {
-		if(file == null ) throw new IllegalArgumentException("the file can't be null");
+	public ManagedFile(File file) {
+		if (file == null) {
+			throw new IllegalArgumentException("the file can't be null");
+		}
 		this.originalFileName = file.getName();
 		this.byteSize = file.length();
 		this.extension = deriveExtension(file);
@@ -57,7 +59,6 @@ public class ManagedFile {
 	public void setReady(boolean ready) {
 		this.ready = ready;
 	}
-
 
 
 }

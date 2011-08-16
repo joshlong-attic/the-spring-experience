@@ -5,7 +5,7 @@ package org.springsource.examples.expenses.reports;
  */
 public class DefaultExpenseValidationStrategy implements ExpenseValidationStrategy {
 
-	private double maxAbsoluteValue ;
+	private double maxAbsoluteValue;
 
 	public DefaultExpenseValidationStrategy(double maxAbsoluteValue) {
 		this.maxAbsoluteValue = maxAbsoluteValue;
@@ -17,9 +17,11 @@ public class DefaultExpenseValidationStrategy implements ExpenseValidationStrate
 
 	@Override
 	public boolean validate(Expense item) {
-		if(item == null ) throw new IllegalArgumentException("the item can't be null");
+		if (item == null) {
+			throw new IllegalArgumentException("the item can't be null");
+		}
 		double charge = item.getAmount();
-		boolean invalid = (( item.getReceipt() == null || charge > maxAbsoluteValue));
+		boolean invalid = ((item.getReceipt() == null || charge > maxAbsoluteValue));
 		return !invalid;
 	}
 }
