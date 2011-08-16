@@ -3,19 +3,25 @@ package org.springsource.examples.expenses;
 
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
+import org.springsource.examples.expenses.reports.Charge;
 import org.springsource.examples.expenses.reports.ExpenseReport;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class TestExpenseReport {
 
 	private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
 
+	Collection<Charge> charges = Arrays.asList();
+
 	@Test
 	public void testSubmittingExpenseReport() throws Throwable {
 
 		ExpenseReport expenseReport = new ExpenseReport();
-		expenseReport.addExpense()
+		for(Charge c : charges)
+			expenseReport.addExpense(c ) ;
 
 		/*
 
@@ -38,7 +44,7 @@ public class TestExpenseReport {
 
 			for (String userId : users) {
 				ExpenseReport expenseReport = new ExpenseReport(userId);
-				Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
+				Assert.assertTrue("new reports are always 'OPEN'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.OPEN));
 				for (int i = 0; i < 5; i++) {
 					expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
 				}
@@ -71,7 +77,7 @@ public class TestExpenseReport {
 
         for (String userId : users) {
             ExpenseReport expenseReport = new ExpenseReport(userId);
-            Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
+            Assert.assertTrue("new reports are always 'OPEN'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.OPEN));
             for (int i = 0; i < 5; i++) {
                 expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
             }

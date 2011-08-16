@@ -10,14 +10,14 @@ import java.util.Set;
  */
 public class ExpenseReport {
 
-	private ExpenseReportState state = ExpenseReportState.NEW;
+	private ExpenseReportState state = ExpenseReportState.OPEN;
 
 	private Set<Expense> expenses = new HashSet<Expense>();
 
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
 	public static enum ExpenseReportState {
-		NEW, PENDING_REVIEW, CLOSED
+		OPEN, IN_REVIEW, CLOSED
 	}
 
 	public Set<Expense> getExpenses() {
@@ -32,6 +32,10 @@ public class ExpenseReport {
 	}
 
 	public Expense addExpense(Charge charge) {
+
+		if(!this.state.equals(ExpenseReportState.OPEN))
+			throw new IllegalStateException("you can't add expenses to a closed expense report");
+
 		Expense item = new Expense(charge.getId(), charge.getAmount());
 		item.setCategory(charge.getCategory());
 		getExpenses().add(item);
@@ -52,11 +56,11 @@ public class ExpenseReport {
 		if (!validate()) {
 			throw new IllegalStateException("the report's not valid and can't be filed.");
 		}
-		this.state = ExpenseReportState.PENDING_REVIEW;
+		this.state = ExpenseReportState.IN_REVIEW;
 	}
 
-	public void setNew() {
-		this.state = ExpenseReportState.NEW;
+	public void setOpen() {
+		this.state = ExpenseReportState.OPEN;
 	}
 
 	public void setClosed() {
