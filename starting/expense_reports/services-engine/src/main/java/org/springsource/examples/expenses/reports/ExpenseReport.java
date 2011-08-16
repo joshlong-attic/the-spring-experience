@@ -16,22 +16,12 @@ public class ExpenseReport {
 
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
-	private String reasonForRejection;
-
-	public static enum ExpenseReportState {
-		OPEN, IN_REVIEW, CLOSED
-
-	}
-
 	public Set<Expense> getExpenses() {
 		return expenses;
 	}
 
 	public ExpenseReportState getState() {
 		return state;
-	}
-
-	public ExpenseReport() {
 	}
 
 	public Expense addExpense(Charge charge) {
@@ -48,12 +38,10 @@ public class ExpenseReport {
 
 	public boolean validate() {
 		boolean valid = getExpenses().size() > 0;
-		for (Expense lineItem : getExpenses()) {
-			if (!expenseValidationStrategy.validate(lineItem)) {
+		for (Expense expense : getExpenses()) {
+			if (!expenseValidationStrategy.validate(expense)) {
 				valid = false;
-				lineItem.flag("Receipt required"); // todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
-			} else {
-				lineItem.unflag();
+				// todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
 			}
 		}
 		return valid;

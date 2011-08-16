@@ -21,18 +21,27 @@ public class DefaultExpenseValidationStrategy implements ExpenseValidationStrate
 			throw new IllegalArgumentException("the item can't be null");
 		}
 		double charge = item.getAmount();
-		boolean receiptMissing = item.getReceipt()  == null ;
-		boolean requiresReceipt = charge > maxAbsoluteValue ;
-		boolean invalid = false ;
-		if(requiresReceipt && receiptMissing)
-			invalid = true ;
+		boolean receiptMissing = item.getReceipt() == null;
+		boolean requiresReceipt = charge > maxAbsoluteValue;
+		boolean invalid = false;
 
-		if( requiresReceipt && !receiptMissing)
-			invalid = false ;
+		if (requiresReceipt && receiptMissing) {
+			item.flag("Receipt required");
+			invalid = true;
+		}
 
-		if(!requiresReceipt )
+		if (requiresReceipt && !receiptMissing) {
 			invalid = false;
+		}
 
-		return !invalid;
+		if (!requiresReceipt) {
+			invalid = false;
+		}
+
+		boolean valid = !invalid;
+		if (valid) {
+			item.unflag();
+		}
+		return valid;
 	}
 }
