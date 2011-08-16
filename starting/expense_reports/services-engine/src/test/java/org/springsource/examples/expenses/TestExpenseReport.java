@@ -70,6 +70,7 @@ public class TestExpenseReport {
                 expenseReport.fileReport();
                 Assert.fail("we should never be able to file an invalid report");
             } catch (Throwable th) {
+                // noop
             }
 
             Assert.assertTrue("the expense report's no longer valid", !expenseReport.isValid());
