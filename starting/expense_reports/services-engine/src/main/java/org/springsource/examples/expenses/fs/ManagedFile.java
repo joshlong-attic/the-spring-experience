@@ -1,7 +1,5 @@
 package org.springsource.examples.expenses.fs;
 
-import org.springframework.util.Assert;
-
 import java.io.File;
 
 /**
@@ -23,7 +21,7 @@ public class ManagedFile {
 	}
 
 	public ManagedFile( File file) {
-		Assert.notNull(file, "the file can't be null");
+		if(file == null ) throw new IllegalArgumentException("the file can't be null");
 		this.originalFileName = file.getName();
 		this.byteSize = file.length();
 		this.extension = deriveExtension(file);
