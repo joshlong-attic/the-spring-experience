@@ -1,15 +1,6 @@
 package org.springsource.examples.expenses;
 
 
-import org.apache.commons.lang.SystemUtils;
-import org.junit.Assert;
-import org.junit.Test;
-import org.springsource.examples.expenses.fs.ManagedFile;
-import org.springsource.examples.expenses.reports.ExpenseReport;
-import org.springsource.examples.expenses.reports.LineItem;
-
-import java.io.File;
-
 public class TestExpenseReport {
 
    /* private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
@@ -32,7 +23,7 @@ public class TestExpenseReport {
             Assert.assertTrue("the expense report should be invalid", !expenseReport.isValid());
 
             int i = 0;
-            for (LineItem lineItem : expenseReport.getLineItems()) {
+            for (Expense lineItem : expenseReport.getExpenses()) {
                 i += 1;
                 *//*if (lineItem.isRequiresReceipt()) {
                     ManagedFile receipt = new ManagedFile(new File(desktop, i + "_receipt.jpg"));
@@ -72,10 +63,10 @@ public class TestExpenseReport {
 
             Assert.assertTrue("the expense report's no longer valid", !expenseReport.isValid());
 
-            *//*LineItem li = (LineItem) CollectionUtils.find(expenseReport.getLineItems(), new Predicate() {
+            *//*Expense li = (Expense) CollectionUtils.find(expenseReport.getExpenses(), new Predicate() {
                 @Override
                 public boolean evaluate(Object object) {
-                    LineItem li = (LineItem) object;
+                    Expense li = (Expense) object;
                     return li.isRequiresReceipt();
                 }
             });

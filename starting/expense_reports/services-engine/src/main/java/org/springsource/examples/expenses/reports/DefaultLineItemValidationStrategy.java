@@ -7,15 +7,18 @@ import org.springframework.util.Assert;
  */
 public class DefaultLineItemValidationStrategy implements LineItemValidationStrategy {
 
-	private double maxAbsoluteValue = 25.0d;
+	private double maxAbsoluteValue ;
 
-    public void setMaxAbsoluteValue(double mav){
-        Assert.isTrue(mav > 0 );
-        this.maxAbsoluteValue = mav;
-    }
+	public DefaultLineItemValidationStrategy(double maxAbsoluteValue) {
+		this.maxAbsoluteValue = maxAbsoluteValue;
+	}
+
+	public DefaultLineItemValidationStrategy( ) {
+		this(25.0d);
+	}
 
 	@Override
-	public boolean lineItemRequiresReceipt(LineItem item) {
+	public boolean validate(Expense item) {
 		Assert.notNull(item, "the 'lineItem' must not be null");
 		double charge = item.getAmount();
 		return (charge > maxAbsoluteValue);

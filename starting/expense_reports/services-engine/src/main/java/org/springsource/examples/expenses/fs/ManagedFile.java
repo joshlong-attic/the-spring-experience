@@ -15,7 +15,7 @@ public class ManagedFile {
 	private double byteSize;
 	private String originalFileName;
 	private boolean ready;
-	private int priority;
+
 
 	public ManagedFile( File file) {
 		Assert.notNull(file, "the file can't be null");
@@ -38,24 +38,19 @@ public class ManagedFile {
 		return this.extension;
 	}
 
-	public void setExtension(String extension) {
+
+	public ManagedFile(String extension, double byteSize, String originalFileName ) {
 		this.extension = extension;
+		this.byteSize = byteSize;
+		this.originalFileName = originalFileName;
 	}
 
 	public double getByteSize() {
 		return this.byteSize;
 	}
 
-	public void setByteSize(double byteSize) {
-		this.byteSize = byteSize;
-	}
-
 	public String getOriginalFileName() {
 		return this.originalFileName;
-	}
-
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
 	}
 
 	public boolean isReady() {
@@ -66,12 +61,6 @@ public class ManagedFile {
 		this.ready = ready;
 	}
 
-	public int getPriority() {
-		return this.priority;
-	}
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
 
 }

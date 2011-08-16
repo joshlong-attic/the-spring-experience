@@ -9,7 +9,7 @@ public interface LineItemValidationStrategy {
 	 * @param item the expenseReport to validate
 	 * @return whether
 	 */
-	boolean lineItemRequiresReceipt(LineItem item);
+	boolean validate(Expense item);
 
 
 }
