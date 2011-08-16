@@ -34,7 +34,7 @@ public class ExpenseReport {
 	public Expense addExpense(Charge charge) {
 
 		if(!this.state.equals(ExpenseReportState.OPEN))
-			throw new IllegalStateException("you can't add expenses to a closed expense report");
+			throw new IllegalStateException("you can't add expenses to a closed expense report.");
 
 		Expense item = new Expense(charge.getId(), charge.getAmount());
 		item.setCategory(charge.getCategory());
