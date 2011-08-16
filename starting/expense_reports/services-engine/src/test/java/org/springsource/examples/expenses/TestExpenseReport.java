@@ -56,7 +56,7 @@ public class TestExpenseReport {
                 }*//*
             }
             Assert.assertTrue("after corrections, the report should be valid now", expenseReport.isValid());
-            expenseReport.fileReport();
+            expenseReport.setPendingReview();
             Assert.assertTrue(expenseReport.isValid());
         }
     }
@@ -79,7 +79,7 @@ public class TestExpenseReport {
 
             Assert.assertTrue("the expense report should be invalid", !expenseReport.isValid());
             try {
-                expenseReport.fileReport();
+                expenseReport.setPendingReview();
                 Assert.fail("we should never be able to file an invalid report");
             } catch (Throwable th) {
                 // noop

@@ -17,7 +17,7 @@ public class ExpenseReport {
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
 	public static enum ExpenseReportState {
-		NEW, PENDING_RESOLUTION, CLOSED
+		NEW, PENDING_REVIEW, CLOSED
 	}
 
 	public Set<Expense> getExpenses() {
@@ -48,18 +48,18 @@ public class ExpenseReport {
 		return valid;
 	}
 
-	public void fileReport() {
+	public void setPendingReview() {
 		if (!validate()) {
 			throw new IllegalStateException("the report's not valid and can't be filed.");
 		}
-		this.state = ExpenseReportState.PENDING_RESOLUTION;
+		this.state = ExpenseReportState.PENDING_REVIEW;
 	}
 
-	public void rejectReport() {
+	public void setNew() {
 		this.state = ExpenseReportState.NEW;
 	}
 
-	public void closeReport() {
+	public void setClosed() {
 		if (!validate()) {
 			throw new IllegalStateException("the report's not valid and can't be closed.");
 		}
