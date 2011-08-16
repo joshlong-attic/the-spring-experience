@@ -16,8 +16,11 @@ public class ExpenseReport {
 
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
+	private String reasonForRejection;
+
 	public static enum ExpenseReportState {
 		OPEN, IN_REVIEW, CLOSED
+
 	}
 
 	public Set<Expense> getExpenses() {
@@ -46,7 +49,10 @@ public class ExpenseReport {
 		boolean valid =  getExpenses().size() > 0 ;
 		for (Expense lineItem : getExpenses()) {
 			if (!expenseValidationStrategy.validate(lineItem)) {
-				valid = false;
+				valid=false;
+				lineItem.flag("receipt-required"); // todo introduce WELL_KNOWN_RECEIPT_REQUIRED constant or something?
+			} else {
+				lineItem.unflag();
 			}
 		}
 		return valid;
@@ -69,4 +75,6 @@ public class ExpenseReport {
 		}
 		this.state = ExpenseReportState.CLOSED;
 	}
+
+
 }

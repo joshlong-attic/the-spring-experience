@@ -21,22 +21,46 @@ public class TestExpenseReport {
 	private Charge inexpensiveCharge = new Charge(33L, 22, "category 2");
 	private Collection<Charge> charges = Arrays.asList(expensiveCharge, inexpensiveCharge);
 
-	private ManagedFile file = new ManagedFile(new File(new File(SystemUtils.getUserHome(), "Desktop"), "coffee.jpg"));
+	private ManagedFile coffeeReceipt = new ManagedFile(new File(new File(SystemUtils.getUserHome(), "Desktop"), "coffee.jpg"));
 
 	@Test
-	public void testValidation() throws Throwable {
-
+	public void testOkLineItemReportValidation() throws Throwable {
 		ExpenseReport expenseReport = new ExpenseReport();
-		Assert.assertFalse(expenseReport.validate());
 		expenseReport.addExpense(inexpensiveCharge);
-		Assert.assertTrue(expenseReport.validate());
-		Expense expensiveExpense = expenseReport.addExpense(expensiveCharge);
-		Assert.assertFalse(expenseReport.validate());
-		expensiveExpense.setReceipt(file);
 		Assert.assertTrue(expenseReport.validate());
 	}
 
 	@Test
-	public void testSubmission() throws Throwable {
+	public void testEmptyReportValidation() throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		Assert.assertFalse(expenseReport.validate());
+	}
+
+	@Test
+	public void testExpensiveExpenseValidation () throws Throwable  {
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(expensiveCharge);
+		Assert.assertFalse(expenseReport.validate());
+	}
+
+	@Test
+	public void testExpensiveExpenseReconciliation () throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		Expense expense = expenseReport.addExpense(expensiveCharge);
+		Assert.assertFalse(expenseReport.validate());
+		expense.setReceipt(coffeeReceipt);
+		Assert.assertTrue(expenseReport.validate());
+	}
+
+	@Test
+	public void testRejection() throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		Assert.assertTrue(expenseReport.validate());
+
+		expenseReport.setPendingReview();
+		Assert.assertTrue(expenseReport.getState().equals(ExpenseReport.ExpenseReportState.IN_REVIEW));
+
+
 	}
 }
