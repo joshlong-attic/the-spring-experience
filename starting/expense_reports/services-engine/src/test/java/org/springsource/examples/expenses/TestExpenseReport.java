@@ -10,8 +10,6 @@ import org.springsource.examples.expenses.reports.Expense;
 import org.springsource.examples.expenses.reports.ExpenseReport;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Set;
 
 public class TestExpenseReport {
@@ -20,7 +18,6 @@ public class TestExpenseReport {
 
 	private Charge expensiveCharge = new Charge(32L, 232.00, "category 1");
 	private Charge inexpensiveCharge = new Charge(33L, 22, "category 2");
-	private Collection<Charge> charges = Arrays.asList(expensiveCharge, inexpensiveCharge);
 
 	private ManagedFile coffeeReceipt = new ManagedFile(new File(new File(SystemUtils.getUserHome(), "Desktop"), "coffee.jpg"));
 
@@ -69,6 +66,7 @@ public class TestExpenseReport {
 		expense.flag( error );
 		Assert.assertTrue(expense.isInError());
 		Assert.assertTrue(expense.getErrorDescription().equals(error));
-
 	}
+
+
 }
