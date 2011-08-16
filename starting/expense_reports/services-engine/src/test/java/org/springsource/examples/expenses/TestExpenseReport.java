@@ -8,6 +8,7 @@ import org.springsource.examples.expenses.fs.ManagedFile;
 import org.springsource.examples.expenses.reports.Charge;
 import org.springsource.examples.expenses.reports.Expense;
 import org.springsource.examples.expenses.reports.ExpenseReport;
+import org.springsource.examples.expenses.reports.ExpenseReportState;
 
 import java.io.File;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class TestExpenseReport {
 		Assert.assertTrue(expenseReport.validate());
 
 		expenseReport.setPendingReview();
-		Assert.assertTrue(expenseReport.getState().equals(ExpenseReport.ExpenseReportState.IN_REVIEW));
+		Assert.assertTrue(expenseReport.getState().equals( ExpenseReportState.IN_REVIEW));
 
 		// approver spots a bad expense
 		Set<Expense> expenseSet = expenseReport.getExpenses();
@@ -100,5 +101,38 @@ public class TestExpenseReport {
 		} catch (Throwable th) {
 		    // noop
 		}
+	}
+
+
+	@Test
+	public void testFailedClose() throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		expenseReport.setPendingReview();
+
+		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
+
+		expenseReport.getExpenses().iterator().next().flag("No! You can't use the company card for *THAT*");
+
+		Assert.assertFalse(expenseReport.validate());
+		try {
+			expenseReport.setClosed();
+			Assert.fail("you shouldn't be able to close a flagged expense report"); }
+		catch (Throwable t ){
+			// noop
+		}
+		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
+
+	}
+
+	@Test
+	public void testSuccessfulSubmission() throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		expenseReport.setPendingReview();
+
+		expenseReport.setClosed();
+		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.CLOSED))  ;
+
 	}
 }
