@@ -1,5 +1,6 @@
 package org.springsource.examples.expenses.reports;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,8 +38,9 @@ public class ExpenseReport {
 	}
 
 	public boolean validate() {
-		boolean valid = getExpenses().size() > 0;
-		for (Expense expense : getExpenses()) {
+		Collection<Expense> expenseCollection = getExpenses();
+		boolean valid = expenseCollection.size() > 0;
+		for (Expense expense : expenseCollection) {
 			if (!expenseValidationStrategy.validate(expense)) {
 				valid = false;
 			}
