@@ -15,8 +15,7 @@ public class LineItem {
 	private String category;
 	private double amount;
 
-
-	public LineItem(ExpenseReport expenseReport, long chargeId, double amount) {
+	public LineItem(long chargeId, double amount) {
 		this.chargeId = chargeId;
 		this.amount = amount;
 	}
