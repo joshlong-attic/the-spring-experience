@@ -1,11 +1,13 @@
 package org.springsource.examples.expenses.reports;
 
+import org.springsource.examples.expenses.charges.Charge;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * aggregate for reconciled charges, which are called line items.
+ * aggregate for reconciled {@link Charge}s, which are called {@link Expense}.
  *
  * @author Josh Long
  */
@@ -56,15 +58,31 @@ public class ExpenseReport {
 	}
 
 	public void setOpen() {
+		boolean inValidState = state.equals(ExpenseReportState.IN_REVIEW) || state.equals(ExpenseReportState.IN_REVIEW);
+		if (!inValidState) {
+			throw new IllegalStateException("a report can only be opened if it's already opened or if it's been rejected.");
+		}
 		this.state = ExpenseReportState.OPEN;
 	}
 
 	public void setClosed() {
+		if (isFlagged()) {
+			throw new IllegalArgumentException("the report's been flagged and can't be closed");
+		}
 		if (!validate()) {
 			throw new IllegalStateException("the report's not valid and can't be closed.");
 		}
+
 		this.state = ExpenseReportState.CLOSED;
 	}
 
+	public boolean isFlagged() {
+		for (Expense ex : getExpenses()) {
+			if (ex.isFlagged()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

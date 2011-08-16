@@ -12,7 +12,7 @@ public class DefaultExpenseValidationStrategy implements ExpenseValidationStrate
 	}
 
 	public DefaultExpenseValidationStrategy() {
-		this(25.0d);
+		this(25.0D);
 	}
 
 	@Override
@@ -37,11 +37,6 @@ public class DefaultExpenseValidationStrategy implements ExpenseValidationStrate
 		if (!requiresReceipt) {
 			invalid = false;
 		}
-
-		boolean valid = !invalid;
-		if (valid) {
-			item.unflag();
-		}
-		return valid;
+		return !invalid;
 	}
 }

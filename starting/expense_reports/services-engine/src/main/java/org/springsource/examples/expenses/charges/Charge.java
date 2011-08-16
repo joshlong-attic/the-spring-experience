@@ -1,9 +1,12 @@
-package org.springsource.examples.expenses.reports;
+package org.springsource.examples.expenses.charges;
 
 
 /**
  * a {@link Charge} is a free-standing entity that represents the boundry between an external credit card system and the
- * expense report system.  Essentially, charges may be selected and then added into {@link Expense}s.
+ * expense report system.  Essentially, charges may be selected and then added into {@link org.springsource.examples.expenses.reports.ExpenseReport}s.
+ *
+ * Ideally, once an expense report's been successfully {@link org.springsource.examples.expenses.reports.ExpenseReport#setClosed()}, then
+ * the corresponding {@link Charge charge} would be {@link Charge#setReconciled() reconciled}.
  *
  * @author Josh Long
  */

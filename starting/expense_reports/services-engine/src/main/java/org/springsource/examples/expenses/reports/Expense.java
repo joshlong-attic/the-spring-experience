@@ -3,7 +3,7 @@ package org.springsource.examples.expenses.reports;
 import org.springsource.examples.expenses.fs.ManagedFile;
 
 /**
- * A {@link Expense} is basically an unjustified, unreconciled {@link Charge}.
+ * A {@link Expense} is basically an unjustified, unreconciled {@link org.springsource.examples.expenses.charges.Charge}.
  *
  * @author Josh Long
  */

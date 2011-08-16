@@ -4,8 +4,8 @@ package org.springsource.examples.expenses;
 import junit.framework.Assert;
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
+import org.springsource.examples.expenses.charges.Charge;
 import org.springsource.examples.expenses.fs.ManagedFile;
-import org.springsource.examples.expenses.reports.Charge;
 import org.springsource.examples.expenses.reports.Expense;
 import org.springsource.examples.expenses.reports.ExpenseReport;
 import org.springsource.examples.expenses.reports.ExpenseReportState;
@@ -83,7 +83,6 @@ public class TestExpenseReport {
 		Assert.assertTrue(expense.getFlag().equals(error));
 	}
 
-
 	@Test
 	public void testFailedSubmission() throws Throwable {
 		ExpenseReport expenseReport = new ExpenseReport();
@@ -103,26 +102,35 @@ public class TestExpenseReport {
 		}
 	}
 
-
 	@Test
 	public void testFailedClose() throws Throwable {
 		ExpenseReport expenseReport = new ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
-
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
-
 		expenseReport.getExpenses().iterator().next().flag("No! You can't use the company card for *THAT*");
-
-		Assert.assertFalse(expenseReport.validate());
+		Assert.assertTrue(expenseReport.isFlagged());
 		try {
 			expenseReport.setClosed();
 			Assert.fail("you shouldn't be able to close a flagged expense report"); }
 		catch (Throwable t ){
-			// noop
+		//	System.err.println("exception occurred " + ExceptionUtils.getFullStackTrace(t));
 		}
-		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
+		ExpenseReportState state = expenseReport.getState();
+		Assert.assertTrue(state.equals(ExpenseReportState.IN_REVIEW))  ;
+	}
 
+	@Test
+	public void testFlagMutation () throws Throwable {
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		expenseReport.setPendingReview();
+		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
+		Expense expense = expenseReport.getExpenses().iterator().next()  ;
+		expense.flag("No! You can't use the company card for *THAT*");
+		Assert.assertTrue(expenseReport.isFlagged());
+		expense.unflag();
+		Assert.assertTrue(!expenseReport.isFlagged());
 	}
 
 	@Test
@@ -133,6 +141,5 @@ public class TestExpenseReport {
 
 		expenseReport.setClosed();
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.CLOSED))  ;
-
 	}
 }

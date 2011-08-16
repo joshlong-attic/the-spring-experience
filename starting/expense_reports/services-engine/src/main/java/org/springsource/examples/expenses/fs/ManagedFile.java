@@ -15,18 +15,20 @@ public class ManagedFile {
 	private boolean ready;
 
 	public ManagedFile(String extension, double byteSize, String originalFileName) {
-		this.extension = extension;
-		this.byteSize = byteSize;
-		this.originalFileName = originalFileName;
+		setup(extension, byteSize, originalFileName);
 	}
 
 	public ManagedFile(File file) {
 		if (file == null) {
 			throw new IllegalArgumentException("the file can't be null");
 		}
-		this.originalFileName = file.getName();
-		this.byteSize = file.length();
-		this.extension = deriveExtension(file);
+		setup(deriveExtension(file ), file.length(),file.getName());
+	}
+
+	protected void setup(String extension, double byteSize, String ogFileName){
+		this.extension = extension;
+		this.byteSize = byteSize ;
+		this.originalFileName = ogFileName ;
 	}
 
 
