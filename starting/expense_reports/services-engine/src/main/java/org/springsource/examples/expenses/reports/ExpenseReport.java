@@ -10,53 +10,34 @@ import java.util.Set;
  */
 public class ExpenseReport {
 
-	/**
-	 * the validation strategy
-	 */
-	private LineItemValidationStrategy lineItemValidationStrategy = new DefaultLineItemValidationStrategy();
-
-	/**
-	 * the id of this expense report
-	 */
 	private long id;
 
-	/**
-	 * the state of the {@link ExpenseReport}
-	 */
-	private ExpenseReportState state;
+	private ExpenseReportState state = ExpenseReportState.New;
 
-	/**
-	 * the line items for this expense report
-	 */
 	private Set<Expense> expenses = new HashSet<Expense>();
 
-	/**
-	 * which states can the report be in?
-	 */
+	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
+
 	public static enum ExpenseReportState {
 		New, PendingReview, Closed
-	}
-
-	public ExpenseReport(String userId) {
-		this.state =ExpenseReportState.New;
-
 	}
 
 	public long getId() {
 		return id;
 	}
 
-
 	public Set<Expense> getExpenses() {
 		return expenses;
 	}
 
-	public void setLineItemValidationStrategy(LineItemValidationStrategy lineItemValidationStrategy) {
-		this.lineItemValidationStrategy = lineItemValidationStrategy;
-	}
-
 	public ExpenseReportState getState() {
 		return state;
+	}
+
+	public ExpenseReport(long id, ExpenseReportState state,  ExpenseValidationStrategy expenseValidationStrategy) {
+		this.id = id;
+		this.state = state;
+		this.expenseValidationStrategy = expenseValidationStrategy;
 	}
 
 	/**
@@ -69,7 +50,7 @@ public class ExpenseReport {
 		protected boolean validate() {
 			boolean valid = true;
 			for (Expense lineItem : getExpenses()) {
-				boolean needsReceipt = lineItemValidationStrategy.lineItemRequiresReceipt(lineItem) && (lineItem.getAttachments().size() == 0);
+				boolean needsReceipt = expenseValidationStrategy.lineItemRequiresReceipt(lineItem) && (lineItem.getAttachments().size() == 0);
 				lineItem.setRequiresReceipt(needsReceipt);
 				if (needsReceipt){
 					valid = false;
@@ -84,7 +65,7 @@ public class ExpenseReport {
 		//    return validate();
 	}
 
-	public Expense createLineItem(Charge charge) {
+	public Expense addExpense(Charge charge) {
 		Expense item = new Expense(charge.getChargeId(), charge.getAmount());
 		item.setCategory(charge.getCategory());
 		getExpenses().add(item);
