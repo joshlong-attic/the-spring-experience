@@ -8,16 +8,12 @@ package org.springsource.examples.expenses.reports;
  */
 public class Charge {
     private boolean reconciled ;
-	private long chargeId;
 	private double amount;
 	private String category;
+	private Long id;
 
 	public boolean isReconciled() {
 		return reconciled;
-	}
-
-	public long getChargeId() {
-		return chargeId;
 	}
 
 	public double getAmount() {
@@ -28,9 +24,13 @@ public class Charge {
 		return category;
 	}
 
-	public Charge(boolean reconciled, long chargeId, double amount, String category) {
+	public Long getId() {
+		return id;
+	}
+
+	public Charge(Long id, boolean reconciled, double amount, String category) {
 		this.reconciled = reconciled;
-		this.chargeId = chargeId;
+		this.id = id;
 		this.amount = amount;
 		this.category = category;
 	}

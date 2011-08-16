@@ -1,7 +1,27 @@
 package org.springsource.examples.expenses;
 
 
+import org.apache.commons.lang.SystemUtils;
+import org.junit.Test;
+import org.springsource.examples.expenses.reports.ExpenseReport;
+
+import java.io.File;
+
 public class TestExpenseReport {
+
+	private File desktop = new File(SystemUtils.getUserHome(),"Desktop") ;
+
+	@Test
+	public void testSubmittingExpenseReport() throws Throwable  {
+	/*
+		String[] users = "jlong,kdonald".split(",");
+
+        long counter = 0;
+
+        for (String userId : users) {
+            ExpenseReport expenseReport = new ExpenseReport(userId);*/
+
+	}
 
    /* private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
 
@@ -14,7 +34,7 @@ public class TestExpenseReport {
 
         for (String userId : users) {
             ExpenseReport expenseReport = new ExpenseReport(userId);
-            Assert.assertTrue("new reports are always 'New'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.New));
+            Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
             for (int i = 0; i < 5; i++) {
                 expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
             }
@@ -47,7 +67,7 @@ public class TestExpenseReport {
 
         for (String userId : users) {
             ExpenseReport expenseReport = new ExpenseReport(userId);
-            Assert.assertTrue("new reports are always 'New'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.New));
+            Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
             for (int i = 0; i < 5; i++) {
                 expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
             }

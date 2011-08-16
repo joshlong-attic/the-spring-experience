@@ -10,20 +10,14 @@ import java.util.Set;
  */
 public class ExpenseReport {
 
-	private long id;
-
-	private ExpenseReportState state = ExpenseReportState.New;
+	private ExpenseReportState state = ExpenseReportState.NEW;
 
 	private Set<Expense> expenses = new HashSet<Expense>();
 
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
 	public static enum ExpenseReportState {
-		New, PendingReview, Closed
-	}
-
-	public long getId() {
-		return id;
+		NEW, PENDING_RESOLUTION, CLOSED
 	}
 
 	public Set<Expense> getExpenses() {
@@ -34,11 +28,9 @@ public class ExpenseReport {
 		return state;
 	}
 
-	public ExpenseReport(long id, ExpenseReportState state,  ExpenseValidationStrategy expenseValidationStrategy) {
-		this.id = id;
-		this.state = state;
-		this.expenseValidationStrategy = expenseValidationStrategy;
+	public ExpenseReport() {
 	}
+
 
 	/**
 	 * reassess the state of this entity
@@ -59,14 +51,14 @@ public class ExpenseReport {
 			return valid;
 		}
 		*/
-	public boolean isValid() {
+	public boolean validate() {
 		// todo fixme after refactoring
 		return false;
 		//    return validate();
 	}
 
 	public Expense addExpense(Charge charge) {
-		Expense item = new Expense(charge.getChargeId(), charge.getAmount());
+		Expense item = new Expense( charge.getId() , charge.getAmount());
 		item.setCategory(charge.getCategory());
 		getExpenses().add(item);
 		return item;
@@ -74,20 +66,20 @@ public class ExpenseReport {
 
 
 	public void fileReport() {
-		if (!isValid()) {
+		if (!validate()  ) {
 			throw new IllegalStateException("the report's not valid and can't be filed.");
 		}
-		this.state = ExpenseReportState.PendingReview;
+		this.state = ExpenseReportState.PENDING_RESOLUTION;
 	}
 
 	public void rejectReport() {
-		this.state = ExpenseReportState.New;
+		this.state = ExpenseReportState.NEW;
 	}
 
 	public void closeReport() {
-		if (!isValid()) {
+		if (!validate()  ) {
 			throw new IllegalStateException("the report's not valid and can't be closed.");
 		}
-		this.state = ExpenseReportState.Closed;
+		this.state = ExpenseReportState.CLOSED;
 	}
 }

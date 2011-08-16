@@ -10,10 +10,9 @@ import org.springsource.examples.expenses.fs.ManagedFile;
 
 public class Expense {
 
-	private long id;
 	private String category;
 	private double amount;
-	private long chargeId;
+	private Long chargeId;
 	private ManagedFile receipt;
 
 	public void setCategory(String category) {
@@ -25,11 +24,6 @@ public class Expense {
 		this.amount = amount;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-
 	public String getCategory() {
 		return category;
 	}
@@ -38,7 +32,7 @@ public class Expense {
 		return amount;
 	}
 
-	public long getChargeId() {
+	public Long getChargeId() {
 		return chargeId;
 	}
 
