@@ -80,14 +80,11 @@ public class TestExpenseReport {
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
 		Assert.assertTrue(expense.getFlag().equals(error));
-
-
 	}
 
 
 	@Test
 	public void testFailedSubmission() throws Throwable {
-
 		ExpenseReport expenseReport = new ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
@@ -103,10 +100,5 @@ public class TestExpenseReport {
 		} catch (Throwable th) {
 		    // noop
 		}
-
-
-
-
 	}
-
 }
