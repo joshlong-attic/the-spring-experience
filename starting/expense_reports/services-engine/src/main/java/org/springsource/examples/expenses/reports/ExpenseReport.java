@@ -31,6 +31,17 @@ public class ExpenseReport {
 	public ExpenseReport() {
 	}
 
+	public boolean validate() {
+		boolean valid = true;
+		for (Expense lineItem : getExpenses()) {
+			boolean needsReceipt = expenseValidationStrategy.validate(lineItem) && (lineItem.getReceipt() == null);
+//			lineItem.setRequiresReceipt(needsReceipt);
+			if (needsReceipt){
+				valid = false;
+			}
+		}
+		return valid;
+	}
 
 	/**
 	 * reassess the state of this entity
@@ -51,11 +62,7 @@ public class ExpenseReport {
 			return valid;
 		}
 		*/
-	public boolean validate() {
-		// todo fixme after refactoring
-		return false;
-		//    return validate();
-	}
+
 
 	public Expense addExpense(Charge charge) {
 		Expense item = new Expense( charge.getId() , charge.getAmount());
