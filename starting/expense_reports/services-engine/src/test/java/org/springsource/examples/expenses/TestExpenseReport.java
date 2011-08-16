@@ -65,11 +65,11 @@ public class TestExpenseReport {
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
-		Assert.assertTrue(expense.getErrorDescription().equals(error));
+		Assert.assertTrue(expense.getFlag().equals(error));
 	}
 
 	@Test
-	public void testRejectionAndReconciliation () throws Throwable {
+	public void testRejectionAndReconciliation() throws Throwable {
 
 		ExpenseReport expenseReport = new ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
@@ -79,7 +79,32 @@ public class TestExpenseReport {
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
-		Assert.assertTrue(expense.getErrorDescription().equals(error));
+		Assert.assertTrue(expense.getFlag().equals(error));
+
+
+	}
+
+
+	@Test
+	public void testFailedSubmission() throws Throwable {
+
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense(inexpensiveCharge);
+		expenseReport.setPendingReview();
+		Set<Expense> expenseSet = expenseReport.getExpenses();
+		Expense expense = expenseSet.iterator().next();
+		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
+		expense.flag(error);
+		Assert.assertTrue(expense.isFlagged());
+		Assert.assertTrue(expense.getFlag().equals(error));
+		try {
+			expenseReport.setPendingReview();
+			Assert.fail("it should not be possible to submit an invalid expense report to anything but 'open'");
+		} catch (Throwable th) {
+		    // noop
+		}
+
+
 
 
 	}
