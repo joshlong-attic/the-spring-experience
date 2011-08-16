@@ -31,6 +31,13 @@ public class ExpenseReport {
 	public ExpenseReport() {
 	}
 
+	public Expense addExpense(Charge charge) {
+		Expense item = new Expense(charge.getId(), charge.getAmount());
+		item.setCategory(charge.getCategory());
+		getExpenses().add(item);
+		return item;
+	}
+
 	public boolean validate() {
 		boolean valid = true;
 		for (Expense lineItem : getExpenses()) {
@@ -39,13 +46,6 @@ public class ExpenseReport {
 			}
 		}
 		return valid;
-	}
-
-	public Expense addExpense(Charge charge) {
-		Expense item = new Expense(charge.getId(), charge.getAmount());
-		item.setCategory(charge.getCategory());
-		getExpenses().add(item);
-		return item;
 	}
 
 	public void fileReport() {

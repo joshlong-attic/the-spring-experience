@@ -9,43 +9,47 @@ import java.io.File;
 
 public class TestExpenseReport {
 
-	private File desktop = new File(SystemUtils.getUserHome(),"Desktop") ;
+	private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
 
 	@Test
-	public void testSubmittingExpenseReport() throws Throwable  {
-	/*
-		String[] users = "jlong,kdonald".split(",");
+	public void testSubmittingExpenseReport() throws Throwable {
 
-        long counter = 0;
+		ExpenseReport expenseReport = new ExpenseReport();
+		expenseReport.addExpense()
 
-        for (String userId : users) {
-            ExpenseReport expenseReport = new ExpenseReport(userId);*/
+		/*
+
+
+				long counter = 0;
+
+				for (String userId : users) {
+					ExpenseReport expenseReport = new ExpenseReport(userId);*/
 
 	}
 
-   /* private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
+	/* private File desktop = new File(SystemUtils.getUserHome(), "Desktop");
 
-    @Test
-    public void testSubmittingExpenseReport() throws Throwable {
+		@Test
+		public void testSubmittingExpenseReport() throws Throwable {
 
-        String[] users = "jlong,kdonald".split(",");
+			String[] users = "jlong,kdonald".split(",");
 
-        long counter = 0;
+			long counter = 0;
 
-        for (String userId : users) {
-            ExpenseReport expenseReport = new ExpenseReport(userId);
-            Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
-            for (int i = 0; i < 5; i++) {
-                expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
-            }
-            expenseReport.addLineItemFromCharge(++counter, 26); // to make sure one fails
+			for (String userId : users) {
+				ExpenseReport expenseReport = new ExpenseReport(userId);
+				Assert.assertTrue("new reports are always 'NEW'", expenseReport.getState().equals(ExpenseReport.ExpenseReportState.NEW));
+				for (int i = 0; i < 5; i++) {
+					expenseReport.addLineItemFromCharge(++counter, (Math.random() * 50));
+				}
+				expenseReport.addLineItemFromCharge(++counter, 26); // to make sure one fails
 
-            Assert.assertTrue("the expense report should be invalid", !expenseReport.isValid());
+				Assert.assertTrue("the expense report should be invalid", !expenseReport.isValid());
 
-            int i = 0;
-            for (Expense lineItem : expenseReport.getExpenses()) {
-                i += 1;
-                *//*if (lineItem.isRequiresReceipt()) {
+				int i = 0;
+				for (Expense lineItem : expenseReport.getExpenses()) {
+					i += 1;
+					*//*if (lineItem.isRequiresReceipt()) {
                     ManagedFile receipt = new ManagedFile(new File(desktop, i + "_receipt.jpg"));
                   //  Receipt attachment = lineItem.addAttachment("this is the receipt for the hotel (#" + i + ") I stayed in ", receipt);
                     Assert.assertNotNull("the attachment can't be null", attachment);
