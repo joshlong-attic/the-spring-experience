@@ -35,7 +35,6 @@ public class ExpenseReport {
 		boolean valid = true;
 		for (Expense lineItem : getExpenses()) {
 			boolean needsReceipt = expenseValidationStrategy.validate(lineItem) && (lineItem.getReceipt() == null);
-//			lineItem.setRequiresReceipt(needsReceipt);
 			if (needsReceipt) {
 				valid = false;
 			}
@@ -49,7 +48,6 @@ public class ExpenseReport {
 		getExpenses().add(item);
 		return item;
 	}
-
 
 	public void fileReport() {
 		if (!validate()) {
