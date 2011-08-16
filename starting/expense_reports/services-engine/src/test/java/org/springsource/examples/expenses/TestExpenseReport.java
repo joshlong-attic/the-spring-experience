@@ -12,6 +12,7 @@ import org.springsource.examples.expenses.reports.ExpenseReport;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
 public class TestExpenseReport {
 
@@ -61,6 +62,13 @@ public class TestExpenseReport {
 		expenseReport.setPendingReview();
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReport.ExpenseReportState.IN_REVIEW));
 
+		// approver spots a bad expense
+		Set<Expense> expenseSet  = expenseReport.getExpenses();
+		Expense expense  =expenseSet.iterator().next()  ;
+		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
+		expense.flag( error );
+		Assert.assertTrue(expense.isInError());
+		Assert.assertTrue(expense.getErrorDescription().equals(error));
 
 	}
 }

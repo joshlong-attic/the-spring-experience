@@ -56,7 +56,7 @@ public class Expense {
 		this.receipt = receipt;
 	}
 
-	public boolean isError() {
+	public boolean isInError() {
 		return error;
 	}
 
