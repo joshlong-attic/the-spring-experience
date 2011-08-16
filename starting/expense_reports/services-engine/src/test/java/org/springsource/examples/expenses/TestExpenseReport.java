@@ -55,7 +55,7 @@ public class TestExpenseReport {
 
         String[] users = "jlong,kdonald".split(",");
 
-        long counter = 0;
+	    long counter = 0;
 
         for (String userId : users) {
             ExpenseReport expenseReport = new ExpenseReport(userId);

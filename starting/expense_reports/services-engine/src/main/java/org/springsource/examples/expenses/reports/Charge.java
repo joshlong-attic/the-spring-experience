@@ -12,7 +12,17 @@ public class Charge {
 	private double amount;
 	private String vendor ;
 
-    public double getAmount() {
+	public Charge() {
+	}
+
+	public Charge(boolean reconciled, long chargeId, double amount, String vendor) {
+		this.reconciled = reconciled;
+		this.chargeId = chargeId;
+		this.amount = amount;
+		this.vendor = vendor;
+	}
+
+	public double getAmount() {
         return amount;
     }
 
