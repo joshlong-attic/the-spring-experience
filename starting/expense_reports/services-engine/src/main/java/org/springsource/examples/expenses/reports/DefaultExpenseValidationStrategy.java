@@ -19,6 +19,7 @@ public class DefaultExpenseValidationStrategy implements ExpenseValidationStrate
 	public boolean validate(Expense item) {
 		if(item == null ) throw new IllegalArgumentException("the item can't be null");
 		double charge = item.getAmount();
-		return ( item.getReceipt() == null || charge > maxAbsoluteValue);
+		boolean invalid = (( item.getReceipt() == null || charge > maxAbsoluteValue));
+		return !invalid;
 	}
 }
