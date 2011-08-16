@@ -29,11 +29,14 @@ public class Charge {
 		return id;
 	}
 
-	public Charge(Long id, boolean reconciled, double amount, String category) {
-		this.reconciled = reconciled;
+	public Charge(Long id, double amount, String category) {
 		this.id = id;
 		this.amount = amount;
 		this.category = category;
+	}
+
+	public void setReconciled(){
+		this.reconciled = true ;
 	}
 
 }

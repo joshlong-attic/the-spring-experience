@@ -43,7 +43,7 @@ public class ExpenseReport {
 	}
 
 	public boolean validate() {
-		boolean valid = true;
+		boolean valid =  getExpenses().size() > 0 ;
 		for (Expense lineItem : getExpenses()) {
 			if (!expenseValidationStrategy.validate(lineItem)) {
 				valid = false;
