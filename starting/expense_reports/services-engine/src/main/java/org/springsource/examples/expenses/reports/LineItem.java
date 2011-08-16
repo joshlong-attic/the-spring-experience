@@ -104,6 +104,7 @@ public class LineItem {
 		Attachment attachment = new Attachment( file);
 		attachment.setDescription(description);
 		getAttachments().add(attachment);
+        expenseReport.validate();
 		return attachment;
 	}
 }

@@ -6,9 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * aggregate for reconciled charges, which are called line items.
+ *
  * @author Josh Long
  */
-
 public class ExpenseReport {
 
     /**
@@ -24,7 +25,7 @@ public class ExpenseReport {
     /**
      * the user ID
      */
-    private String userId ;
+    private String userId;
 
     /**
      * the state of the {@link ExpenseReport}
@@ -32,7 +33,7 @@ public class ExpenseReport {
     private ExpenseReportState state;
 
     /**
-     *  the line items for this expense report
+     * the line items for this expense report
      */
     private Set<LineItem> lineItems = new HashSet<LineItem>();
 
@@ -40,17 +41,17 @@ public class ExpenseReport {
      * which states can the report be in?
      */
     public static enum ExpenseReportState {
-        New, PendingReview, Rejected , Closed
+        New, PendingReview, Closed
     }
 
-    public ExpenseReport(String  userId, ExpenseReportState state) {
+    public ExpenseReport(String userId, ExpenseReportState state) {
         this.state = state;
         this.userId = userId;
         Assert.notNull(this.state, "the 'state' can't be null");
-        Assert.notNull(this.userId,  "the 'userId' can't be null");
+        Assert.notNull(this.userId, "the 'userId' can't be null");
     }
 
-    public ExpenseReport(String  userId ) {
+    public ExpenseReport(String userId) {
         this(userId, ExpenseReportState.New);
     }
 
@@ -78,21 +79,21 @@ public class ExpenseReport {
      * reassess the state of this entity
      *
      * @return is the {@code ExpenseReport} in a known state.
-     *
      */
-    protected boolean validate(){
-       boolean valid = true;
-        for (LineItem li : getLineItems()) {
-            boolean liValid = lineItemValidationStrategy.lineItemRequiresReceipt(li) && (li.getAttachments().size() == 0);
-            li.setRequiresReceipt(liValid);
-            if (!liValid)
+    protected boolean validate() {
+        boolean valid = true;
+        for (LineItem lineItem : getLineItems()) {
+            boolean needsReceipt = lineItemValidationStrategy.lineItemRequiresReceipt(lineItem) && (lineItem.getAttachments().size() == 0);
+            lineItem.setRequiresReceipt(needsReceipt);
+            if (needsReceipt){
                 valid = false;
+            }
         }
         return valid;
     }
 
     public boolean isValid() {
-      return validate();
+        return validate();
     }
 
     public LineItem addLineItem(LineItem li) {
@@ -103,10 +104,10 @@ public class ExpenseReport {
 
     /**
      * We have a {@link Charge charge} entity, but this model should not be afflcited with any knowledge of that entity.
-     *
+     * <p/>
      * It is merely the interface or boundry entity between systems. This system doesn't have a concept of a charge entity
      *
-     * @param chargeId the ID fo the charge (which can then be used to later consult the details of the charge)
+     * @param chargeId  the ID fo the charge (which can then be used to later consult the details of the charge)
      * @param chargeAmt the amount of the charge (copied wholesale from the charge)
      * @return a {@link LineItem}
      */
@@ -116,5 +117,20 @@ public class ExpenseReport {
         li.setExpenseReport(this);
         li.setAmount(chargeAmt);
         return addLineItem(li);
+    }
+
+    public void fileReport (){
+        Assert.isTrue(isValid(),"you can't submit an ExpenseReport unless it's valid");
+        this.state = ExpenseReportState.PendingReview ;
+    }
+
+    public void rejectReport(){
+        Assert.isTrue(!isValid(), "can't reject a valid report");
+        this.state = ExpenseReportState.New ;
+    }
+
+    public void closeReport(){
+        Assert.isTrue(isValid(),"you can't submit an ExpenseReport unless it's valid");
+        this.state  = ExpenseReportState.Closed ;
     }
 }
