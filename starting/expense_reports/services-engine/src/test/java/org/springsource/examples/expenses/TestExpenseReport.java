@@ -20,11 +20,10 @@ package org.springsource.examples.expenses;
 import junit.framework.Assert;
 import org.apache.commons.lang.SystemUtils;
 import org.junit.Test;
-import org.springsource.examples.expenses.charges.Charge;
-import org.springsource.examples.expenses.fs.ManagedFile;
-import org.springsource.examples.expenses.reports.Expense;
-import org.springsource.examples.expenses.reports.ExpenseReport;
-import org.springsource.examples.expenses.reports.ExpenseReportState;
+import org.springsource.html5expenses.charges.Charge;
+import org.springsource.html5expenses.files.ManagedFile;
+import org.springsource.html5expenses.reports.implementation.Expense;
+import org.springsource.html5expenses.reports.implementation.ExpenseReportState;
 
 import java.io.File;
 import java.util.Set;
@@ -38,27 +37,27 @@ public class TestExpenseReport {
 
 	@Test
 	public void testOkLineItemReportValidation() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		Assert.assertTrue(expenseReport.validate());
 	}
 
 	@Test
 	public void testEmptyReportValidation() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		Assert.assertFalse(expenseReport.validate());
 	}
 
 	@Test
 	public void testExpensiveExpenseValidation() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
 	}
 
 	@Test
 	public void testExpensiveExpenseReconciliation() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		Expense expense = expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
 		expense.setReceipt(coffeeReceipt);
@@ -67,7 +66,7 @@ public class TestExpenseReport {
 
 	@Test
 	public void testRejection() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		Assert.assertTrue(expenseReport.validate());
 
@@ -75,8 +74,8 @@ public class TestExpenseReport {
 		Assert.assertTrue(expenseReport.getState().equals( ExpenseReportState.IN_REVIEW));
 
 		// approver spots a bad expense
-		Set<Expense> expenseSet = expenseReport.getExpenses();
-		Expense expense = expenseSet.iterator().next();
+		Set<org.springsource.html5expenses.reports.implementation.Expense> expenseSet = expenseReport.getExpenses();
+		org.springsource.html5expenses.reports.implementation.Expense expense = expenseSet.iterator().next();
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
@@ -86,11 +85,11 @@ public class TestExpenseReport {
 	@Test
 	public void testRejectionAndReconciliation() throws Throwable {
 
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
-		Set<Expense> expenseSet = expenseReport.getExpenses();
-		Expense expense = expenseSet.iterator().next();
+		Set<org.springsource.html5expenses.reports.implementation.Expense> expenseSet = expenseReport.getExpenses();
+		org.springsource.html5expenses.reports.implementation.Expense expense = expenseSet.iterator().next();
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
@@ -99,11 +98,11 @@ public class TestExpenseReport {
 
 	@Test
 	public void testFailedSubmission() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
-		Set<Expense> expenseSet = expenseReport.getExpenses();
-		Expense expense = expenseSet.iterator().next();
+		Set<org.springsource.html5expenses.reports.implementation.Expense> expenseSet = expenseReport.getExpenses();
+		org.springsource.html5expenses.reports.implementation.Expense expense = expenseSet.iterator().next();
 		String error = "dude this is a receipt from your trip to the grocery store. Try again.";
 		expense.flag(error);
 		Assert.assertTrue(expense.isFlagged());
@@ -118,7 +117,7 @@ public class TestExpenseReport {
 
 	@Test
 	public void testFailedClose() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
@@ -136,11 +135,11 @@ public class TestExpenseReport {
 
 	@Test
 	public void testFlagMutation () throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
 		Assert.assertTrue(expenseReport.getState().equals(ExpenseReportState.IN_REVIEW))  ;
-		Expense expense = expenseReport.getExpenses().iterator().next()  ;
+		org.springsource.html5expenses.reports.implementation.Expense expense = expenseReport.getExpenses().iterator().next()  ;
 		expense.flag("No! You can't use the company card for *THAT*");
 		Assert.assertTrue(expenseReport.isFlagged());
 		expense.unflag();
@@ -149,7 +148,7 @@ public class TestExpenseReport {
 
 	@Test
 	public void testSuccessfulSubmission() throws Throwable {
-		ExpenseReport expenseReport = new ExpenseReport();
+		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		expenseReport.addExpense(inexpensiveCharge);
 		expenseReport.setPendingReview();
 
