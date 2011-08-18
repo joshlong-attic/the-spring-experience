@@ -25,6 +25,7 @@ import java.io.File;
  */
 
 public class ManagedFile {
+	private Long id;
 	private String extension;
 	private double byteSize;
 	private String originalFileName;
@@ -79,4 +80,11 @@ public class ManagedFile {
 	}
 
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

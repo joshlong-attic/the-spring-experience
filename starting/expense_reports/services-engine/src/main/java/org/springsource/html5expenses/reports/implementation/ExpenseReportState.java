@@ -16,6 +16,12 @@
 
 package org.springsource.html5expenses.reports.implementation;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * States for the expense report.
  *
@@ -27,6 +33,7 @@ package org.springsource.html5expenses.reports.implementation;
  *
  * @author Josh Long
  */
+@Entity
 public enum ExpenseReportState {
 	/**
 	 * the default state of the {@link ExpenseReport}.
@@ -44,5 +51,18 @@ public enum ExpenseReportState {
 	 * when a report's been successfully submitted and approved, it can finally be closed.
 	 * Once closed, business continues as normal and the expenses will be paid.
 	 */
-	CLOSED
+	CLOSED     ;
+
+	@Id
+    @GeneratedValue
+    private Long id = null;
+
+
+	@Column
+	private String name;
+
+
+	private ExpenseReportState() {
+		this.name = toString();
+	}
 }

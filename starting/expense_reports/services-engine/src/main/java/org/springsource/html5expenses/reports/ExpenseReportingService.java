@@ -53,14 +53,27 @@ public interface ExpenseReportingService {
 
 	/**
 	 * Add a file that can be used to track the
-	 * @param expenseId
-	 * @param receiptBytes
-	 * @return
+	 * @param expenseId the ID of the expense
+	 * @param receiptBytes the bytes representing the file
+	 * @param originalFileName the original name of the file (so that the user can easily correlate)
+	 * @return the ID of the newly created managed file
 	 */
-	Long addReceipt(Long expenseId, byte[] receiptBytes );
+	Long addReceipt(Long expenseId, String originalFileName, byte[] receiptBytes );
 
+	/**
+	 * attempts to file a report.
+	 *
+	 * @param reportId the ID of the report to try to file
+	 * @return a FilingResult is a wrapper that includes the confirmation status as well as an attached ExpenseReport which has validation flags that can be consulted in the event of a failure status
+	 */
 	FilingResult fileReport(Long reportId);
 
+	/**
+	 * returns all the {@link ExpenseReport expense reports} that have not be submitted and are thus not yet
+	 * {@link org.springsource.html5expenses.reports.implementation.ExpenseReportState#CLOSED closed}
+	 *
+	 * @return the collection of ExpenseReports
+	 */
 	List<ExpenseReport> getOpenReports();
 
 }

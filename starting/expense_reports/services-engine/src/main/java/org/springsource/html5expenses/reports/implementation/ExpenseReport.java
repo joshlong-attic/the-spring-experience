@@ -18,6 +18,10 @@ package org.springsource.html5expenses.reports.implementation;
 
 import org.springsource.html5expenses.charges.Charge;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,10 +31,13 @@ import java.util.Set;
  *
  * @author Josh Long
  */
+@Entity
 public class ExpenseReport {
-
+    @Id
+    @GeneratedValue
 	private Long id;
 
+	@Column
 	private String purpose ;
 
 	private ExpenseReportState state = ExpenseReportState.OPEN;

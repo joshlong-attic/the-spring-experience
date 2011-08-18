@@ -20,8 +20,10 @@ package org.springsource.html5expenses.reports;
 import java.util.HashSet;
 import java.util.Set;
 
-/***
+/**
+ * a client view of the expense report
  *
+ * @see org.springsource.html5expenses.reports.implementation.ExpenseReport  *
  * @author Josh Long
  */
 public class ExpenseReport {

@@ -7,7 +7,7 @@ import org.springsource.html5expenses.files.ManagedFileService;
 public class DatabaseManagedFileService  implements ManagedFileService{
 	@Override
 	public String getLocalPathForManagedFile(Long managedFileId) {
-	 return null ;
+		return null;
 	}
 
 	@Override
@@ -16,16 +16,15 @@ public class DatabaseManagedFileService  implements ManagedFileService{
 	}
 
 	@Override
-	public ManagedFile createManagedFile(String extension, double byteSize, String originalFileName) {
+	public ManagedFile createManagedFile(double byteSize, String originalFileName) {
 		return null;
 	}
 
 	@Override
-	public void removeManagedFile(long managedFileId) {
+	public void removeManagedFile(Long managedFileId) {
 	}
 
 	@Override
-	public void setManagedFileReady(long managedFileId, boolean ready) {
-
+	public void setManagedFileReady(Long managedFileId, boolean ready) {
 	}
 }

@@ -16,6 +16,13 @@
 
 package org.springsource.html5expenses.reports;
 
+/**
+ *
+ * A client view of the expense
+ *
+ * @see org.springsource.html5expenses.reports.implementation.Expense
+ * @author Josh Long
+ */
 public class Expense {
 
 	public Expense(String category, double amount, Long chargeId, Long receiptManagedFileId, boolean flagged, String flag) {

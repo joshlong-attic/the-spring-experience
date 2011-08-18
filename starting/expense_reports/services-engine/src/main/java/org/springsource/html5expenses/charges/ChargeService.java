@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 public interface ChargeService {
-
+	Charge getCharge(Long chargeId);
+	List<Charge> getEligibleCharges();
 	void markAsIneligible(Long chargeId) ;
 }
