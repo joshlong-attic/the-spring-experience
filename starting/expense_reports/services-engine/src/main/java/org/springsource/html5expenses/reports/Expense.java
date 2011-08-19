@@ -17,12 +17,12 @@
 package org.springsource.html5expenses.reports;
 
 /**
- *
  * A client view of the expense
  *
- * @see org.springsource.html5expenses.reports.implementation.Expense
  * @author Josh Long
+ * @see org.springsource.html5expenses.reports.implementation.Expense
  */
+
 public class Expense {
 
 	public Expense(String category, double amount, Long chargeId, Long receiptManagedFileId, boolean flagged, String flag) {
@@ -34,12 +34,23 @@ public class Expense {
 		this.flag = flag;
 	}
 
+	private Long id;
+
 	private String category;
 	private double amount;
 	private Long chargeId;
 	private Long receiptManagedFileId;
 	private boolean flagged;
 	private String flag;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 
 	public String getCategory() {
 		return category;

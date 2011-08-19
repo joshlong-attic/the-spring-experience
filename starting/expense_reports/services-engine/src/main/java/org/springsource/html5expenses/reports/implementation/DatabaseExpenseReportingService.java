@@ -43,21 +43,15 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 
 	@Transactional
 	public List<org.springsource.html5expenses.reports.Expense> addExpenses(Long reportId, List<Long> chargeIds) {
-
 		org.springsource.html5expenses.reports.implementation.ExpenseReport er =
 				entityManager.find(org.springsource.html5expenses.reports.implementation.ExpenseReport.class, reportId);
-
-		Set<Expense> expenses = new HashSet<Expense>();
-
 		for (Long chargeId : chargeIds) {
-			expenses.add(er.addExpense(chargeService.getCharge(chargeId)));
+			Charge c = chargeService.getCharge(chargeId);
+			Expense expense  = er.addExpense(c);
+		   	entityManager.persist(expense);
 		}
-
 		entityManager.merge(er);
-
-		Set<org.springsource.html5expenses.reports.Expense> clientExpenses = buildExpensesFrom(expenses);
-
-		return new ArrayList<org.springsource.html5expenses.reports.Expense>(clientExpenses);
+		return new ArrayList<org.springsource.html5expenses.reports.Expense>( buildExpensesFrom( er.getExpenses()) );
 	}
 
 	@Transactional
@@ -72,7 +66,7 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 			IOUtils.copy(is, os);
 		} catch (IOException e) {
 			throw new RuntimeException("an error occurred when trying to write " +
-					                           "the file to the file system", e);
+					                   "the file to the file system", e);
 		} finally {
 			if (os != null) {
 				IOUtils.closeQuietly(os);

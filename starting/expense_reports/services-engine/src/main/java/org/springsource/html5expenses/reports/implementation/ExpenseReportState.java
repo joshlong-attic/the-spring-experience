@@ -33,7 +33,7 @@ import javax.persistence.Id;
  *
  * @author Josh Long
  */
-@Entity
+
 public enum ExpenseReportState {
 	/**
 	 * the default state of the {@link ExpenseReport}.
@@ -53,12 +53,9 @@ public enum ExpenseReportState {
 	 */
 	CLOSED     ;
 
-	@Id
-    @GeneratedValue
-    private Long id = null;
 
 
-	@Column
+
 	private String name;
 
 

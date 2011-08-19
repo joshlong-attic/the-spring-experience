@@ -60,7 +60,7 @@ public class TestExpenseReport {
 		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		Expense expense = expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
-		expense.setReceipt(coffeeReceipt);
+//		expense.setReceipti(coffeeReceipt);
 		Assert.assertTrue(expenseReport.validate());
 	}
 

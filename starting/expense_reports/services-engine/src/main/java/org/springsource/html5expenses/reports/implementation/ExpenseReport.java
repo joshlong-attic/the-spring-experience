@@ -18,10 +18,7 @@ package org.springsource.html5expenses.reports.implementation;
 
 import org.springsource.html5expenses.charges.Charge;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +30,7 @@ import java.util.Set;
  */
 @Entity
 public class ExpenseReport {
+
     @Id
     @GeneratedValue
 	private Long id;
@@ -40,10 +38,13 @@ public class ExpenseReport {
 	@Column
 	private String purpose ;
 
-	private ExpenseReportState state = ExpenseReportState.OPEN;
-
+	@OneToMany(mappedBy="expenseReport" )
 	private Set<Expense> expenses = new HashSet<Expense>();
 
+	@Enumerated(EnumType.STRING)
+	private ExpenseReportState state = ExpenseReportState.OPEN;
+
+	@Transient
 	private ExpenseValidationStrategy expenseValidationStrategy = new DefaultExpenseValidationStrategy();
 
 	public Set<Expense> getExpenses() {
@@ -62,6 +63,7 @@ public class ExpenseReport {
 
 		Expense item = new Expense(charge.getId(), charge.getAmount());
 		item.setCategory(charge.getCategory());
+		item.setExpenseReport(this);
 		getExpenses().add(item);
 		return item;
 	}
@@ -85,7 +87,7 @@ public class ExpenseReport {
 	}
 
 	public void setOpen() {
-		boolean inValidState = state.equals(ExpenseReportState.IN_REVIEW) || state.equals(ExpenseReportState.IN_REVIEW);
+		boolean inValidState = state.equals(ExpenseReportState.IN_REVIEW) || state.equals(ExpenseReportState.OPEN);
 		if (!inValidState) {
 			throw new IllegalStateException("a report can only be opened if it's already opened or if it's been rejected.");
 		}

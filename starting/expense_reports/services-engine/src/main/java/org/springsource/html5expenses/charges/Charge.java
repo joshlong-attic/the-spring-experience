@@ -17,6 +17,10 @@
 package org.springsource.html5expenses.charges;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * a {@link Charge} is a free-standing entity that represents the boundry between an external credit card system and the
  * expense report system.  Essentially, charges may be selected and then added into {@link org.springsource.html5expenses.reports.implementation.ExpenseReport}s.
@@ -26,11 +30,18 @@ package org.springsource.html5expenses.charges;
  *
  * @author Josh Long
  */
+@Entity
 public class Charge {
-	private boolean reconciled;
-	private double amount;
-	private String category;
+
+	@Id @GeneratedValue
 	private Long id;
+
+	private boolean reconciled;
+
+	private double amount;
+
+	private String category;
+
 	private String userId ;
 
 	public String getUserId() {
@@ -55,6 +66,13 @@ public class Charge {
 
 	public Long getId() {
 		return id;
+	}
+
+	Charge(){}
+
+	public Charge(double amt, String cat){
+		this.amount = amt ;
+		this.category = cat;
 	}
 
 	public Charge(Long id, double amount, String category) {
