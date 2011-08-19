@@ -17,11 +17,6 @@
 package org.springsource.html5expenses.reports.implementation;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 /**
  * States for the expense report.
  *
