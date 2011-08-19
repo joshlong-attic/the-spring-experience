@@ -20,6 +20,8 @@ import java.util.*;
 @Service
 public class DatabaseExpenseReportingService implements ExpenseReportingService {
 
+	private String openExpenseReportsQL = String.format("SELECT er FROM %s er WHERE er.state = :state ", ExpenseReport.class.getName());
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -89,12 +91,10 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 		return new FilingResult(buildExpenseReportFrom(er), validationSucceeded ? FilingResultStatus.OK : FilingResultStatus.VALIDATION_ERROR);
 	}
 
-	private String openExpenseReportsQL = String.format("SELECT er FROM %s er WHERE er.status = :status ", ExpenseReport.class.getName());
-
 	@Transactional
 	public List<org.springsource.html5expenses.reports.ExpenseReport> getOpenReports() {
 		Collection<ExpenseReport> ers = entityManager.createQuery(openExpenseReportsQL, ExpenseReport.class)
-				                                .setParameter("status", ExpenseReportState.OPEN)
+				                                .setParameter("state", ExpenseReportState.OPEN)
 				                                .getResultList();
 		return new ArrayList<org.springsource.html5expenses.reports.ExpenseReport>(buildExpenseReportsFrom(new HashSet<ExpenseReport>(ers)));
 	}

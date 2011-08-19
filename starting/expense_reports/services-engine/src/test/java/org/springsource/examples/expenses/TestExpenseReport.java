@@ -60,7 +60,8 @@ public class TestExpenseReport {
 		org.springsource.html5expenses.reports.implementation.ExpenseReport expenseReport = new org.springsource.html5expenses.reports.implementation.ExpenseReport();
 		Expense expense = expenseReport.addExpense(expensiveCharge);
 		Assert.assertFalse(expenseReport.validate());
-//		expense.setReceipti(coffeeReceipt);
+		Long managedFileId = 2434L;
+		expense.setReceiptFileId(managedFileId);
 		Assert.assertTrue(expenseReport.validate());
 	}
 

@@ -1,6 +1,5 @@
 package org.springsource.html5expenses.config;
 
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Driver;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:/services.properties")
@@ -42,10 +43,16 @@ public class ServicesConfiguration {
 		jpaVendorAdapter.setGenerateDdl(true);
 		jpaVendorAdapter.setShowSql(true);
 
+		List <String> pkgs = Arrays.asList(Charge.class.getPackage().getName(), Expense.class.getPackage().getName());
+
+
+		Map<String,String> mapOfJpaProperties = new HashMap<String,String>();
+		mapOfJpaProperties.put("hibernate.hbm2ddl.auto", "create");
+
 		LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+		localContainerEntityManagerFactoryBean.setJpaPropertyMap(mapOfJpaProperties);
 		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
-		List <String> pkgs = Arrays.asList(Charge.class.getPackage().getName(), Expense.class.getPackage().getName());
 		localContainerEntityManagerFactoryBean.setPackagesToScan( pkgs.toArray(new String [pkgs.size()]) );
 
 		// look ma, no persistence.xml !
