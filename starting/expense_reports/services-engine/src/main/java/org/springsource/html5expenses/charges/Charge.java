@@ -26,7 +26,7 @@ import javax.persistence.Id;
  * expense report system.  Essentially, charges may be selected and then added into {@link org.springsource.html5expenses.reports.implementation.ExpenseReport}s.
  *
  * Ideally, once an expense report's been successfully {@link org.springsource.html5expenses.reports.implementation.ExpenseReport#setClosed()}, then
- * the corresponding {@link Charge charge} would be {@link Charge#setReconciled() reconciled}.
+ * the corresponding {@link Charge charge} would be {@link Charge#setReconciled() paid}.
  *
  * @author Josh Long
  */
@@ -36,7 +36,7 @@ public class Charge {
 	@Id @GeneratedValue
 	private Long id;
 
-	private boolean reconciled;
+	private boolean paid;
 
 	private double amount;
 
@@ -52,8 +52,12 @@ public class Charge {
 		this.userId = userId;
 	}
 
-	public boolean isReconciled() {
-		return reconciled;
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
 	}
 
 	public double getAmount() {
@@ -81,8 +85,5 @@ public class Charge {
 		this.category = category;
 	}
 
-	public void setReconciled(){
-		this.reconciled = true ;
-	}
 
 }

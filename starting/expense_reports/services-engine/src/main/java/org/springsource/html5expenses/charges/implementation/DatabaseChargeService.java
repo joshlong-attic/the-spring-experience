@@ -12,29 +12,31 @@ import java.util.List;
 @Service
 public class DatabaseChargeService implements ChargeService {
 
-	@PersistenceContext private EntityManager entityManager ;
+	@PersistenceContext private EntityManager entityManager;
+
+	private String eligibleChargesQuery = String.format("SELECT c FROM %s c WHERE c.paid = FALSE", Charge.class.getName());
 
 	@Transactional
 	public Long createCharge(double amount, String category) {
-		Charge c = new Charge( amount, category);
+		Charge c = new Charge(amount, category);
 		entityManager.persist(c);
 		return c.getId();
 	}
 
 	@Transactional
 	public Charge getCharge(Long chargeId) {
-		return entityManager.find(Charge.class,chargeId);
+		return entityManager.find(Charge.class, chargeId);
 	}
 
 	@Transactional
 	public List<Charge> getEligibleCharges() {
-		return null;
+		return entityManager.createQuery(this.eligibleChargesQuery, Charge.class).getResultList();
 	}
 
 	@Transactional
-	public void markAsIneligible(Long chargeId) {
-		Charge charge= getCharge(chargeId);
-		charge.setReconciled();
+	public void markAsPaid(Long chargeId) {
+		Charge charge = getCharge(chargeId);
+		charge.setPaid(true);
 		entityManager.merge(charge);
 	}
 }
