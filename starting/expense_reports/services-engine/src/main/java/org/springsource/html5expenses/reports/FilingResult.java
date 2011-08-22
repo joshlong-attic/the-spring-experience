@@ -19,9 +19,9 @@ package org.springsource.html5expenses.reports;
 
 /**
  * wrapper used to convey the results of filing.
- *
+ * <p/>
  * Supports the happy-path, which is simply filing a report.
- *
+ * <p/>
  * If the report has errors and can't be filed, then the client is advised
  * to consult the attached {@link ExpenseReport expense report} and the {@link Expense expenses}
  * contained there in for validation flags.
@@ -31,7 +31,7 @@ package org.springsource.html5expenses.reports;
 public class FilingResult {
 
 	private ExpenseReport expenseReport;
-	private FilingResultStatus status ;
+	private FilingResultStatus status;
 
 	public FilingResult(ExpenseReport expenseReport, FilingResultStatus status) {
 		this.expenseReport = expenseReport;

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2002-2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.springsource.examples.expenses;
 
 
@@ -13,10 +29,12 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springsource.html5expenses.charges.Charge;
 import org.springsource.html5expenses.charges.ChargeService;
 import org.springsource.html5expenses.config.ServicesConfiguration;
+import org.springsource.html5expenses.files.ManagedFileService;
 import org.springsource.html5expenses.reports.*;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +42,8 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {ServicesConfiguration.class})
 public class TestDatabaseExpenseReportingService {
+
+	@Inject ManagedFileService fileService;
 
 	@Inject ExpenseReportingService reportingService;
 
@@ -75,6 +95,7 @@ public class TestDatabaseExpenseReportingService {
 		Assert.assertEquals(firstReport.getExpenses().size(), this.charges.size());
 	}
 
+
 	@Test
 	public void testValidation() throws Throwable {
 		// create a report
@@ -97,8 +118,6 @@ public class TestDatabaseExpenseReportingService {
 		Assert.assertFalse("the message returned should not be null", StringUtils.isEmpty(found.getFlag()));
 	}
 
-
-
 	@Test
 	public void testReceiptAttachment() throws Throwable {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("receipt.jpg");
@@ -120,22 +139,8 @@ public class TestDatabaseExpenseReportingService {
 		}
 		Assert.assertNotNull("managedFileId can't be null", managedFileId);
 
-	}
-
-
-/*
-
-	@Test
-	public void testFindingReports() throws Throwable {
-
-		Long erId = expenseReport.createNewReport(this.purpose);
-		Collection<Expense> expenseIds = expenseReport.addExpenses(erId, charges);
-
-		Assert.assertNotNull("the expense report ID can't be null", erId);
-
+		String mfPath = fileService.getLocalPathForManagedFile(managedFileId);
+		Assert.assertTrue(new File(mfPath).exists());
 
 	}
-*/
-
-
 }

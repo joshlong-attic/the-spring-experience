@@ -17,7 +17,6 @@
 package org.springsource.html5expenses.reports.implementation;
 
 /**
- *
  * Strategy interface. Arbitrates whether a given expense can be added to the system.
  *
  * @author Josh Long

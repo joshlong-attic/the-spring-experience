@@ -30,7 +30,11 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Expense {
 
-	Expense(){ }
+	/**
+	 * default ctor for Hibernate
+	 */
+	Expense() {
+	}
 
 	public Expense(long chargeId, double amount) {
 		this.chargeId = chargeId;
@@ -38,10 +42,10 @@ public class Expense {
 	}
 
 	@ManyToOne
-	private ExpenseReport expenseReport ;
+	private ExpenseReport expenseReport;
 
 	@Id @GeneratedValue
-	private Long id ;
+	private Long id;
 
 	private String category;
 	private double amount;
@@ -56,8 +60,8 @@ public class Expense {
 	}
 
 	public void unflag() {
-		this.flagged =false;
-		this.flag = null ;
+		this.flagged = false;
+		this.flag = null;
 	}
 
 	public Long getReceiptFileId() {
@@ -92,8 +96,8 @@ public class Expense {
 		this.flagged = flagged;
 	}
 
-	public String getFlag(){
-	    return flag;
+	public String getFlag() {
+		return flag;
 	}
 
 	public Long getId() {

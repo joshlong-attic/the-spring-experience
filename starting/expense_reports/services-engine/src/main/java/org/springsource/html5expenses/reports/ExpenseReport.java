@@ -23,8 +23,8 @@ import java.util.Set;
 /**
  * a client view of the expense report
  *
- * @see org.springsource.html5expenses.reports.implementation.ExpenseReport  *
  * @author Josh Long
+ * @see org.springsource.html5expenses.reports.implementation.ExpenseReport  *
  */
 public class ExpenseReport {
 	private String purpose;

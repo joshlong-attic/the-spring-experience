@@ -24,9 +24,9 @@ import javax.persistence.Id;
 /**
  * a {@link Charge} is a free-standing entity that represents the boundry between an external credit card system and the
  * expense report system.  Essentially, charges may be selected and then added into {@link org.springsource.html5expenses.reports.implementation.ExpenseReport}s.
- *
+ * <p/>
  * Ideally, once an expense report's been successfully {@link org.springsource.html5expenses.reports.implementation.ExpenseReport#setClosed()}, then
- * the corresponding {@link Charge charge} would be {@link Charge#setReconciled() paid}.
+ * the corresponding {@link Charge charge} would be {@link Charge#setPaid(boolean)} paid}.
  *
  * @author Josh Long
  */
@@ -42,7 +42,7 @@ public class Charge {
 
 	private String category;
 
-	private String userId ;
+	private String userId;
 
 	public String getUserId() {
 		return userId;
@@ -72,10 +72,14 @@ public class Charge {
 		return id;
 	}
 
-	Charge(){}
+	/**
+	 * default ctor for Hibernate
+	 */
+	Charge() {
+	}
 
-	public Charge(double amt, String cat){
-		this.amount = amt ;
+	public Charge(double amt, String cat) {
+		this.amount = amt;
 		this.category = cat;
 	}
 

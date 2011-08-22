@@ -29,7 +29,6 @@ import java.util.List;
 public interface ExpenseReportingService {
 
 	/**
-	 *
 	 * Creates a new, {@link org.springsource.html5expenses.reports.implementation.ExpenseReportState#OPEN open} expense report with a purpose.
 	 *
 	 * @param purpose the purpose for this report, e.g., "Palo Alto Face to Face"
@@ -39,14 +38,14 @@ public interface ExpenseReportingService {
 
 	/**
 	 * Retrieves all the charges that this user needs to account for.
-	 *                                                                                                	 *
+	 * *
+	 *
 	 * @return All charges returned from this call can conceivably be added to a {@link ExpenseReport}
 	 */
 	List<Charge> getEligibleCharges();
 
 	/**
-	 *
-	 * @param reportId   the ID of the report
+	 * @param reportId  the ID of the report
 	 * @param chargeIds the IDs of the charges to be added to the report
 	 * @return a collection of the charges that were added to the report
 	 */
@@ -54,12 +53,13 @@ public interface ExpenseReportingService {
 
 	/**
 	 * Add a file that can be used to track the
-	 * @param expenseId the ID of the expense
-	 * @param receiptBytes the bytes representing the file
+	 *
+	 * @param expenseId        the ID of the expense
+	 * @param receiptBytes     the bytes representing the file
 	 * @param originalFileName the original name of the file (so that the user can easily correlate)
 	 * @return the ID of the newly created managed file
 	 */
-	Long addReceipt(Long expenseId, String originalFileName, byte[] receiptBytes );
+	Long addReceipt(Long expenseId, String originalFileName, byte[] receiptBytes);
 
 	/**
 	 * attempts to file a report.

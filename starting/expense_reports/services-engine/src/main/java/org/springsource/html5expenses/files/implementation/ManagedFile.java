@@ -26,7 +26,6 @@ import java.io.File;
  *
  * @author Josh Long
  */
-
 @Entity
 public class ManagedFile {
 	@Id @GeneratedValue
@@ -41,19 +40,24 @@ public class ManagedFile {
 		setup(extension, byteSize, originalFileName);
 	}
 
+	/**
+	 * default ctor for Hibernate
+	 */
+	ManagedFile() {
+	}
+
 	public ManagedFile(File file) {
 		if (file == null) {
 			throw new IllegalArgumentException("the file can't be null");
 		}
-		setup(deriveExtension(file ), file.length(),file.getName());
+		setup(deriveExtension(file), file.length(), file.getName());
 	}
 
-	protected void setup(String extension, double byteSize, String ogFileName){
+	protected void setup(String extension, double byteSize, String ogFileName) {
 		this.extension = extension;
-		this.byteSize = byteSize ;
-		this.originalFileName = ogFileName ;
+		this.byteSize = byteSize;
+		this.originalFileName = ogFileName;
 	}
-
 
 	private String deriveExtension(File file) {
 		String name = file.getName();

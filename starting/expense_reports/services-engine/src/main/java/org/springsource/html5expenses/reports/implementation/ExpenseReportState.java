@@ -19,12 +19,12 @@ package org.springsource.html5expenses.reports.implementation;
 
 /**
  * States for the expense report.
- *
+ * <p/>
  * There are well known transitions:
- *
- *  From OPEN => IN_REVIEW
- *  From IN_REVIEW => OPEN (where somebody must revisit the report and correct any faults)
- *  From IN_REVIEW => CLOSED (everything's OK, and everything's justified.)
+ * <p/>
+ * From OPEN => IN_REVIEW
+ * From IN_REVIEW => OPEN (where somebody must revisit the report and correct any faults)
+ * From IN_REVIEW => CLOSED (everything's OK, and everything's justified.)
  *
  * @author Josh Long
  */
@@ -46,9 +46,7 @@ public enum ExpenseReportState {
 	 * when a report's been successfully submitted and approved, it can finally be closed.
 	 * Once closed, business continues as normal and the expenses will be paid.
 	 */
-	CLOSED     ;
-
-
+	CLOSED;
 
 
 	private String name;

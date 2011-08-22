@@ -1,3 +1,19 @@
+/*
+ * Copyright 2002-2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.springsource.html5expenses.files.implementation;
 
 
@@ -12,7 +28,8 @@ import java.io.File;
 
 public class DatabaseManagedFileService implements ManagedFileService {
 
-	private int numberOfVolumes = 5; // arbitrary for now
+	// assumes we want to distribute the files over 5 'buckets'
+	private int numberOfVolumes = 5;
 	private static String MANAGED_FILE_MOUNT_DIRECTORY = "managedFiles";
 
 	private String assetPathMask = "%010d/%010d.%s";
@@ -53,7 +70,7 @@ public class DatabaseManagedFileService implements ManagedFileService {
 		ManagedFile managedFile = new ManagedFile(getFilePathExtension(originalFileName), byteSize, originalFileName);
 		managedFile.setReady(false);
 		entityManager.persist(managedFile);
-		return  fromManagedFile( getManagedFileById(managedFile.getId()));
+		return fromManagedFile(getManagedFileById(managedFile.getId()));
 	}
 
 	@Override
@@ -104,13 +121,13 @@ public class DatabaseManagedFileService implements ManagedFileService {
 	}
 
 	private org.springsource.html5expenses.files.ManagedFile fromManagedFile(ManagedFile f) {
-		org.springsource.html5expenses.files.ManagedFile mf = new org.springsource.html5expenses.files.ManagedFile ();
+		org.springsource.html5expenses.files.ManagedFile mf = new org.springsource.html5expenses.files.ManagedFile();
 		mf.setByteSize(f.getByteSize());
 		mf.setExtension(f.getExtension());
 		mf.setId(f.getId());
 		mf.setReady(f.isReady());
 		mf.setOriginalFileName(f.getOriginalFileName());
-		return mf ;
+		return mf;
 	}
 
 }

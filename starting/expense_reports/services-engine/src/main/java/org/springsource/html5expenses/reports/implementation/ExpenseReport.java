@@ -31,14 +31,14 @@ import java.util.Set;
 @Entity
 public class ExpenseReport {
 
-    @Id
-    @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Long id;
 
 	@Column
-	private String purpose ;
+	private String purpose;
 
-	@OneToMany(mappedBy="expenseReport" )
+	@OneToMany(mappedBy = "expenseReport")
 	private Set<Expense> expenses = new HashSet<Expense>();
 
 	@Enumerated(EnumType.STRING)
@@ -55,12 +55,12 @@ public class ExpenseReport {
 		return state;
 	}
 
-	public Expense addExpense( long chargeId, double chargeAmt ,String category) {
+	public Expense addExpense(long chargeId, double chargeAmt, String category) {
 
 		if (!this.state.equals(ExpenseReportState.OPEN)) {
 			throw new IllegalStateException("you can't add expenses to a closed expense report.");
 		}
-		Expense item = new Expense( chargeId, chargeAmt);
+		Expense item = new Expense(chargeId, chargeAmt);
 		item.setCategory(category);
 		item.setExpenseReport(this);
 		getExpenses().add(item);

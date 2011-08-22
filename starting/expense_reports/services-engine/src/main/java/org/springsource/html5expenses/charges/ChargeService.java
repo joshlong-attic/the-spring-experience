@@ -16,8 +16,6 @@
 
 package org.springsource.html5expenses.charges;
 
-import org.springsource.html5expenses.charges.implementation.Charge;
-
 import java.util.List;
 
 /**
@@ -25,8 +23,11 @@ import java.util.List;
  */
 
 public interface ChargeService {
-	Long createCharge( double amount, String category );
-	org.springsource.html5expenses.charges.Charge  getCharge(Long chargeId);
-	List<org.springsource.html5expenses.charges.Charge > getEligibleCharges();
-	void markAsPaid(Long chargeId) ;
+	Long createCharge(double amount, String category);
+
+	org.springsource.html5expenses.charges.Charge getCharge(Long chargeId);
+
+	List<org.springsource.html5expenses.charges.Charge> getEligibleCharges();
+
+	void markAsPaid(Long chargeId);
 }
