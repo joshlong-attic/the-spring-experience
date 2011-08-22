@@ -18,6 +18,7 @@ package org.springsource.html5expenses.reports;
 
 
 import org.springsource.html5expenses.charges.Charge;
+import org.springsource.html5expenses.files.ManagedFile;
 
 import java.util.List;
 
@@ -76,5 +77,7 @@ public interface ExpenseReportingService {
 	 * @return the collection of ExpenseReports
 	 */
 	List<ExpenseReport> getOpenReports();
+
+
 
 }

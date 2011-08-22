@@ -20,6 +20,7 @@ package org.springsource.examples.expenses;
 import junit.framework.Assert;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,7 @@ import org.springsource.html5expenses.charges.Charge;
 import org.springsource.html5expenses.charges.ChargeService;
 import org.springsource.html5expenses.config.ServicesConfiguration;
 import org.springsource.html5expenses.files.ManagedFileService;
+import org.springsource.html5expenses.files.implementation.DatabaseManagedFileService;
 import org.springsource.html5expenses.reports.*;
 
 import javax.inject.Inject;
@@ -61,6 +63,10 @@ public class TestDatabaseExpenseReportingService {
 
 	@Before
 	public void setup() throws Throwable {
+		if (fileService instanceof DatabaseManagedFileService) {
+			((DatabaseManagedFileService) fileService).setRootFileSystem(SystemUtils.getJavaIoTmpDir().getAbsolutePath());
+		}
+
 		this.charges = Arrays.asList(chargeService.createCharge(chargeAmt1, chargeVendor1), chargeService.createCharge(chargeAmt2, chargeVendor2));
 	}
 
@@ -141,6 +147,8 @@ public class TestDatabaseExpenseReportingService {
 
 		String mfPath = fileService.getLocalPathForManagedFile(managedFileId);
 		Assert.assertTrue(new File(mfPath).exists());
+
+
 
 	}
 }

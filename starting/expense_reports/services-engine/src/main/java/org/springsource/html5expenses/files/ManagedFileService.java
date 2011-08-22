@@ -23,6 +23,13 @@ package org.springsource.html5expenses.files;
  */
 public interface ManagedFileService {
 
+	/**
+	 * Simple way to check the state of file objects
+	 * @param mfId the ID of the managed file
+	 * @return the {@link ManagedFile managed file}
+	 */
+	ManagedFile getManagedFile(Long mfId);
+
 	String getLocalPathForManagedFile(Long managedFileId);
 
 	String getWebUrlForManagedFile(String host, Long managedFileId);

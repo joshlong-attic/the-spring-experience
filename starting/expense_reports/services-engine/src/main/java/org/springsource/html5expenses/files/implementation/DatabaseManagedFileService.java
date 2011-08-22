@@ -18,6 +18,8 @@ package org.springsource.html5expenses.files.implementation;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.html5expenses.files.ManagedFileService;
@@ -28,6 +30,8 @@ import java.io.File;
 
 public class DatabaseManagedFileService implements ManagedFileService {
 
+	private Log log = LogFactory.getLog(getClass()) ;
+
 	// assumes we want to distribute the files over 5 'buckets'
 	private int numberOfVolumes = 5;
 	private static String MANAGED_FILE_MOUNT_DIRECTORY = "managedFiles";
@@ -37,8 +41,17 @@ public class DatabaseManagedFileService implements ManagedFileService {
 	@Value("#{systemProperties['user.home']}")
 	private String rootFileSystem;
 
+	public void setRootFileSystem(String rootFileSystem) {
+		this.rootFileSystem = rootFileSystem;
+	}
+
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	@Override
+	public org.springsource.html5expenses.files.ManagedFile getManagedFile(Long mfId) {
+	 return  fromManagedFile(getManagedFileById(mfId));
+	}
 
 	@Transactional(readOnly = true)
 	@Override
@@ -46,8 +59,10 @@ public class DatabaseManagedFileService implements ManagedFileService {
 		ManagedFile managedFile = getManagedFileById(managedFileId);
 		long lid = managedFile.getId();
 		long rootFolderId = deriveFolderIdFor(lid);
-		String mountPrefix = "";
-		return String.format("%s/%s/media/" + assetPathMask, buildFileSystemPrefix(), mountPrefix, rootFolderId, lid, managedFile.getExtension());
+		String mountPrefix = "mount";
+		String path =String.format("%s/%s/media/" + assetPathMask, buildFileSystemPrefix(), mountPrefix, rootFolderId, lid, managedFile.getExtension());
+		guaranteeTreeExists(path);
+		return path ;
 	}
 
 	@Transactional(readOnly = true)
@@ -128,6 +143,24 @@ public class DatabaseManagedFileService implements ManagedFileService {
 		mf.setReady(f.isReady());
 		mf.setOriginalFileName(f.getOriginalFileName());
 		return mf;
+	}
+
+	/**
+	 * precondition; the input must be a file path
+	 *
+	 * @param path the path itself (including the file)
+	 * @return whether or not that can be written to
+	 */
+	private boolean guaranteeTreeExists(String path) {
+		if (log.isDebugEnabled()) {
+			log.debug(String.format("testing to see if %s exists.", path));
+		}
+		File f = new File(path);
+		File dir = f.getParentFile();
+		if (!dir.exists()) {
+			return dir.mkdirs() && dir.exists();
+		}
+		return dir.exists();
 	}
 
 }

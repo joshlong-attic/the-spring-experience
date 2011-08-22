@@ -82,29 +82,10 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 		return new ArrayList<org.springsource.html5expenses.reports.Expense>(buildExpensesFrom(er.getExpenses()));
 	}
 
-	/**
-	 * precondition; the input must be a file path
-	 *
-	 * @param path the path itself (including the file)
-	 * @return whether or not that can be written to
-	 */
-	private boolean guaranteeTreeExists(String path) {
-		if (log.isDebugEnabled()) {
-			log.debug(String.format("testing to see if %s exists.", path));
-		}
-		File f = new File(path);
-		File dir = f.getParentFile();
-		if (!dir.exists()) {
-			return dir.mkdirs() && dir.exists();
-		}
-		return dir.exists();
-	}
-
 	@Transactional
 	public Long addReceipt(Long expenseId, String originalFileName, byte[] receiptBytes) {
 		ManagedFile file = fileService.createManagedFile(receiptBytes.length, originalFileName);
 		String pathToManagedFile = fileService.getLocalPathForManagedFile(file.getId());
-		guaranteeTreeExists(pathToManagedFile);
 		File outputFile = new File(pathToManagedFile);
 		OutputStream os = null;
 		InputStream is = null;
@@ -126,6 +107,8 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 		if (!(outputFile.exists() && outputFile.isFile() && outputFile.length() >= receiptBytes.length)) {
 			throw new IllegalStateException(String.format("the file '%s' has not been written!", outputFile.getAbsolutePath()));
 		}
+
+		fileService.setManagedFileReady(file.getId(), true);
 
 		return file.getId();
 	}
