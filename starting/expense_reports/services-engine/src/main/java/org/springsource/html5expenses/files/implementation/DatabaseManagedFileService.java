@@ -49,11 +49,11 @@ public class DatabaseManagedFileService implements ManagedFileService {
 
 	@Transactional
 	@Override
-	public ManagedFile createManagedFile(double byteSize, String originalFileName) {
+	public org.springsource.html5expenses.files.ManagedFile createManagedFile(double byteSize, String originalFileName) {
 		ManagedFile managedFile = new ManagedFile(getFilePathExtension(originalFileName), byteSize, originalFileName);
 		managedFile.setReady(false);
 		entityManager.persist(managedFile);
-		return getManagedFileById(managedFile.getId());
+		return  fromManagedFile( getManagedFileById(managedFile.getId()));
 	}
 
 	@Override
@@ -101,6 +101,16 @@ public class DatabaseManagedFileService implements ManagedFileService {
 			}
 		}
 		return null;
+	}
+
+	private org.springsource.html5expenses.files.ManagedFile fromManagedFile(ManagedFile f) {
+		org.springsource.html5expenses.files.ManagedFile mf = new org.springsource.html5expenses.files.ManagedFile ();
+		mf.setByteSize(f.getByteSize());
+		mf.setExtension(f.getExtension());
+		mf.setId(f.getId());
+		mf.setReady(f.isReady());
+		mf.setOriginalFileName(f.getOriginalFileName());
+		return mf ;
 	}
 
 }

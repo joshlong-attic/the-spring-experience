@@ -97,6 +97,8 @@ public class TestDatabaseExpenseReportingService {
 		Assert.assertFalse("the message returned should not be null", StringUtils.isEmpty(found.getFlag()));
 	}
 
+
+
 	@Test
 	public void testReceiptAttachment() throws Throwable {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("receipt.jpg");
@@ -105,18 +107,20 @@ public class TestDatabaseExpenseReportingService {
 		Long erId = reportingService.createNewReport(this.purpose);
 		reportingService.addExpenses(erId, this.charges);
 
-		FilingResult filingResult = reportingService.fileReport( erId);
+		FilingResult filingResult = reportingService.fileReport(erId);
 		Assert.assertTrue(filingResult.getStatus().equals(FilingResultStatus.VALIDATION_ERROR));
 
-		for( Expense e : filingResult.getExpenseReport().getExpenses()){
-			if(e.isFlagged()){
+		Long managedFileId = null;
+		for (Expense e : filingResult.getExpenseReport().getExpenses()) {
+			if (e.isFlagged()) {
 				// then lets attach a file
-				Long managedFileId=  reportingService.addReceipt( e.getId(), "receipt.jpg", input);
-				Assert.assertTrue(managedFileId != null ) ;
+				managedFileId = reportingService.addReceipt(e.getId(), "receipt.jpg", input);
+				Assert.assertTrue(managedFileId != null);
 			}
 		}
-	}
+		Assert.assertNotNull("managedFileId can't be null", managedFileId);
 
+	}
 
 
 /*

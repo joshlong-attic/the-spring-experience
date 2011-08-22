@@ -1,9 +1,11 @@
 package org.springsource.examples.expenses;
 
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -12,6 +14,7 @@ import org.springsource.html5expenses.charges.ChargeService;
 import org.springsource.html5expenses.config.ServicesConfiguration;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +23,8 @@ import java.util.List;
 public class TestDatabaseChargeService {
 
 	@Inject ChargeService chargeService;
+
+	@Inject DataSource dataSource;
 
 	double chargeAmt1 = 242.32, chargeAmt2 = 23.0;
 
@@ -32,6 +37,12 @@ public class TestDatabaseChargeService {
 	@Before
 	public void setup() throws Throwable {
 		this.charges = Arrays.asList(chargeService.createCharge(chargeAmt1, chargeVendor1), chargeService.createCharge(chargeAmt2, chargeVendor2));
+	}
+
+	@After
+	public void tearDown() throws Throwable {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(this.dataSource);
+		jdbcTemplate.execute("TRUNCATE TABLE CHARGE ");
 	}
 
 	@Test
@@ -53,8 +64,19 @@ public class TestDatabaseChargeService {
 	}
 
 	@Test
-	public void testFindingCharges() throws  Throwable {
-		Long chargeId = this.charges.iterator().next()  ;
-		 Assert.assertEquals(chargeService.getCharge(  chargeId).getId() ,chargeId);
+	public void testFindingCharges() throws Throwable {
+		Long chargeId = this.charges.iterator().next();
+		Assert.assertEquals(chargeService.getCharge(chargeId).getId(), chargeId);
+	}
+
+	@Test
+	public void testChargeReconciliation() throws Throwable {
+		List<Charge> eligibleCharges = chargeService.getEligibleCharges();
+		Assert.assertNotNull(eligibleCharges);
+		Assert.assertTrue(eligibleCharges.size() == 2);
+		for (Charge c : eligibleCharges) {
+			chargeService.markAsPaid(c.getId());
+		}
+		Assert.assertTrue(chargeService.getEligibleCharges().size() == 0);
 	}
 }

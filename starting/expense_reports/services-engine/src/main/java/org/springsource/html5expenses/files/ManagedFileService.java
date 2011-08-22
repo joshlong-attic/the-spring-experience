@@ -33,7 +33,7 @@ public interface ManagedFileService {
 	 * create a new managed file in the system (presumably there's some
 	 * service specific logic about where this managed file lives)
 	 */
-	ManagedFile createManagedFile(  double byteSize, String originalFileName);
+	org.springsource.html5expenses.files.ManagedFile  createManagedFile(  double byteSize, String originalFileName);
 
 	/**
 	 * to reclaim hard disk space and remove the entry from the database
