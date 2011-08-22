@@ -16,6 +16,7 @@
 
 package org.springsource.html5expenses.reports;
 
+
 import org.springsource.html5expenses.charges.Charge;
 
 import java.util.List;

@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package org.springsource.html5expenses.files;
+package org.springsource.html5expenses.files.implementation;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.File;
 
 /**
@@ -24,8 +27,11 @@ import java.io.File;
  * @author Josh Long
  */
 
+@Entity
 public class ManagedFile {
+	@Id @GeneratedValue
 	private Long id;
+
 	private String extension;
 	private double byteSize;
 	private String originalFileName;

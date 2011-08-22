@@ -11,9 +11,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springsource.html5expenses.charges.Charge;
+import org.springsource.html5expenses.charges.implementation.Charge;
 import org.springsource.html5expenses.charges.ChargeService;
 import org.springsource.html5expenses.charges.implementation.DatabaseChargeService;
+import org.springsource.html5expenses.files.implementation.ManagedFile;
 import org.springsource.html5expenses.files.ManagedFileService;
 import org.springsource.html5expenses.files.implementation.DatabaseManagedFileService;
 import org.springsource.html5expenses.reports.ExpenseReportingService;
@@ -43,7 +44,7 @@ public class ServicesConfiguration {
 		jpaVendorAdapter.setGenerateDdl(true);
 		jpaVendorAdapter.setShowSql(true);
 
-		List <String> pkgs = Arrays.asList(Charge.class.getPackage().getName(), Expense.class.getPackage().getName());
+		List <String> pkgs = Arrays.asList(Charge.class.getPackage().getName(), ManagedFile.class.getPackage().getName(), Expense.class.getPackage().getName());
 
 
 		Map<String,String> mapOfJpaProperties = new HashMap<String,String>();

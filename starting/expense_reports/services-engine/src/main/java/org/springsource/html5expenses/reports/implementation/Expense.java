@@ -22,7 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * A {@link Expense} is basically an unjustified, unreconciled {@link org.springsource.html5expenses.charges.Charge}.
+ * A {@link Expense} is basically an unjustified, unreconciled {@link org.springsource.html5expenses.charges.implementation.Charge}.
  *
  * @author Josh Long
  */

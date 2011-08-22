@@ -16,7 +16,7 @@
 
 package org.springsource.html5expenses.reports.implementation;
 
-import org.springsource.html5expenses.charges.Charge;
+import org.springsource.html5expenses.charges.implementation.Charge;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -55,14 +55,13 @@ public class ExpenseReport {
 		return state;
 	}
 
-	public Expense addExpense(Charge charge) {
+	public Expense addExpense( long chargeId, double chargeAmt ,String category) {
 
 		if (!this.state.equals(ExpenseReportState.OPEN)) {
 			throw new IllegalStateException("you can't add expenses to a closed expense report.");
 		}
-
-		Expense item = new Expense(charge.getId(), charge.getAmount());
-		item.setCategory(charge.getCategory());
+		Expense item = new Expense( chargeId, chargeAmt);
+		item.setCategory(category);
 		item.setExpenseReport(this);
 		getExpenses().add(item);
 		return item;

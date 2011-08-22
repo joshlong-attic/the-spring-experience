@@ -1,12 +1,14 @@
 package org.springsource.html5expenses.reports.implementation;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springsource.html5expenses.charges.Charge;
 import org.springsource.html5expenses.charges.ChargeService;
-import org.springsource.html5expenses.files.ManagedFile;
 import org.springsource.html5expenses.files.ManagedFileService;
+import org.springsource.html5expenses.files.implementation.ManagedFile;
 import org.springsource.html5expenses.reports.ExpenseReportingService;
 import org.springsource.html5expenses.reports.FilingResult;
 import org.springsource.html5expenses.reports.FilingResultStatus;
@@ -17,8 +19,16 @@ import javax.persistence.PersistenceContext;
 import java.io.*;
 import java.util.*;
 
+/**
+ * implementation of the {@link ExpenseReportingService} that uses a database and JPA.
+ *
+ * @author Josh Long
+ */
+
 @Service
 public class DatabaseExpenseReportingService implements ExpenseReportingService {
+
+	private Log log = LogFactory.getLog(getClass());
 
 	private String openExpenseReportsQL = String.format("SELECT er FROM %s er WHERE er.state = :state ", ExpenseReport.class.getName());
 
@@ -40,7 +50,7 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 
 	@Transactional
 	public List<Charge> getEligibleCharges() {
-		return this.chargeService.getEligibleCharges();
+		return  this.chargeService.getEligibleCharges();
 	}
 
 	@Transactional
@@ -49,26 +59,45 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 				entityManager.find(org.springsource.html5expenses.reports.implementation.ExpenseReport.class, reportId);
 		for (Long chargeId : chargeIds) {
 			Charge c = chargeService.getCharge(chargeId);
-			Expense expense  = er.addExpense(c);
-		   	entityManager.persist(expense);
+			Expense expense = er.addExpense(c.getId(), c.getAmount(),c.getCategory());
+			entityManager.persist(expense);
 		}
 		entityManager.merge(er);
-		return new ArrayList<org.springsource.html5expenses.reports.Expense>( buildExpensesFrom( er.getExpenses()) );
+		return new ArrayList<org.springsource.html5expenses.reports.Expense>(buildExpensesFrom(er.getExpenses()));
+	}
+
+	/**
+	 * precondition; the input must be a file path
+	 *
+	 * @param path the path itself (including the file)
+	 * @return whether or not that can be written to
+	 */
+	private boolean guaranteeTreeExists(String path) {
+		if (log.isDebugEnabled()) {
+			log.debug(String.format("testing to see if %s exists.", path));
+		}
+		File f = new File(path);
+		File dir = f.getParentFile();
+		if (!dir.exists()) {
+			return dir.mkdirs() && dir.exists();
+		}
+		return dir.exists();
 	}
 
 	@Transactional
 	public Long addReceipt(Long expenseId, String originalFileName, byte[] receiptBytes) {
 		ManagedFile file = fileService.createManagedFile(receiptBytes.length, originalFileName);
 		String pathToManagedFile = fileService.getLocalPathForManagedFile(file.getId());
+		guaranteeTreeExists(pathToManagedFile);
+		File outputFile = new File(pathToManagedFile);
 		OutputStream os = null;
 		InputStream is = null;
 		try {
 			is = new ByteArrayInputStream(receiptBytes);
-			os = new FileOutputStream(new File(pathToManagedFile));
+			os = new FileOutputStream(outputFile);
 			IOUtils.copy(is, os);
 		} catch (IOException e) {
-			throw new RuntimeException("an error occurred when trying to write " +
-					                   "the file to the file system", e);
+			throw new RuntimeException("an error occurred when trying to write the file to the file system", e);
 		} finally {
 			if (os != null) {
 				IOUtils.closeQuietly(os);
@@ -77,6 +106,11 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 				IOUtils.closeQuietly(is);
 			}
 		}
+
+		if (!(outputFile.exists() && outputFile.isFile() && outputFile.length() >= receiptBytes.length)) {
+			throw new IllegalStateException(String.format("the file '%s' has not been written!", outputFile.getAbsolutePath()));
+		}
+
 		return file.getId();
 	}
 
@@ -127,6 +161,7 @@ public class DatabaseExpenseReportingService implements ExpenseReportingService 
 		e.setId(expenseReport.getId());
 		e.setPurpose(expenseReport.getPurpose());
 		e.setExpenses(buildExpensesFrom(expenseReport.getExpenses()));
+
 		return e;
 	}
 

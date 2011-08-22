@@ -51,8 +51,10 @@ public class TestDatabaseChargeService {
 		Assert.assertEquals(c1.getId(), (Long) c1Id);
 		Assert.assertEquals(c2.getId(), (Long) c2Id);
 	}
+
 	@Test
 	public void testFindingCharges() throws  Throwable {
-
+		Long chargeId = this.charges.iterator().next()  ;
+		 Assert.assertEquals(chargeService.getCharge(  chargeId).getId() ,chargeId);
 	}
 }

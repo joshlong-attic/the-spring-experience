@@ -16,6 +16,8 @@
 
 package org.springsource.html5expenses.files;
 
+import org.springsource.html5expenses.files.implementation.ManagedFile;
+
 /**
  * simple service to manage files for receipt storage "just the contracts ma'am"
  *
